@@ -3,137 +3,192 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HopePaw — Turning Memes into Hope</title>
+  <title>HopePaw — A Meme With A Mission</title>
+
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
-    body {
-      font-family: Arial, sans-serif;
-      background: #0a192f;
-      color: #333333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 30px 15px;
+
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:#0a192f;
+      color:#333;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      padding:30px 15px;
     }
-    .container {
-      background-color: #ffffff;
-      padding: 35px 25px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      text-align: center;
-      max-width: 480px;
-      width: 100%;
+
+    .container{
+      background:#fff;
+      max-width:500px;
+      width:100%;
+      border-radius:20px;
+      padding:35px 25px;
+      box-shadow:0 10px 30px rgba(0,0,0,.45);
+      text-align:center;
     }
-    .logo {
-      width: 130px;
-      height: auto;
-      margin-bottom: 15px;
+
+    .logo{
+      width:130px;
+      margin-bottom:15px;
     }
-    h1 {
-      color: #0a192f;
-      font-size: 1.8rem;
-      margin-bottom: 5px;
+
+    h1{
+      color:#0a192f;
+      font-size:1.9rem;
+      margin-bottom:6px;
     }
-    .tagline {
-      color: #2563eb;
-      font-weight: bold;
-      font-size: 0.95rem;
-      margin-bottom: 25px;
+
+    .tagline{
+      color:#2563eb;
+      font-weight:bold;
+      margin-bottom:25px;
+      font-size:1rem;
     }
-    .section-box {
-      background-color: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 18px;
-      text-align: left;
-      margin-bottom: 20px;
+
+    .section-box{
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:14px;
+      padding:18px;
+      text-align:left;
+      margin-bottom:18px;
     }
-    .section-box h3 {
-      font-size: 1rem;
-      color: #0f172a;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+
+    .section-box h3{
+      color:#0f172a;
+      margin-bottom:10px;
+      font-size:1rem;
     }
-    .section-box p {
-      font-size: 0.88rem;
-      color: #475569;
-      line-height: 1.5;
+
+    .section-box p,
+    .section-box li{
+      color:#475569;
+      line-height:1.7;
+      font-size:.92rem;
     }
-    .section-box ul {
-      padding-left: 20px;
-      font-size: 0.88rem;
-      color: #475569;
-      line-height: 1.6;
+
+    .section-box ul{
+      padding-left:20px;
     }
-    .closing-text {
-      font-style: italic;
-      color: #334155;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin: 25px 0;
-      padding: 0 10px;
+
+    .closing-text{
+      margin:25px 0;
+      color:#334155;
+      font-style:italic;
+      line-height:1.7;
+      font-size:.92rem;
     }
-    .btn {
-      display: block;
-      background-color: #000000;
-      color: #ffffff;
-      padding: 14px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 0.95rem;
-      transition: background-color 0.2s;
+
+    .btn{
+      display:block;
+      background:#000;
+      color:#fff;
+      text-decoration:none;
+      padding:14px;
+      border-radius:30px;
+      font-weight:bold;
+      transition:.3s;
     }
-    .btn:hover {
-      background-color: #1e293b;
+
+    .btn:hover{
+      background:#1e293b;
     }
+
+    .footer{
+      margin-top:20px;
+      font-size:.8rem;
+      color:#94a3b8;
+    }
+
   </style>
+
 </head>
+
 <body>
 
-  <div class="container">
-    <!-- Logo Utama -->
-    <img src="1785989730239.png" alt="HopePaw Logo" class="logo">
-    
-    <h1>🐾 HopePaw</h1>
-    <div class="tagline">Turning Memes Into Hope ❤️</div>
+<div class="container">
 
-    <!-- Section Vision -->
-    <div class="section-box">
-      <h3>🐾 Vision</h3>
-      <p>
-        To prove that a meme coin can create real hope through transparency, community, and meaningful impact.
-      </p>
-    </div>
+<img src="1785989730239.png" alt="HopePaw Logo" class="logo">
 
-    <!-- Section Mission -->
-    <div class="section-box">
-      <h3>❤️ Mission</h3>
-      <ul>
-        <li>Support orphanages and children's education.</li>
-        <li>Build with complete transparency.</li>
-        <li>Grow a strong, community-driven ecosystem.</li>
-        <li>Turn memes into meaningful impact.</li>
-      </ul>
-    </div>
+<h1>🐾 HopePaw</h1>
 
-    <!-- Kalimat Penutup -->
-    <p class="closing-text">
-      "HopePaw isn't just another meme coin. It's a community built on hope, transparency, and the belief that even the smallest paw can leave a lasting impact. ❤️"
-    </p>
+<div class="tagline">
+A Meme With A Mission ❤️
+</div>
 
-    <!-- Tombol X -->
-    <a href="https://x.com/HopePawHQ" target="_blank" class="btn">
-      Follow @HopePawHQ on X
-    </a>
-  </div>
+<div class="section-box">
+<h3>🐾 Vision</h3>
+
+<p>
+To prove that a meme coin can create real hope through transparency,
+community, and meaningful impact.
+</p>
+
+</div>
+
+<div class="section-box">
+
+<h3>❤️ Mission</h3>
+
+<ul>
+<li>Support orphanages and children's education.</li>
+<li>Build with complete transparency.</li>
+<li>Grow a strong, community-driven ecosystem.</li>
+<li>Turn memes into meaningful impact.</li>
+</ul>
+
+</div>
+
+<div class="section-box">
+
+<h3>📖 Our Story</h3>
+
+<p>
+HopePaw was born from one simple belief:
+a meme coin can be more than just hype.
+
+<br><br>
+
+We want to build a transparent community that grows together while creating opportunities to support orphanages and children's education.
+
+<br><br>
+
+Every step forward is another step toward turning memes into hope.
+</p>
+
+</div>
+
+<p class="closing-text">
+
+"HopePaw isn't just another meme coin.
+
+It's a community built on hope, transparency, and the belief that even the smallest paw can leave a lasting impact. ❤️"
+
+</p>
+
+<a
+class="btn"
+href="https://x.com/HopePawHQ"
+target="_blank"
+rel="noopener noreferrer">
+
+Follow @HopePawHQ on X
+
+</a>
+
+<div class="footer">
+
+Building hope, one paw at a time. 💙
+
+</div>
+
+</div>
 
 </body>
 </html>
