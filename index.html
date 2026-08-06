@@ -33,7 +33,7 @@
                 <span class="text-2xl font-bold tracking-tight">🐾 HopePaw</span>
             </div>
 
-            <!-- NAVBAR MENU (KLIK UNTUK PINDAH KONTEN) -->
+            <!-- NAVBAR MENU -->
             <div class="hidden md:flex items-center space-x-6 text-sm text-gray-300 font-medium">
                 <button @click="activeTab = 'vision'" :class="activeTab === 'vision' ? 'text-brandLightBlue border-b-2 border-brandLightBlue pb-1' : 'hover:text-white'" class="transition">Vision</button>
                 <button @click="activeTab = 'mission'" :class="activeTab === 'mission' ? 'text-brandLightBlue border-b-2 border-brandLightBlue pb-1' : 'hover:text-white'" class="transition">Mission</button>
@@ -49,10 +49,12 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section class="container mx-auto px-6 py-10 md:py-16 flex flex-col md:flex-row items-center justify-between gap-12">
-        <div class="md:w-1/2 space-y-6">
-            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+    <!-- HERO SECTION (MENYERUPAI TAMPILAN GAMBAR REFERENSI) -->
+    <section class="container mx-auto px-6 py-12 md:py-24 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden">
+        
+        <!-- TEKS DI SEBELAH KIRI -->
+        <div class="md:w-[52%] space-y-6 z-10">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1]">
                 A Meme <br>
                 With A Mission <span class="text-brandLightBlue">💙</span>
             </h1>
@@ -61,23 +63,27 @@
                 Turning Memes Into Hope
             </p>
 
-            <p class="text-gray-400 max-w-md text-sm md:text-base leading-relaxed">
+            <p class="text-gray-400 max-w-lg text-sm md:text-base leading-relaxed">
                 Supporting orphanages and children's education through transparency and community.
             </p>
 
             <div class="pt-2">
-                <a href="https://x.com/HopePawHQ" target="_blank" class="inline-flex items-center bg-brandBlue hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition">
+                <a href="https://x.com/HopePawHQ" target="_blank" class="inline-flex items-center bg-brandBlue hover:bg-blue-700 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition">
                     <span>Follow @HopePawHQ on X</span>
                 </a>
             </div>
         </div>
 
-        <!-- GAMBAR MASCOT -->
-        <div class="md:w-1/2 flex justify-center relative">
-            <div class="absolute w-80 h-80 md:w-[500px] md:h-[500px] bg-blue-600/30 rounded-full blur-3xl -z-10"></div>
+        <!-- GAMBAR MASCOT BESAR DI SEBELAH KANAN (MENYATU SEMPURNA) -->
+        <div class="md:w-[48%] flex justify-center md:justify-end relative">
+            <!-- Cahaya latar belakang pendaran biru -->
+            <div class="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-600/20 rounded-full blur-[120px] -z-10"></div>
             
-            <div class="relative w-[340px] h-[340px] md:w-[520px] md:h-[520px] flex items-center justify-center">
-                <img src="1786002734097.png" alt="HopePaw Mascot" class="w-full h-full object-contain drop-shadow-[0_0_35px_rgba(37,99,235,0.5)]">
+            <!-- Kontainer gambar ukuran jumbo agar terlihat megah -->
+            <div class="relative w-[340px] h-[340px] md:w-[620px] md:h-[620px] flex items-center justify-center">
+                <img src="1786002734097.png" 
+                     alt="HopePaw Mascot" 
+                     class="w-full h-full object-contain [mask-image:radial-gradient(circle_at_center,black_45%,transparent_88%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_45%,transparent_88%)] drop-shadow-[0_0_60px_rgba(37,99,235,0.3)]">
             </div>
         </div>
     </section>
@@ -91,7 +97,6 @@
 
         <!-- TOMBOL / IKON MENU INTERAKTIF -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <!-- Tombol Vision -->
             <button @click="activeTab = 'vision'" 
                     :class="activeTab === 'vision' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
                     class="p-5 rounded-2xl border text-center transition flex flex-col items-center space-y-2 group">
@@ -99,7 +104,6 @@
                 <span class="font-bold text-sm text-white">Vision</span>
             </button>
 
-            <!-- Tombol Mission -->
             <button @click="activeTab = 'mission'" 
                     :class="activeTab === 'mission' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
                     class="p-5 rounded-2xl border text-center transition flex flex-col items-center space-y-2 group">
@@ -107,7 +111,6 @@
                 <span class="font-bold text-sm text-white">Mission</span>
             </button>
 
-            <!-- Tombol Our Story -->
             <button @click="activeTab = 'story'" 
                     :class="activeTab === 'story' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
                     class="p-5 rounded-2xl border text-center transition flex flex-col items-center space-y-2 group">
@@ -115,7 +118,6 @@
                 <span class="font-bold text-sm text-white">Our Story</span>
             </button>
 
-            <!-- Tombol Our Goal -->
             <button @click="activeTab = 'goal'" 
                     :class="activeTab === 'goal' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
                     class="p-5 rounded-2xl border text-center transition flex flex-col items-center space-y-2 group">
@@ -124,10 +126,9 @@
             </button>
         </div>
 
-        <!-- KOTAK TAMPILAN KONTEN (BERUBAH SESUAI IKON YANG DIKLIK) -->
+        <!-- KOTAK TAMPILAN KONTEN -->
         <div class="bg-brandCard p-8 md:p-10 rounded-2xl border border-slate-800 shadow-xl min-h-[220px] transition-all">
             
-            <!-- KONTEN VISION -->
             <div x-show="activeTab === 'vision'" x-transition.opacity.duration.300ms>
                 <div class="flex items-center space-x-3 mb-4">
                     <span class="text-2xl">🌐</span>
@@ -138,7 +139,6 @@
                 </p>
             </div>
 
-            <!-- KONTEN MISSION -->
             <div x-show="activeTab === 'mission'" x-transition.opacity.duration.300ms style="display: none;">
                 <div class="flex items-center space-x-3 mb-4">
                     <span class="text-2xl">🚀</span>
@@ -160,7 +160,6 @@
                 </ul>
             </div>
 
-            <!-- KONTEN OUR STORY -->
             <div x-show="activeTab === 'story'" x-transition.opacity.duration.300ms style="display: none;">
                 <div class="flex items-center space-x-3 mb-4">
                     <span class="text-2xl">🐾</span>
@@ -174,7 +173,6 @@
                 </p>
             </div>
 
-            <!-- KONTEN OUR GOAL -->
             <div x-show="activeTab === 'goal'" x-transition.opacity.duration.300ms style="display: none;">
                 <div class="flex items-center space-x-3 mb-4">
                     <span class="text-2xl">💙</span>
