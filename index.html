@@ -36,17 +36,21 @@
 </head>
 <body class="bg-brandDark text-white selection:bg-brandBlue selection:text-white min-h-screen" x-data="{ activeTab: 'vision', openFaq: null }">
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR DENGAN LOGO KECIL -->
     <nav class="sticky top-0 z-50 bg-brandDark/85 backdrop-blur-md border-b border-slate-800/60">
-        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <span class="text-2xl font-bold tracking-tight">🐾 HopePaw</span>
-            </div>
+        <div class="container mx-auto px-6 py-3 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-9 h-9 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center overflow-hidden p-1 group-hover:border-brandLightBlue transition">
+                    <img src="1786002734097.png" alt="HopePaw Logo" class="w-full h-full object-contain">
+                </div>
+                <span class="text-xl font-bold tracking-tight">HopePaw</span>
+            </a>
 
             <!-- NAVBAR MENU -->
             <div class="hidden md:flex items-center space-x-6 text-sm text-gray-300 font-medium">
                 <a href="#about" class="hover:text-brandLightBlue transition">About</a>
                 <a href="#roadmap" class="hover:text-brandLightBlue transition">Roadmap</a>
+                <a href="#buildpublic" class="hover:text-brandLightBlue transition">Build in Public</a>
                 <a href="#status" class="hover:text-brandLightBlue transition">Status</a>
                 <a href="#faq" class="hover:text-brandLightBlue transition">FAQ</a>
             </div>
@@ -92,7 +96,7 @@
             </div>
         </div>
 
-        <!-- GAMBAR MASCOT DI SEBELAH KANAN (Dengan Animasi Mengambang) -->
+        <!-- GAMBAR MASCOT DI SEBELAH KANAN -->
         <div class="md:w-[48%] flex justify-center md:justify-end relative">
             <div class="absolute w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-blue-600/15 rounded-full blur-[130px] -z-10"></div>
             
@@ -104,7 +108,7 @@
         </div>
     </section>
 
-    <!-- INTERACTIVE SECTION (Vision, Mission, Story, Goal) -->
+    <!-- INTERACTIVE SECTION (VISION, MISSION, STORY, GOAL - SUDAH DIREVISI) -->
     <section id="about" class="container mx-auto px-6 py-12 max-w-5xl scroll-mt-24">
         
         <div class="text-center mb-10">
@@ -164,15 +168,15 @@
                 <ul class="space-y-3 text-gray-300">
                     <li class="flex items-start space-x-2">
                         <span class="text-brandLightBlue font-bold">•</span>
-                        <span><strong>100% Transparent Donations:</strong> Allocate a dedicated portion of transaction fees directly to verified orphanages and educational programs worldwide.</span>
+                        <span><strong>Transparent Foundation:</strong> Our long-term goal is to allocate a portion of future project revenue to support verified orphanages and children's education.</span>
                     </li>
                     <li class="flex items-start space-x-2">
                         <span class="text-brandLightBlue font-bold">•</span>
-                        <span><strong>Community-Driven Impact:</strong> Empower holders to vote on charity initiatives, ensuring every member has a voice in where help goes.</span>
+                        <span><strong>Community-Driven Impact:</strong> Empower holders to engage in discussions and vote on future charity initiatives, ensuring an inclusive direction.</span>
                     </li>
                     <li class="flex items-start space-x-2">
                         <span class="text-brandLightBlue font-bold">•</span>
-                        <span><strong>Sustainable Growth:</strong> Combine engaging content, strong tokenomics, and public accountability to create long-term value for both holders and beneficiary organizations.</span>
+                        <span><strong>Sustainable Growth:</strong> Combine engaging content, strong community values, and public accountability to create meaningful long-term value.</span>
                     </li>
                 </ul>
             </div>
@@ -183,10 +187,10 @@
                     <h3 class="text-2xl font-bold text-white">Our Story</h3>
                 </div>
                 <p class="text-gray-300 leading-relaxed text-base mb-3">
-                    HopePaw started with a simple observation: meme coins have the power to mobilize millions of people, yet most of that energy goes unused for real-world change.
+                    HopePaw began as an independent community project born out of a simple observation: meme coins have the power to mobilize millions, yet that energy can be channeled toward a positive purpose.
                 </p>
                 <p class="text-gray-300 leading-relaxed text-base">
-                    Founded by a group of passionate builders and animal lovers, we launched HopePaw to give a deeper purpose to the crypto space. What began as a small idea on social media quickly evolved into a structured initiative dedicated to building hope—one paw print at a time.
+                    What started as an independent idea on social media has evolved into a structured vision dedicated to building hope from the ground up—one paw print at a time.
                 </p>
             </div>
 
@@ -196,7 +200,7 @@
                     <h3 class="text-2xl font-bold text-white">Our Goal</h3>
                 </div>
                 <p class="text-gray-300 leading-relaxed text-base">
-                    Our primary goal is to fund shelter, food, and quality educational resources for over <strong>10,000 children</strong> across partner orphanages globally. By growing a strong #BuildInPublic community, we aim to demonstrate that decentralized finance can consistently change lives in the physical world.
+                    Our long-term goal is to support children through education and humanitarian initiatives. By growing an organic #BuildInPublic community from day one, we aim to demonstrate that decentralized projects can genuinely improve lives in the physical world.
                 </p>
             </div>
 
@@ -288,6 +292,23 @@
         </div>
     </section>
 
+    <!-- 6. BUILD IN PUBLIC SECTION (BARU) -->
+    <section id="buildpublic" class="container mx-auto px-6 py-12 max-w-4xl scroll-mt-24">
+        <div class="bg-gradient-to-r from-blue-900/30 to-brandCard border border-blue-500/20 p-8 md:p-10 rounded-2xl shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 text-9xl opacity-5 select-none pointer-events-none">🐾</div>
+            
+            <div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/30 px-3 py-1 rounded-full text-brandLightBlue text-xs font-semibold mb-4">
+                <span>⚡ Core Value</span>
+            </div>
+            
+            <h3 class="text-2xl md:text-3xl font-bold mb-3">Build in Public</h3>
+            <p class="text-brandLightBlue font-medium text-sm md:text-base mb-4">We believe transparency builds trust.</p>
+            <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                Every milestone, update, and lesson will be shared openly with our community. Instead of hiding behind closed doors, HopePaw is built transparently from day one, giving everyone a front-row seat to our growth.
+            </p>
+        </div>
+    </section>
+
     <!-- 7. PROGRESS / PROJECT STATUS -->
     <section id="status" class="container mx-auto px-6 py-12 max-w-4xl scroll-mt-24">
         <div class="bg-brandCard border border-slate-800 p-8 rounded-2xl shadow-xl">
@@ -368,14 +389,14 @@
         </div>
     </section>
 
-    <!-- 4. & 5. SOCIAL LINKS & FOOTER -->
+    <!-- 4. & 5. SOCIAL LINKS & FOOTER (DIREVISI) -->
     <footer class="container mx-auto px-6 py-12 mt-16 border-t border-slate-800/80 text-center">
         
         <!-- Social Links -->
         <div class="flex justify-center items-center space-x-6 mb-8 text-sm font-medium text-gray-300">
             <a href="https://x.com/HopePawHQ" target="_blank" class="hover:text-brandLightBlue transition duration-300 hover:scale-105">X (Twitter)</a>
             <span class="text-slate-700">•</span>
-            <a href="https://github.com" target="_blank" class="hover:text-brandLightBlue transition duration-300 hover:scale-105">GitHub</a>
+            <a href="https://github.com/hopepaw" target="_blank" class="hover:text-brandLightBlue transition duration-300 hover:scale-105">GitHub</a>
             <span class="text-slate-700">•</span>
             <span class="text-gray-500 cursor-not-allowed" title="Coming soon">Telegram <span class="text-xs">(Soon)</span></span>
             <span class="text-slate-700">•</span>
