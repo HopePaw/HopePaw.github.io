@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HopePaw - A Meme With A Mission</title>
     
-    <!-- META TAGS UNTUK SOCIAL PREVIEW -->
+    <!-- META TAGS SEO & SOCIAL PREVIEW -->
     <meta name="description" content="A meme with a mission. Building hope through community, transparency, and purpose.">
+    <meta name="theme-color" content="#030712">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="HopePaw">
     <meta property="og:title" content="HopePaw - A Meme With A Mission">
     <meta property="og:description" content="Building hope through community, transparency, and purpose.">
-    <meta property="og:image" content="Building the future.png">
+    <meta property="og:image" content="building-future.png">
     <meta property="og:url" content="https://hopepaw.github.io/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="HopePaw - A Meme With A Mission">
     <meta name="twitter:description" content="Building hope through community, transparency, and purpose.">
-    <meta name="twitter:image" content="Building the future.png">
+    <meta name="twitter:image" content="building-future.png">
 
     <!-- FAVICON -->
-    <link rel="icon" type="image/png" href="Building the future.png">
+    <link rel="icon" type="image/png" href="building-future.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -53,36 +56,61 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body class="bg-brandDark text-white selection:bg-brandBlue selection:text-white min-h-screen relative" x-data="{ activeTab: 'vision', openFaq: null, showTopBtn: false }" @scroll.window="showTopBtn = (window.pageYOffset > 300)">
+<body class="bg-brandDark text-white selection:bg-brandBlue selection:text-white min-h-screen relative" 
+      x-data="{ activeTab: 'vision', openFaq: null, showTopBtn: false, mobileMenu: false }" 
+      @scroll.window="showTopBtn = (window.pageYOffset > 300)">
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR DENGAN MOBILE HAMBURGER MENU -->
     <nav class="sticky top-0 z-50 bg-brandDark/85 backdrop-blur-md border-b border-slate-800/60">
         <div class="container mx-auto px-6 py-3 flex items-center justify-between">
             <a href="#" class="flex items-center space-x-3 group">
                 <div class="w-9 h-9 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center overflow-hidden p-1 group-hover:border-brandLightBlue transition">
-                    <img src="Building the future.png" alt="HopePaw Logo" class="w-full h-full object-contain">
+                    <img src="building-future.png" alt="HopePaw Logo" class="w-full h-full object-contain">
                 </div>
                 <span class="text-xl font-bold tracking-tight">HopePaw</span>
-            </div>
+            </a>
 
+            <!-- Desktop Nav Links -->
             <div class="hidden md:flex items-center space-x-6 text-sm text-gray-300 font-medium">
                 <a href="#about" class="hover:text-brandLightBlue transition">About</a>
-                <a href="#why" class="hover:text-brandLightBlue transition">Why Us</a>
-                <a href="#roadmap" class="hover:text-brandLightBlue transition">Roadmap</a>
+                <a href="#values" class="hover:text-brandLightBlue transition">Values</a>
+                <a href="#timeline" class="hover:text-brandLightBlue transition">Timeline</a>
+                <a href="#tokenomics" class="hover:text-brandLightBlue transition">Tokenomics</a>
                 <a href="#updates" class="hover:text-brandLightBlue transition">Updates</a>
                 <a href="#faq" class="hover:text-brandLightBlue transition">FAQ</a>
             </div>
 
-            <div>
+            <div class="hidden md:block">
                 <a href="https://x.com/HopePawHQ" target="_blank" class="border border-slate-700 hover:border-white px-5 py-2 rounded-full text-sm font-medium transition duration-300 hover:scale-105 inline-block">
                     Follow on X
                 </a>
             </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button @click="mobileMenu = !mobileMenu" class="md:hidden text-gray-300 hover:text-white focus:outline-none p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path x-show="!mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    <path x-show="mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div x-show="mobileMenu" x-transition class="md:hidden bg-brandDark/95 border-b border-slate-800 px-6 py-4 space-y-3 text-sm font-medium">
+            <a href="#about" @click="mobileMenu = false" class="block text-gray-300 hover:text-brandLightBlue py-1">About</a>
+            <a href="#values" @click="mobileMenu = false" class="block text-gray-300 hover:text-brandLightBlue py-1">Values</a>
+            <a href="#timeline" @click="mobileMenu = false" class="block text-gray-300 hover:text-brandLightBlue py-1">Timeline</a>
+            <a href="#tokenomics" @click="mobileMenu = false" class="block text-gray-300 hover:text-brandLightBlue py-1">Tokenomics</a>
+            <a href="#updates" @click="mobileMenu = false" class="block text-gray-300 hover:text-brandLightBlue py-1">Updates</a>
+            <a href="#faq" @click="mobileMenu = false" class="block text-gray-300 hover:text-brandLightBlue py-1">FAQ</a>
+            <div class="pt-2">
+                <a href="https://x.com/HopePawHQ" target="_blank" class="block text-center bg-brandBlue text-white py-2.5 rounded-xl font-semibold">Follow on X</a>
+            </div>
         </div>
     </nav>
 
-    <!-- 1. HERO SECTION (Menggunakan: Building the future.png) -->
-    <section class="container mx-auto px-6 py-12 md:py-24 flex flex-col md:flex-row items-center justify-between gap-12 overflow-hidden">
+    <!-- 1. HERO SECTION -->
+    <section class="container mx-auto px-6 py-12 md:py-20 flex flex-col md:flex-row items-center justify-between gap-12 overflow-hidden">
         <div class="md:w-[52%] space-y-6 z-10">
             <div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/30 px-3.5 py-1.5 rounded-full text-brandLightBlue text-xs font-semibold tracking-wide">
                 <span>✨ Welcome to the Future of Memes</span>
@@ -122,18 +150,43 @@
             <div class="absolute w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-blue-600/15 rounded-full blur-[130px] -z-10"></div>
             
             <div class="relative w-[320px] h-[320px] md:w-[520px] md:h-[520px] flex items-center justify-center animate-float">
-                <img src="Building the future.png" 
+                <img src="building-future.png" 
                      alt="Building the Future" 
-                     class="w-full h-full object-contain drop-shadow-[0_0_40px_rgba(37,99,235,0.3)]">
+                     class="w-full h-full object-contain drop-shadow-[0_0_40px_rgba(37,99,235,0.3)] hover:scale-105 transition duration-500">
             </div>
         </div>
     </section>
 
-    <!-- 2. INTRODUKSI TAMBAHAN (Menggunakan: Leading white hope.png) -->
+    <!-- 1. SOCIAL PROOF SECTION (Angka & Statistik) -->
+    <section class="container mx-auto px-6 py-8">
+        <div class="text-center mb-6">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-blue-400">Growing Every Day</h3>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <div class="bg-brandCard border border-slate-800 p-6 rounded-2xl text-center shadow-lg hover:border-blue-500/40 transition">
+                <div class="text-3xl md:text-4xl font-extrabold text-brandLightBlue mb-1">10+</div>
+                <div class="text-xs text-gray-400 font-medium">Daily Updates</div>
+            </div>
+            <div class="bg-brandCard border border-slate-800 p-6 rounded-2xl text-center shadow-lg hover:border-blue-500/40 transition">
+                <div class="text-3xl md:text-4xl font-extrabold text-brandLightBlue mb-1">100%</div>
+                <div class="text-xs text-gray-400 font-medium">Transparent</div>
+            </div>
+            <div class="bg-brandCard border border-slate-800 p-6 rounded-2xl text-center shadow-lg hover:border-blue-500/40 transition">
+                <div class="text-3xl md:text-4xl font-extrabold text-brandLightBlue mb-1">1</div>
+                <div class="text-xs text-gray-400 font-medium">Mission</div>
+            </div>
+            <div class="bg-brandCard border border-slate-800 p-6 rounded-2xl text-center shadow-lg hover:border-blue-500/40 transition">
+                <div class="text-3xl md:text-4xl font-extrabold text-brandLightBlue mb-1">∞</div>
+                <div class="text-xs text-gray-400 font-medium">Hope</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. INTRODUKSI LEADER -->
     <section class="container mx-auto px-6 py-8 max-w-4xl">
         <div class="bg-brandCard border border-slate-800 p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center gap-6 shadow-xl">
             <div class="w-32 h-32 flex-shrink-0 bg-blue-600/10 rounded-full border border-blue-500/30 overflow-hidden p-2 flex items-center justify-center">
-                <img src="Leading white hope.png" alt="Leading with Hope" class="w-full h-full object-contain animate-pulseSlow">
+                <img src="leading-hope.png" alt="Leading with Hope" class="w-full h-full object-contain animate-pulseSlow hover:scale-110 transition duration-300">
             </div>
             <div class="text-center md:text-left space-y-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Community Leader</span>
@@ -145,7 +198,7 @@
         </div>
     </section>
 
-    <!-- CORE PILLARS (VISION, MISSION, STORY, GOAL) -->
+    <!-- CORE PILLARS -->
     <section id="about" class="container mx-auto px-6 py-12 max-w-5xl scroll-mt-24">
         <div class="text-center mb-10">
             <h2 class="text-3xl font-bold tracking-tight">Core Pillars</h2>
@@ -232,41 +285,42 @@
         </div>
     </section>
 
-    <!-- WHY HOPEPAW & IMPACT (Menggunakan: Growing impact.png) -->
-    <section id="why" class="container mx-auto px-6 py-12 max-w-5xl scroll-mt-24">
+    <!-- 5. OUR VALUES SECTION -->
+    <section id="values" class="container mx-auto px-6 py-12 max-w-5xl scroll-mt-24">
         <div class="text-center mb-10">
-            <h2 class="text-3xl font-bold tracking-tight">Why HopePaw & Impact</h2>
-            <p class="text-gray-400 text-sm mt-2">The core principles that set us apart</p>
+            <h2 class="text-3xl font-bold tracking-tight">Our Values</h2>
+            <p class="text-gray-400 text-sm mt-2">The core principles that guide every action we take</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 hover:border-blue-500/40 transition">
-                <div class="text-3xl mb-4">💎</div>
-                <h3 class="text-xl font-bold mb-2">Transparency</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    Built openly from day one. No hidden agendas, no closed doors—just honest progress shared with everyone.
-                </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 hover:border-blue-500/40 transition text-center group">
+                <div class="text-4xl mb-3 group-hover:scale-110 transition">🐾</div>
+                <h3 class="text-lg font-bold mb-2">Kindness</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">Spreading genuine care and compassion to children and communities in need.</p>
             </div>
-            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 hover:border-blue-500/40 transition">
-                <div class="text-3xl mb-4">🤝</div>
-                <h3 class="text-xl font-bold mb-2">Community</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    Powered by passionate individuals. Every holder and supporter plays a vital role in shaping HopePaw.
-                </p>
+            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 hover:border-blue-500/40 transition text-center group">
+                <div class="text-4xl mb-3 group-hover:scale-110 transition">💎</div>
+                <h3 class="text-lg font-bold mb-2">Transparency</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">Open development and clear communication from day one without secrets.</p>
             </div>
-            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 hover:border-blue-500/40 transition">
-                <div class="text-3xl mb-4">🌍</div>
-                <h3 class="text-xl font-bold mb-2">Real Impact</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    Bridging online culture with real-world change. Turning meme energy into tangible support for children.
-                </p>
+            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 hover:border-blue-500/40 transition text-center group">
+                <div class="text-4xl mb-3 group-hover:scale-110 transition">📚</div>
+                <h3 class="text-lg font-bold mb-2">Education</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">Empowering the next generation through learning support and resources.</p>
+            </div>
+            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 hover:border-blue-500/40 transition text-center group">
+                <div class="text-4xl mb-3 group-hover:scale-110 transition">🤝</div>
+                <h3 class="text-lg font-bold mb-2">Community</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">United supporters working together toward a powerful humanitarian goal.</p>
             </div>
         </div>
+    </section>
 
-        <!-- Banner Growing Impact -->
+    <!-- BANNER GROWING IMPACT -->
+    <section class="container mx-auto px-6 py-6 max-w-5xl">
         <div class="bg-gradient-to-r from-blue-950/40 via-brandCard to-blue-950/40 border border-blue-500/30 p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center gap-6 shadow-xl">
             <div class="w-32 h-32 flex-shrink-0 bg-blue-600/10 rounded-full border border-blue-500/30 overflow-hidden p-2 flex items-center justify-center">
-                <img src="Growing impact.png" alt="Growing Impact" class="w-full h-full object-contain animate-pulseSlow">
+                <img src="growing-impact.png" alt="Growing Impact" class="w-full h-full object-contain animate-pulseSlow hover:scale-110 transition duration-300">
             </div>
             <div class="text-center md:text-left space-y-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-green-400 bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20">Organic Growth</span>
@@ -278,13 +332,42 @@
         </div>
     </section>
 
-    <!-- ROADMAP & LEARNING (Menggunakan: Reading & learning.png) -->
-    <section id="roadmap" class="container mx-auto px-6 py-16 max-w-5xl scroll-mt-24">
+    <!-- 2. TIMELINE PERJALANAN & ROADMAP -->
+    <section id="timeline" class="container mx-auto px-6 py-16 max-w-5xl scroll-mt-24">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold tracking-tight">Roadmap & Progress</h2>
-            <p class="text-gray-400 text-sm mt-2">Our strategic steps toward building sustainable impact</p>
+            <h2 class="text-3xl font-bold tracking-tight">Journey & Roadmap</h2>
+            <p class="text-gray-400 text-sm mt-2">The complete timeline of HopePaw's evolution</p>
         </div>
 
+        <!-- Timeline Perjalanan (Journey) -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 mb-12">
+            <div class="bg-brandCard border border-slate-800 p-4 rounded-xl text-center">
+                <span class="text-xs text-blue-400 font-bold block mb-1">Day 1</span>
+                <div class="text-xs font-semibold text-white">Project Born</div>
+            </div>
+            <div class="bg-brandCard border border-slate-800 p-4 rounded-xl text-center">
+                <span class="text-xs text-blue-400 font-bold block mb-1">Day 2</span>
+                <div class="text-xs font-semibold text-white">Meet Hope</div>
+            </div>
+            <div class="bg-brandCard border border-slate-800 p-4 rounded-xl text-center">
+                <span class="text-xs text-blue-400 font-bold block mb-1">Day 5</span>
+                <div class="text-xs font-semibold text-white">Website Live</div>
+            </div>
+            <div class="bg-brandCard border border-slate-800 p-4 rounded-xl text-center">
+                <span class="text-xs text-blue-400 font-bold block mb-1">Day 10</span>
+                <div class="text-xs font-semibold text-white">Roadmap Set</div>
+            </div>
+            <div class="bg-brandCard border border-slate-800 p-4 rounded-xl text-center border-blue-500/40 bg-blue-950/20">
+                <span class="text-xs text-brandLightBlue font-bold block mb-1">Next</span>
+                <div class="text-xs font-semibold text-white">Whitepaper</div>
+            </div>
+            <div class="bg-brandCard border border-slate-800 p-4 rounded-xl text-center border-blue-500/40 bg-blue-950/20">
+                <span class="text-xs text-brandLightBlue font-bold block mb-1">Future</span>
+                <div class="text-xs font-semibold text-white">Token Launch</div>
+            </div>
+        </div>
+
+        <!-- Detail Roadmap Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
             <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 relative hover:border-blue-500/40 transition">
                 <div class="flex items-center justify-between mb-4">
@@ -324,7 +407,7 @@
         <!-- Banner Reading & Learning -->
         <div class="bg-brandCard border border-slate-800 p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center gap-6 shadow-xl">
             <div class="w-32 h-32 flex-shrink-0 bg-blue-600/10 rounded-full border border-blue-500/30 overflow-hidden p-2 flex items-center justify-center">
-                <img src="Reading & learning.png" alt="Reading & Learning" class="w-full h-full object-contain animate-pulseSlow">
+                <img src="reading-learning.png" alt="Reading & Learning" class="w-full h-full object-contain animate-pulseSlow hover:scale-110 transition duration-300">
             </div>
             <div class="text-center md:text-left space-y-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Research & Strategy</span>
@@ -336,43 +419,128 @@
         </div>
     </section>
 
-    <!-- LATEST UPDATES -->
-    <section id="updates" class="container mx-auto px-6 py-12 max-w-4xl scroll-mt-24">
-        <div class="bg-brandCard border border-slate-800 p-8 rounded-2xl shadow-xl">
-            <h3 class="text-2xl font-bold mb-2">Latest Updates</h3>
-            <p class="text-gray-400 text-sm mb-6">Changelog and recent project milestones.</p>
+    <!-- 9. TOKENOMICS SECTION (Coming Soon) -->
+    <section id="tokenomics" class="container mx-auto px-6 py-12 max-w-4xl scroll-mt-24">
+        <div class="bg-brandCard border border-slate-800 p-8 rounded-2xl shadow-xl text-center relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl"></div>
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20 inline-block mb-3">Tokenomics</span>
+            <h3 class="text-2xl font-bold mb-2 text-white">Token Structure <span class="text-brandLightBlue text-lg">(Coming Soon)</span></h3>
+            <p class="text-gray-400 text-sm mb-8 max-w-md mx-auto">Designed fairly for sustainable community growth and charity funding.</p>
             
-            <div class="space-y-4 text-sm">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-900/60 rounded-xl border border-slate-800/80 gap-2">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-green-400 font-bold">✨</span>
-                        <span class="font-medium text-gray-200">Website v1.0 Released & Initial Socials Setup</span>
-                    </div>
-                    <span class="text-xs text-gray-400 bg-slate-800 px-2.5 py-1 rounded-full w-fit">Aug 2026</span>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
+                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                    <div class="text-green-400 font-bold text-sm mb-1">✓ Fair Launch</div>
+                    <div class="text-xs text-gray-400">Equal opportunity for everyone from start.</div>
                 </div>
-
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-900/60 rounded-xl border border-slate-800/80 gap-2">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-blue-400 font-bold">🐾</span>
-                        <span class="font-medium text-gray-200">Brand Identity, Mascots & Roadmap Finalized</span>
-                    </div>
-                    <span class="text-xs text-gray-400 bg-slate-800 px-2.5 py-1 rounded-full w-fit">Aug 2026</span>
+                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                    <div class="text-green-400 font-bold text-sm mb-1">✓ Community First</div>
+                    <div class="text-xs text-gray-400">Powered and governed by holders.</div>
+                </div>
+                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                    <div class="text-green-400 font-bold text-sm mb-1">✓ No VC</div>
+                    <div class="text-xs text-gray-400">No venture capital dumping on holders.</div>
+                </div>
+                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                    <div class="text-green-400 font-bold text-sm mb-1">✓ No Presale</div>
+                    <div class="text-xs text-gray-400">Clean public launch for maximum fairness.</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SPREADING LOVE BANNER (Menggunakan: Spreading love.png) -->
-    <section class="container mx-auto px-6 py-8 max-w-3xl">
+    <!-- 7. UPDATES SECTION (Changelog Building in Public) -->
+    <section id="updates" class="container mx-auto px-6 py-12 max-w-4xl scroll-mt-24">
+        <div class="bg-brandCard border border-slate-800 p-8 rounded-2xl shadow-xl">
+            <h3 class="text-2xl font-bold mb-2">Building in Public Updates</h3>
+            <p class="text-gray-400 text-sm mb-6">Our daily changelog and milestone progress.</p>
+            
+            <div class="space-y-3 text-sm">
+                <div class="flex items-center justify-between p-4 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-blue-400 font-bold text-xs bg-blue-500/10 px-2.5 py-1 rounded-full">Day 10</span>
+                        <span class="font-medium text-gray-200">Roadmap & Timeline Finalized</span>
+                    </div>
+                    <span class="text-green-400 font-bold">✔</span>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-blue-400 font-bold text-xs bg-blue-500/10 px-2.5 py-1 rounded-full">Day 8</span>
+                        <span class="font-medium text-gray-200">Mascot & Brand Assets Created</span>
+                    </div>
+                    <span class="text-green-400 font-bold">✔</span>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-blue-400 font-bold text-xs bg-blue-500/10 px-2.5 py-1 rounded-full">Day 5</span>
+                        <span class="font-medium text-gray-200">Website v1.0 Launched</span>
+                    </div>
+                    <span class="text-green-400 font-bold">✔</span>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-blue-400 font-bold text-xs bg-blue-500/10 px-2.5 py-1 rounded-full">Day 2</span>
+                        <span class="font-medium text-gray-200">Meet Hope Mascot Concept</span>
+                    </div>
+                    <span class="text-green-400 font-bold">✔</span>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-blue-400 font-bold text-xs bg-blue-500/10 px-2.5 py-1 rounded-full">Day 1</span>
+                        <span class="font-medium text-gray-200">Created X Account & Initial Setup</span>
+                    </div>
+                    <span class="text-green-400 font-bold">✔</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPREADING LOVE BANNER -->
+    <section class="container mx-auto px-6 py-6 max-w-3xl">
         <div class="bg-gradient-to-r from-blue-900/40 via-brandCard to-blue-900/40 border border-blue-500/30 p-8 rounded-2xl text-center shadow-xl relative overflow-hidden">
             <div class="w-28 h-28 mx-auto mb-4 bg-blue-600/15 rounded-full border border-blue-500/30 p-2 flex items-center justify-center animate-bounce">
-                <img src="Spreading love.png" alt="Spreading Love" class="w-full h-full object-contain">
+                <img src="spreading-love.png" alt="Spreading Love" class="w-full h-full object-contain">
             </div>
             <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20 inline-block mb-3">Community First</span>
             <h3 class="text-2xl font-bold mb-2 text-white">Spreading Love & Real Purpose 💙</h3>
             <p class="text-gray-300 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
                 More than just a token—our ultimate vision is to bridge crypto innovation with real-world humanitarian support for children in need. Thank you for being here early!
             </p>
+        </div>
+    </section>
+
+    <!-- 10. TRUST SECTION -->
+    <section class="container mx-auto px-6 py-12 max-w-4xl">
+        <div class="bg-brandCard border border-slate-800 p-8 rounded-2xl shadow-xl">
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold tracking-tight">Why Trust HopePaw?</h3>
+                <p class="text-gray-400 text-sm mt-1">Our commitment to safety, honesty, and sustainable growth</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <div class="flex items-center space-x-3 p-3 bg-slate-900/60 rounded-xl border border-slate-800">
+                    <span class="text-green-400 font-bold text-lg">✓</span>
+                    <span class="font-medium text-gray-200">Building in Public</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3 bg-slate-900/60 rounded-xl border border-slate-800">
+                    <span class="text-green-400 font-bold text-lg">✓</span>
+                    <span class="font-medium text-gray-200">Transparent Development</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3 bg-slate-900/60 rounded-xl border border-slate-800">
+                    <span class="text-green-400 font-bold text-lg">✓</span>
+                    <span class="font-medium text-gray-200">Community First</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3 bg-slate-900/60 rounded-xl border border-slate-800">
+                    <span class="text-green-400 font-bold text-lg">✓</span>
+                    <span class="font-medium text-gray-200">Long Term Vision</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3 bg-slate-900/60 rounded-xl border border-slate-800 sm:col-span-2 justify-center">
+                    <span class="text-green-400 font-bold text-lg">✓</span>
+                    <span class="font-medium text-gray-200">Charity & Humanitarian Mission</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -416,23 +584,57 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="container mx-auto px-6 py-12 mt-16 border-t border-slate-800/80 text-center">
-        <div class="flex justify-center items-center space-x-6 mb-8 text-sm font-medium text-gray-300">
-            <a href="https://x.com/HopePawHQ" target="_blank" class="hover:text-brandLightBlue transition duration-300 hover:scale-105">X (Twitter)</a>
-            <span class="text-slate-700">•</span>
-            <span class="text-gray-500 cursor-not-allowed">Telegram <span class="text-xs">(Soon)</span></span>
-            <span class="text-slate-700">•</span>
-            <span class="text-gray-500 cursor-not-allowed">Whitepaper <span class="text-xs">(Soon)</span></span>
+    <!-- 6. CTA TERAKHIR (Sebelum Footer) -->
+    <section class="container mx-auto px-6 py-12 max-w-4xl text-center">
+        <div class="bg-gradient-to-b from-blue-900/30 to-brandCard border border-blue-500/30 p-10 rounded-3xl shadow-2xl relative overflow-hidden space-y-6">
+            <div class="absolute inset-0 bg-blue-500/5 blur-3xl -z-10"></div>
+            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Ready to Build Hope Together?</h2>
+            <p class="text-gray-300 text-base max-w-lg mx-auto">Follow our journey and be part of an incredible community making real change.</p>
+            <div>
+                <a href="https://x.com/HopePawHQ" target="_blank" class="inline-flex items-center bg-brandBlue hover:bg-blue-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-blue-600/30 transition duration-300 hover:scale-105">
+                    <span>Follow on X</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FOOTER YANG LEBIH HIDUP -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 pt-16 pb-12 mt-12">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div class="space-y-4 md:col-span-2">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center overflow-hidden p-1">
+                        <img src="building-future.png" alt="HopePaw Logo" class="w-full h-full object-contain">
+                    </div>
+                    <span class="text-lg font-bold tracking-tight">HopePaw</span>
+                </div>
+                <p class="text-gray-400 text-sm max-w-xs leading-relaxed">
+                    A Meme With A Mission. Building hope through community, transparency, and purpose.
+                </p>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="text-sm font-bold uppercase tracking-wider text-white">Links</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#about" class="hover:text-brandLightBlue transition">About</a></li>
+                    <li><a href="#values" class="hover:text-brandLightBlue transition">Values</a></li>
+                    <li><a href="#timeline" class="hover:text-brandLightBlue transition">Roadmap</a></li>
+                    <li><a href="#faq" class="hover:text-brandLightBlue transition">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="text-sm font-bold uppercase tracking-wider text-white">Community</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="https://x.com/HopePawHQ" target="_blank" class="hover:text-brandLightBlue transition">X (Twitter)</a></li>
+                    <li><span class="text-gray-600 cursor-not-allowed">Telegram (Soon)</span></li>
+                </ul>
+            </div>
         </div>
 
-        <div class="space-y-2 text-xs text-gray-400">
-            <p class="font-medium text-gray-300">Built with transparency.</p>
-            <p class="text-gray-400">Powered by community.</p>
-            <div class="pt-2 text-gray-500 space-y-1">
-                <p>HopePaw Website v1.0 • Last Updated: August 2026</p>
-                <p>&copy; 2026 HopePaw. All rights reserved.</p>
-            </div>
+        <div class="container mx-auto px-6 border-t border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+            <p>Built with ❤️ by HopePaw Community. &copy; 2026 HopePaw. All rights reserved.</p>
+            <p>HopePaw Website v1.1 • August 2026</p>
         </div>
     </footer>
 
