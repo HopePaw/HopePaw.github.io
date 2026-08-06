@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HopePaw - A Meme With A Mission</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js untuk fitur klik interaktif -->
+    <!-- Alpine.js untuk fitur interaktif -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
@@ -15,16 +15,26 @@
                         brandDark: '#030712',
                         brandBlue: '#2563eb',
                         brandLightBlue: '#60a5fa',
-                        brandCard: '#0b1329'
+                        brandCard: '#0b1329',
+                        brandCardHover: '#111c38'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    },
+                    animation: {
+                        float: 'float 4s ease-in-out infinite',
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body class="bg-brandDark text-white selection:bg-brandBlue selection:text-white min-h-screen" x-data="{ activeTab: 'vision' }">
+<body class="bg-brandDark text-white selection:bg-brandBlue selection:text-white min-h-screen" x-data="{ activeTab: 'vision', openFaq: null }">
 
     <!-- NAVBAR -->
     <nav class="sticky top-0 z-50 bg-brandDark/85 backdrop-blur-md border-b border-slate-800/60">
@@ -35,86 +45,99 @@
 
             <!-- NAVBAR MENU -->
             <div class="hidden md:flex items-center space-x-6 text-sm text-gray-300 font-medium">
-                <button @click="activeTab = 'vision'" :class="activeTab === 'vision' ? 'text-brandLightBlue border-b-2 border-brandLightBlue pb-1' : 'hover:text-white'" class="transition">Vision</button>
-                <button @click="activeTab = 'mission'" :class="activeTab === 'mission' ? 'text-brandLightBlue border-b-2 border-brandLightBlue pb-1' : 'hover:text-white'" class="transition">Mission</button>
-                <button @click="activeTab = 'story'" :class="activeTab === 'story' ? 'text-brandLightBlue border-b-2 border-brandLightBlue pb-1' : 'hover:text-white'" class="transition">Our Story</button>
-                <button @click="activeTab = 'goal'" :class="activeTab === 'goal' ? 'text-brandLightBlue border-b-2 border-brandLightBlue pb-1' : 'hover:text-white'" class="transition">Our Goal</button>
+                <a href="#about" class="hover:text-brandLightBlue transition">About</a>
+                <a href="#roadmap" class="hover:text-brandLightBlue transition">Roadmap</a>
+                <a href="#status" class="hover:text-brandLightBlue transition">Status</a>
+                <a href="#faq" class="hover:text-brandLightBlue transition">FAQ</a>
             </div>
 
             <div>
-                <a href="https://x.com/HopePawHQ" target="_blank" class="border border-slate-700 hover:border-white px-5 py-2 rounded-full text-sm font-medium transition">
+                <a href="https://x.com/HopePawHQ" target="_blank" class="border border-slate-700 hover:border-white px-5 py-2 rounded-full text-sm font-medium transition duration-300 hover:scale-105 inline-block">
                     Follow on X
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section class="container mx-auto px-6 py-12 md:py-24 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden">
+    <!-- 1. HERO SECTION -->
+    <section class="container mx-auto px-6 py-12 md:py-24 flex flex-col md:flex-row items-center justify-between gap-12 overflow-hidden">
         
         <!-- TEKS DI SEBELAH KIRI -->
         <div class="md:w-[52%] space-y-6 z-10">
+            <div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/30 px-3.5 py-1.5 rounded-full text-brandLightBlue text-xs font-semibold tracking-wide">
+                <span>✨ Welcome to the Future of Memes</span>
+            </div>
+
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1]">
                 A Meme <br>
                 With A Mission <span class="text-brandLightBlue">💙</span>
             </h1>
 
-            <p class="text-xl font-semibold text-gray-200">
-                Turning Memes Into Hope
+            <p class="text-lg md:text-xl font-medium text-gray-200">
+                Building hope through community, transparency, and purpose.
             </p>
 
             <p class="text-gray-400 max-w-lg text-sm md:text-base leading-relaxed">
-                Supporting orphanages and children's education through transparency and community.
+                Supporting orphanages and children's education by bridging crypto innovation with real-world humanitarian impact.
             </p>
 
-            <div class="pt-2">
-                <a href="https://x.com/HopePawHQ" target="_blank" class="inline-flex items-center bg-brandBlue hover:bg-blue-700 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition">
-                    <span>Follow @HopePawHQ on X</span>
+            <!-- Tombol Aksi -->
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+                <a href="https://x.com/HopePawHQ" target="_blank" class="inline-flex items-center bg-brandBlue hover:bg-blue-600 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg shadow-blue-600/20 transition duration-300 hover:scale-105">
+                    <span>Follow on X</span>
+                </a>
+                <a href="#about" class="inline-flex items-center bg-brandCard hover:bg-brandCardHover border border-slate-700 hover:border-slate-500 text-white font-semibold px-6 py-3.5 rounded-xl transition duration-300 hover:scale-105">
+                    <span>Read Our Mission</span>
                 </a>
             </div>
         </div>
 
-        <!-- GAMBAR MASCOT DI SEBELAH KANAN -->
+        <!-- GAMBAR MASCOT DI SEBELAH KANAN (Dengan Animasi Mengambang) -->
         <div class="md:w-[48%] flex justify-center md:justify-end relative">
-            <div class="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-600/20 rounded-full blur-[120px] -z-10"></div>
+            <div class="absolute w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-blue-600/15 rounded-full blur-[130px] -z-10"></div>
             
-            <div class="relative w-[340px] h-[340px] md:w-[620px] md:h-[620px] flex items-center justify-center">
+            <div class="relative w-[320px] h-[320px] md:w-[560px] md:h-[560px] flex items-center justify-center animate-float">
                 <img src="1786002734097.png" 
                      alt="HopePaw Mascot" 
-                     class="w-full h-full object-contain [mask-image:radial-gradient(circle_at_center,black_45%,transparent_88%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_45%,transparent_88%)] drop-shadow-[0_0_60px_rgba(37,99,235,0.3)]">
+                     class="w-full h-full object-contain [mask-image:radial-gradient(circle_at_center,black_45%,transparent_88%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_45%,transparent_88%)] drop-shadow-[0_0_50px_rgba(37,99,235,0.25)]">
             </div>
         </div>
     </section>
 
-    <!-- INTERACTIVE SECTION -->
-    <section class="container mx-auto px-6 py-6 max-w-5xl">
+    <!-- INTERACTIVE SECTION (Vision, Mission, Story, Goal) -->
+    <section id="about" class="container mx-auto px-6 py-12 max-w-5xl scroll-mt-24">
         
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold tracking-tight">Core Pillars</h2>
+            <p class="text-gray-400 text-sm mt-2">Explore the foundation behind HopePaw</p>
+        </div>
+
         <!-- TOMBOL / IKON MENU INTERAKTIF -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <button @click="activeTab = 'vision'" 
-                    :class="activeTab === 'vision' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
-                    class="p-5 rounded-2xl border text-center transition flex flex-col items-center space-y-2 group">
+                    :class="activeTab === 'vision' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10 scale-[1.02]' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
+                    class="p-5 rounded-2xl border text-center transition duration-300 flex flex-col items-center space-y-2 group">
                 <span class="text-3xl group-hover:scale-110 transition">🌐</span>
                 <span class="font-bold text-sm text-white">Vision</span>
             </button>
 
             <button @click="activeTab = 'mission'" 
-                    :class="activeTab === 'mission' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
-                    class="p-5 rounded-2xl border text-center transition flex flex-col items-center space-y-2 group">
+                    :class="activeTab === 'mission' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10 scale-[1.02]' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
+                    class="p-5 rounded-2xl border text-center transition duration-300 flex flex-col items-center space-y-2 group">
                 <span class="text-3xl group-hover:scale-110 transition">🚀</span>
                 <span class="font-bold text-sm text-white">Mission</span>
             </button>
 
             <button @click="activeTab = 'story'" 
-                    :class="activeTab === 'story' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
-                    class="p-5 rounded-2xl border text-center transition flex flex-col items-center space-y-2 group">
+                    :class="activeTab === 'story' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10 scale-[1.02]' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
+                    class="p-5 rounded-2xl border text-center transition duration-300 flex flex-col items-center space-y-2 group">
                 <span class="text-3xl group-hover:scale-110 transition">🐾</span>
                 <span class="font-bold text-sm text-white">Our Story</span>
             </button>
 
             <button @click="activeTab = 'goal'" 
-                    :class="activeTab === 'goal' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
-                    class="p-5 rounded-2xl border text-center transition flex flex-col items-center space-y-2 group">
+                    :class="activeTab === 'goal' ? 'border-brandLightBlue bg-blue-600/20 shadow-lg shadow-blue-500/10 scale-[1.02]' : 'border-slate-800 bg-brandCard hover:border-slate-700'"
+                    class="p-5 rounded-2xl border text-center transition duration-300 flex flex-col items-center space-y-2 group">
                 <span class="text-3xl group-hover:scale-110 transition">💙</span>
                 <span class="font-bold text-sm text-white">Our Goal</span>
             </button>
@@ -126,7 +149,7 @@
             <div x-show="activeTab === 'vision'" x-transition.opacity.duration.300ms>
                 <div class="flex items-center space-x-3 mb-4">
                     <span class="text-2xl">🌐</span>
-                    <h2 class="text-2xl font-bold text-white">Vision</h2>
+                    <h3 class="text-2xl font-bold text-white">Vision</h3>
                 </div>
                 <p class="text-gray-300 leading-relaxed text-base">
                     To build a world where Web3 technology and meme culture serve as a global force for good. HopePaw aims to bridge crypto innovation with real-world humanitarian impact, ensuring that laughter and community financial growth directly fund a brighter future for children in need.
@@ -136,7 +159,7 @@
             <div x-show="activeTab === 'mission'" x-transition.opacity.duration.300ms style="display: none;">
                 <div class="flex items-center space-x-3 mb-4">
                     <span class="text-2xl">🚀</span>
-                    <h2 class="text-2xl font-bold text-white">Mission</h2>
+                    <h3 class="text-2xl font-bold text-white">Mission</h3>
                 </div>
                 <ul class="space-y-3 text-gray-300">
                     <li class="flex items-start space-x-2">
@@ -157,7 +180,7 @@
             <div x-show="activeTab === 'story'" x-transition.opacity.duration.300ms style="display: none;">
                 <div class="flex items-center space-x-3 mb-4">
                     <span class="text-2xl">🐾</span>
-                    <h2 class="text-2xl font-bold text-white">Our Story</h2>
+                    <h3 class="text-2xl font-bold text-white">Our Story</h3>
                 </div>
                 <p class="text-gray-300 leading-relaxed text-base mb-3">
                     HopePaw started with a simple observation: meme coins have the power to mobilize millions of people, yet most of that energy goes unused for real-world change.
@@ -170,7 +193,7 @@
             <div x-show="activeTab === 'goal'" x-transition.opacity.duration.300ms style="display: none;">
                 <div class="flex items-center space-x-3 mb-4">
                     <span class="text-2xl">💙</span>
-                    <h2 class="text-2xl font-bold text-white">Our Goal</h2>
+                    <h3 class="text-2xl font-bold text-white">Our Goal</h3>
                 </div>
                 <p class="text-gray-300 leading-relaxed text-base">
                     Our primary goal is to fund shelter, food, and quality educational resources for over <strong>10,000 children</strong> across partner orphanages globally. By growing a strong #BuildInPublic community, we aim to demonstrate that decentralized finance can consistently change lives in the physical world.
@@ -181,10 +204,189 @@
 
     </section>
 
-    <!-- FOOTER -->
-    <footer class="container mx-auto px-6 py-8 mt-12 border-t border-slate-800 text-center text-xs text-gray-500">
-        <p>Small paws. Big hope. Brighter tomorrow. 💙</p>
-        <p class="mt-2">&copy; 2026 HopePaw. All rights reserved.</p>
+    <!-- 2. ROADMAP -->
+    <section id="roadmap" class="container mx-auto px-6 py-16 max-w-5xl scroll-mt-24">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold tracking-tight">Roadmap</h2>
+            <p class="text-gray-400 text-sm mt-2">Our strategic steps toward building sustainable impact</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Phase 1 -->
+            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 relative hover:border-blue-500/40 transition">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Phase 1</span>
+                    <span class="text-green-400 font-bold text-xs bg-green-500/10 px-2.5 py-1 rounded-full border border-green-500/20">Completed ✅</span>
+                </div>
+                <ul class="space-y-2.5 text-gray-300 text-sm">
+                    <li class="flex items-center space-x-2">
+                        <span class="text-brandLightBlue">•</span>
+                        <span>Website Launch</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <span class="text-brandLightBlue">•</span>
+                        <span>Community Building</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 relative hover:border-blue-500/40 transition">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Phase 2</span>
+                    <span class="text-gray-400 text-xs bg-slate-800 px-2.5 py-1 rounded-full">Upcoming ⏳</span>
+                </div>
+                <ul class="space-y-2.5 text-gray-300 text-sm">
+                    <li class="flex items-center space-x-2">
+                        <span class="text-brandLightBlue">•</span>
+                        <span>Token Launch</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <span class="text-brandLightBlue">•</span>
+                        <span>CoinGecko Listing</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 relative hover:border-blue-500/40 transition">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Phase 3</span>
+                    <span class="text-gray-400 text-xs bg-slate-800 px-2.5 py-1 rounded-full">Upcoming ⏳</span>
+                </div>
+                <ul class="space-y-2.5 text-gray-300 text-sm">
+                    <li class="flex items-center space-x-2">
+                        <span class="text-brandLightBlue">•</span>
+                        <span>Community Events</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <span class="text-brandLightBlue">•</span>
+                        <span>First Charity Initiative</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="bg-brandCard p-6 rounded-2xl border border-slate-800 relative hover:border-blue-500/40 transition">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Phase 4</span>
+                    <span class="text-gray-400 text-xs bg-slate-800 px-2.5 py-1 rounded-full">Future 🚀</span>
+                </div>
+                <ul class="space-y-2.5 text-gray-300 text-sm">
+                    <li class="flex items-center space-x-2">
+                        <span class="text-brandLightBlue">•</span>
+                        <span>Long-term Growth</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <span class="text-brandLightBlue">•</span>
+                        <span>Global Community Expansion</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 7. PROGRESS / PROJECT STATUS -->
+    <section id="status" class="container mx-auto px-6 py-12 max-w-4xl scroll-mt-24">
+        <div class="bg-brandCard border border-slate-800 p-8 rounded-2xl shadow-xl">
+            <h3 class="text-2xl font-bold mb-2">Project Status</h3>
+            <p class="text-gray-400 text-sm mb-6">Real-time tracking of HopePaw development milestones.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="flex items-center space-x-3 p-3.5 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <span class="text-green-400 text-lg">✅</span>
+                    <span class="text-sm font-medium text-gray-200">Website</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3.5 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <span class="text-green-400 text-lg">✅</span>
+                    <span class="text-sm font-medium text-gray-200">Brand Identity</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3.5 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <span class="text-green-400 text-lg">✅</span>
+                    <span class="text-sm font-medium text-gray-200">Community</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3.5 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <span class="text-gray-500 text-lg">⬜</span>
+                    <span class="text-sm font-medium text-gray-400">Whitepaper</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3.5 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <span class="text-gray-500 text-lg">⬜</span>
+                    <span class="text-sm font-medium text-gray-400">Token Launch</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3.5 bg-slate-900/60 rounded-xl border border-slate-800/80">
+                    <span class="text-gray-500 text-lg">⬜</span>
+                    <span class="text-sm font-medium text-gray-400">Partnerships</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. FAQ -->
+    <section id="faq" class="container mx-auto px-6 py-16 max-w-3xl scroll-mt-24">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold tracking-tight">Frequently Asked Questions</h2>
+            <p class="text-gray-400 text-sm mt-2">Everything you need to know about HopePaw</p>
+        </div>
+
+        <div class="space-y-4">
+            
+            <!-- FAQ 1 -->
+            <div class="bg-brandCard border border-slate-800 rounded-2xl overflow-hidden transition">
+                <button @click="openFaq === 1 ? openFaq = null : openFaq = 1" class="w-full p-6 text-left flex justify-between items-center font-semibold text-white focus:outline-none">
+                    <span>What is HopePaw?</span>
+                    <span class="text-brandLightBlue text-xl transition-transform duration-300" :class="openFaq === 1 ? 'rotate-45' : ''">+</span>
+                </button>
+                <div x-show="openFaq === 1" x-transition.opacity class="px-6 pb-6 text-gray-300 text-sm leading-relaxed">
+                    A meme with a mission. We combine viral meme culture with decentralized technology to support children's education and orphanages worldwide.
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="bg-brandCard border border-slate-800 rounded-2xl overflow-hidden transition">
+                <button @click="openFaq === 2 ? openFaq = null : openFaq = 2" class="w-full p-6 text-left flex justify-between items-center font-semibold text-white focus:outline-none">
+                    <span>Why was HopePaw created?</span>
+                    <span class="text-brandLightBlue text-xl transition-transform duration-300" :class="openFaq === 2 ? 'rotate-45' : ''">+</span>
+                </button>
+                <div x-show="openFaq === 2" x-transition.opacity class="px-6 pb-6 text-gray-300 text-sm leading-relaxed">
+                    To build a transparent community with a positive purpose, proving that meme tokens can create real-world impact instead of just short-term speculation.
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="bg-brandCard border border-slate-800 rounded-2xl overflow-hidden transition">
+                <button @click="openFaq === 3 ? openFaq = null : openFaq = 3" class="w-full p-6 text-left flex justify-between items-center font-semibold text-white focus:outline-none">
+                    <span>When will the token launch?</span>
+                    <span class="text-brandLightBlue text-xl transition-transform duration-300" :class="openFaq === 3 ? 'rotate-45' : ''">+</span>
+                </button>
+                <div x-show="openFaq === 3" x-transition.opacity class="px-6 pb-6 text-gray-300 text-sm leading-relaxed">
+                    The launch will happen when the project is fully ready and our community infrastructure is completely established. Stay tuned on our official X account!
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. & 5. SOCIAL LINKS & FOOTER -->
+    <footer class="container mx-auto px-6 py-12 mt-16 border-t border-slate-800/80 text-center">
+        
+        <!-- Social Links -->
+        <div class="flex justify-center items-center space-x-6 mb-8 text-sm font-medium text-gray-300">
+            <a href="https://x.com/HopePawHQ" target="_blank" class="hover:text-brandLightBlue transition duration-300 hover:scale-105">X (Twitter)</a>
+            <span class="text-slate-700">•</span>
+            <a href="https://github.com" target="_blank" class="hover:text-brandLightBlue transition duration-300 hover:scale-105">GitHub</a>
+            <span class="text-slate-700">•</span>
+            <span class="text-gray-500 cursor-not-allowed" title="Coming soon">Telegram <span class="text-xs">(Soon)</span></span>
+            <span class="text-slate-700">•</span>
+            <span class="text-gray-500 cursor-not-allowed" title="Coming soon">Email <span class="text-xs">(Soon)</span></span>
+        </div>
+
+        <div class="space-y-2 text-xs text-gray-400">
+            <p class="font-medium text-gray-300">Built with transparency.</p>
+            <p class="text-gray-400">Powered by community.</p>
+            <p class="mt-4 text-gray-500">&copy; 2026 HopePaw. All rights reserved.</p>
+        </div>
     </footer>
 
 </body>
