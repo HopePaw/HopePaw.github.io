@@ -1,194 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HopePaw — A Meme With A Mission</title>
-
-  <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    body{
-      font-family:Arial,Helvetica,sans-serif;
-      background:#0a192f;
-      color:#333;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      min-height:100vh;
-      padding:30px 15px;
-    }
-
-    .container{
-      background:#fff;
-      max-width:500px;
-      width:100%;
-      border-radius:20px;
-      padding:35px 25px;
-      box-shadow:0 10px 30px rgba(0,0,0,.45);
-      text-align:center;
-    }
-
-    .logo{
-      width:130px;
-      margin-bottom:15px;
-    }
-
-    h1{
-      color:#0a192f;
-      font-size:1.9rem;
-      margin-bottom:6px;
-    }
-
-    .tagline{
-      color:#2563eb;
-      font-weight:bold;
-      margin-bottom:25px;
-      font-size:1rem;
-    }
-
-    .section-box{
-      background:#f8fafc;
-      border:1px solid #e2e8f0;
-      border-radius:14px;
-      padding:18px;
-      text-align:left;
-      margin-bottom:18px;
-    }
-
-    .section-box h3{
-      color:#0f172a;
-      margin-bottom:10px;
-      font-size:1rem;
-    }
-
-    .section-box p,
-    .section-box li{
-      color:#475569;
-      line-height:1.7;
-      font-size:.92rem;
-    }
-
-    .section-box ul{
-      padding-left:20px;
-    }
-
-    .closing-text{
-      margin:25px 0;
-      color:#334155;
-      font-style:italic;
-      line-height:1.7;
-      font-size:.92rem;
-    }
-
-    .btn{
-      display:block;
-      background:#000;
-      color:#fff;
-      text-decoration:none;
-      padding:14px;
-      border-radius:30px;
-      font-weight:bold;
-      transition:.3s;
-    }
-
-    .btn:hover{
-      background:#1e293b;
-    }
-
-    .footer{
-      margin-top:20px;
-      font-size:.8rem;
-      color:#94a3b8;
-    }
-
-  </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HopePaw - A Meme With A Mission</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandDark: '#030712',
+                        brandBlue: '#2563eb',
+                        brandLightBlue: '#60a5fa',
+                        brandCard: '#0b1329'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
+<body class="bg-brandDark text-white selection:bg-brandBlue selection:text-white min-h-screen">
 
-<body>
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-50 bg-brandDark/80 backdrop-blur-md border-b border-slate-800/60">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl font-bold tracking-tight">🐾 HopePaw</span>
+            </div>
 
-<div class="container">
+            <div class="hidden md:flex items-center space-x-8 text-sm text-gray-300 font-medium">
+                <a href="#vision" class="hover:text-brandLightBlue transition">Vision</a>
+                <a href="#mission" class="hover:text-brandLightBlue transition">Mission</a>
+                <a href="#story" class="hover:text-brandLightBlue transition">Our Story</a>
+                <a href="#goal" class="hover:text-brandLightBlue transition">Our Goal</a>
+            </div>
 
-<img src="1785989730239.png" alt="HopePaw Logo" class="logo">
+            <div>
+                <a href="https://x.com" target="_blank" class="border border-slate-700 hover:border-white px-5 py-2 rounded-full text-sm font-medium transition">
+                    Follow on X
+                </a>
+            </div>
+        </div>
+    </nav>
 
-<h1>HopePaw</h1>
+    <!-- HERO SECTION -->
+    <section class="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center justify-between gap-12">
+        <div class="md:w-1/2 space-y-6">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+                A Meme <br>
+                With A Mission <span class="text-brandLightBlue">💙</span>
+            </h1>
 
-<div class="tagline">
-A Meme With A Mission ❤️
-</div>
+            <p class="text-xl font-semibold text-gray-200">
+                Turning Memes Into Hope
+            </p>
 
-<div class="section-box">
-<h3>🐾 Vision</h3>
+            <p class="text-gray-400 max-w-md text-sm md:text-base leading-relaxed">
+                Supporting orphanages and children's education through transparency and community.
+            </p>
 
-<p>
-To prove that a meme coin can create real hope through transparency,
-community, and meaningful impact.
-</p>
+            <div class="pt-2">
+                <a href="https://x.com" target="_blank" class="inline-flex items-center bg-brandBlue hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition">
+                    <span>Follow @HopePawHQ on X</span>
+                </a>
+            </div>
+        </div>
 
-</div>
+        <div class="md:w-1/2 flex justify-center relative">
+            <div class="absolute w-72 h-72 md:w-96 md:h-96 bg-blue-600/30 rounded-full blur-3xl -z-10"></div>
+            <div class="relative w-80 h-80 md:w-96 md:h-96 flex items-center justify-center">
+                <!-- Ganti src ini dengan gambar mascot milikmu -->
+                <img src="https://via.placeholder.com/400x400/1e293b/ffffff?text=Mascot+Here" alt="HopePaw Mascot" class="rounded-full shadow-2xl object-cover border-4 border-blue-500/20">
+            </div>
+        </div>
+    </section>
 
-<div class="section-box">
+    <!-- CONTENT SECTIONS -->
+    <section class="container mx-auto px-6 py-8 space-y-12 max-w-5xl">
+        
+        <!-- VISION -->
+        <div id="vision" class="bg-brandCard p-8 rounded-2xl border border-slate-800 scroll-mt-24 shadow-xl">
+            <div class="flex items-center space-x-3 mb-4">
+                <span class="text-2xl">🌐</span>
+                <h2 class="text-2xl font-bold text-white">Vision</h2>
+            </div>
+            <p class="text-gray-300 leading-relaxed text-base">
+                To build a world where Web3 technology and meme culture serve as a global force for good. HopePaw aims to bridge crypto innovation with real-world humanitarian impact, ensuring that laughter and community financial growth directly fund a brighter future for children in need.
+            </p>
+        </div>
 
-<h3>❤️ Mission</h3>
+        <!-- MISSION -->
+        <div id="mission" class="bg-brandCard p-8 rounded-2xl border border-slate-800 scroll-mt-24 shadow-xl">
+            <div class="flex items-center space-x-3 mb-4">
+                <span class="text-2xl">🚀</span>
+                <h2 class="text-2xl font-bold text-white">Mission</h2>
+            </div>
+            <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start space-x-2">
+                    <span class="text-brandLightBlue font-bold">•</span>
+                    <span><strong>100% Transparent Donations:</strong> Allocate a dedicated portion of transaction fees directly to verified orphanages and educational programs worldwide.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="text-brandLightBlue font-bold">•</span>
+                    <span><strong>Community-Driven Impact:</strong> Empower holders to vote on charity initiatives, ensuring every member has a voice in where help goes.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="text-brandLightBlue font-bold">•</span>
+                    <span><strong>Sustainable Growth:</strong> Combine engaging content, strong tokenomics, and public accountability to create long-term value for both holders and beneficiary organizations.</span>
+                </li>
+            </ul>
+        </div>
 
-<ul>
-<li>Support orphanages and children's education.</li>
-<li>Build with complete transparency.</li>
-<li>Grow a strong, community-driven ecosystem.</li>
-<li>Turn memes into meaningful impact.</li>
-</ul>
+        <!-- OUR STORY -->
+        <div id="story" class="bg-brandCard p-8 rounded-2xl border border-slate-800 scroll-mt-24 shadow-xl">
+            <div class="flex items-center space-x-3 mb-4">
+                <span class="text-2xl">🐾</span>
+                <h2 class="text-2xl font-bold text-white">Our Story</h2>
+            </div>
+            <p class="text-gray-300 leading-relaxed text-base mb-3">
+                HopePaw started with a simple observation: meme coins have the power to mobilize millions of people, yet most of that energy goes unused for real-world change.
+            </p>
+            <p class="text-gray-300 leading-relaxed text-base">
+                Founded by a group of passionate builders and animal lovers, we launched HopePaw to give a deeper purpose to the crypto space. What began as a small idea on social media quickly evolved into a structured initiative dedicated to building hope—one paw print at a time.
+            </p>
+        </div>
 
-</div>
+        <!-- OUR GOAL -->
+        <div id="goal" class="bg-brandCard p-8 rounded-2xl border border-slate-800 scroll-mt-24 shadow-xl">
+            <div class="flex items-center space-x-3 mb-4">
+                <span class="text-2xl">💙</span>
+                <h2 class="text-2xl font-bold text-white">Our Goal</h2>
+            </div>
+            <p class="text-gray-300 leading-relaxed text-base">
+                Our primary goal is to fund shelter, food, and quality educational resources for over <strong>10,000 children</strong> across partner orphanages globally. By growing a strong #BuildInPublic community, we aim to demonstrate that decentralized finance can consistently change lives in the physical world.
+            </p>
+        </div>
 
-<div class="section-box">
+    </section>
 
-<h3>📖 Our Story</h3>
-
-<p>
-HopePaw was born from one simple belief:
-a meme coin can be more than just hype.
-
-<br><br>
-
-We want to build a transparent community that grows together while creating opportunities to support orphanages and children's education.
-
-<br><br>
-
-Every step forward is another step toward turning memes into hope.
-</p>
-
-</div>
-
-<p class="closing-text">
-
-"HopePaw isn't just another meme coin.
-
-It's a community built on hope, transparency, and the belief that even the smallest paw can leave a lasting impact. ❤️"
-
-</p>
-
-<a
-class="btn"
-href="https://x.com/HopePawHQ"
-target="_blank"
-rel="noopener noreferrer">
-
-Follow @HopePawHQ on X
-
-</a>
-
-<div class="footer">
-
-Building hope, one paw at a time. 💙
-
-</div>
-
-</div>
+    <!-- FOOTER -->
+    <footer class="container mx-auto px-6 py-8 border-t border-slate-800 text-center text-xs text-gray-500">
+        <p>Small paws. Big hope. Brighter tomorrow. 💙</p>
+        <p class="mt-2">&copy; 2026 HopePaw. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>
