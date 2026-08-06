@@ -49,7 +49,7 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION (MENYERUPAI TAMPILAN GAMBAR REFERENSI) -->
+    <!-- HERO SECTION -->
     <section class="container mx-auto px-6 py-12 md:py-24 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden">
         
         <!-- TEKS DI SEBELAH KIRI -->
@@ -74,12 +74,10 @@
             </div>
         </div>
 
-        <!-- GAMBAR MASCOT BESAR DI SEBELAH KANAN (MENYATU SEMPURNA) -->
+        <!-- GAMBAR MASCOT DI SEBELAH KANAN -->
         <div class="md:w-[48%] flex justify-center md:justify-end relative">
-            <!-- Cahaya latar belakang pendaran biru -->
             <div class="absolute w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-600/20 rounded-full blur-[120px] -z-10"></div>
             
-            <!-- Kontainer gambar ukuran jumbo agar terlihat megah -->
             <div class="relative w-[340px] h-[340px] md:w-[620px] md:h-[620px] flex items-center justify-center">
                 <img src="1786002734097.png" 
                      alt="HopePaw Mascot" 
@@ -88,13 +86,9 @@
         </div>
     </section>
 
-    <!-- INTERACTIVE SECTION (IKON / TOMBOL PEMILIH) -->
+    <!-- INTERACTIVE SECTION -->
     <section class="container mx-auto px-6 py-6 max-w-5xl">
         
-        <div class="text-center mb-6">
-            <p class="text-sm text-gray-400">Ketuk ikon di bawah untuk melihat detail informasi:</p>
-        </div>
-
         <!-- TOMBOL / IKON MENU INTERAKTIF -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <button @click="activeTab = 'vision'" 
