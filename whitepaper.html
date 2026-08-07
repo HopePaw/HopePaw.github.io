@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HopePaw Whitepaper v1.0 - A Meme With A Mission</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandDark: '#030712',
+                        brandBlue: '#2563eb',
+                        brandLightBlue: '#60a5fa',
+                        brandCard: '#0b1329'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-brandDark text-white selection:bg-brandBlue selection:text-white min-h-screen">
+
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-50 bg-brandDark/90 backdrop-blur-md border-b border-slate-800/80">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <div class="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center p-1">
+                    <img src="Building-future.png" alt="HopePaw Logo" class="w-full h-full object-contain">
+                </div>
+                <span class="text-lg font-bold tracking-tight">HopePaw Docs</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-sm text-gray-300 hover:text-white transition">← Back to Main Web</a>
+                <button onclick="window.print()" class="hidden sm:inline-block border border-slate-700 hover:border-slate-500 px-4 py-1.5 rounded-lg text-xs font-semibold">Print / Save PDF</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT CONTAINER -->
+    <main class="container mx-auto px-6 py-12 max-w-4xl">
+        <div class="bg-brandCard border border-slate-800 p-8 md:p-12 rounded-3xl shadow-2xl space-y-10">
+            
+            <!-- HEADER DOCUMENT -->
+            <div class="border-b border-slate-800 pb-8 text-center md:text-left">
+                <div class="inline-block bg-blue-500/10 border border-blue-500/30 px-3 py-1 rounded-full text-brandLightBlue text-xs font-semibold mb-3">
+                    OFFICIAL DOCUMENTATION v1.0
+                </div>
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-2">HopePaw Whitepaper</h1>
+                <p class="text-gray-400 text-sm md:text-base">Bridging Crypto Innovation with Real-World Humanitarian Impact</p>
+                <div class="mt-4 text-xs text-gray-500">Last updated: Day 11 • August 2026</div>
+            </div>
+
+            <!-- SECTION 1 -->
+            <section class="space-y-3">
+                <h2 class="text-xl font-bold text-brandLightBlue flex items-center gap-2"><span>1.</span> Executive Summary</h2>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                    Meme tokens have proven to be a massive force in Web3, bringing together vibrant global communities and driving billions in trading volume. However, many projects lack long-term utility, purpose, or real-world transparency.
+                </p>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                    HopePaw is an independent, community-driven Web3 initiative that channels the power and virality of meme culture toward a meaningful cause. By combining decentralized mechanics with transparent social impact, HopePaw aims to provide continuous funding and support for orphanages and children's education programs worldwide.
+                </p>
+            </section>
+
+            <!-- SECTION 2 -->
+            <section class="space-y-3">
+                <h2 class="text-xl font-bold text-brandLightBlue flex items-center gap-2"><span>2.</span> Vision & Core Values</h2>
+                <ul class="space-y-2 text-gray-300 text-sm md:text-base">
+                    <li class="flex items-start gap-2"><span class="text-blue-400 font-bold">•</span> <strong>Kindness & Purpose:</strong> Every milestone reached directly correlates to real-world support for children in need.</li>
+                    <li class="flex items-start gap-2"><span class="text-blue-400 font-bold">•</span> <strong>Radical Transparency:</strong> Built in public with complete open communication, regular updates, and clear verification for all charity activities.</li>
+                    <li class="flex items-start gap-2"><span class="text-blue-400 font-bold">•</span> <strong>Education First:</strong> Empowering young generations by funding essential learning materials, tuition, and shelter resources.</li>
+                    <li class="flex items-start gap-2"><span class="text-blue-400 font-bold">•</span> <strong>Community Governance:</strong> Decoupling decisions from centralized entities by allowing the community to propose and vote on future humanitarian recipients.</li>
+                </ul>
+            </section>
+
+            <!-- SECTION 3 -->
+            <section class="space-y-3">
+                <h2 class="text-xl font-bold text-brandLightBlue flex items-center gap-2"><span>3.</span> Charity Model & Transparency</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                    <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 text-xs">
+                        <div class="font-bold text-white mb-1">Dedicated Reserve</div>
+                        <div class="text-gray-400">A portion of project resources is set aside exclusively for humanitarian initiatives.</div>
+                    </div>
+                    <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 text-xs">
+                        <div class="font-bold text-white mb-1">Public Verification</div>
+                        <div class="text-gray-400">All distributions are recorded on-chain with photo/video documentation.</div>
+                    </div>
+                    <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 text-xs">
+                        <div class="font-bold text-white mb-1">Partner Vetting</div>
+                        <div class="text-gray-400">Prioritizing verified, grassroots orphanages & educational NGOs.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <section class="space-y-3">
+                <h2 class="text-xl font-bold text-brandLightBlue flex items-center gap-2"><span>4.</span> Tokenomics Structure</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs md:text-sm border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-gray-400">
+                                <th class="py-3 px-2">Allocation</th>
+                                <th class="py-3 px-2">Percentage</th>
+                                <th class="py-3 px-2">Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60 text-gray-300">
+                            <tr>
+                                <td class="py-3 px-2 font-semibold text-white">Liquidity Pool (LP)</td>
+                                <td class="py-3 px-2 text-green-400 font-bold">80%</td>
+                                <td class="py-3 px-2">Locked for market trading security</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-2 font-semibold text-white">Charity Treasury</td>
+                                <td class="py-3 px-2 text-blue-400 font-bold">10%</td>
+                                <td class="py-3 px-2">Dedicated exclusively to orphanages & education</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-2 font-semibold text-white">Marketing & Growth</td>
+                                <td class="py-3 px-2 text-yellow-400 font-bold">5%</td>
+                                <td class="py-3 px-2">For outreach, campaigns, and global awareness</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-2 font-semibold text-white">Development & Team</td>
+                                <td class="py-3 px-2 text-purple-400 font-bold">5%</td>
+                                <td class="py-3 px-2">For technical maintenance & Web3 infrastructure</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-gray-400 italic pt-2">*Fair Launch model with no private presale and no venture capital (VC) allocation.</p>
+            </section>
+
+            <!-- SECTION 5 -->
+            <section class="space-y-3">
+                <h2 class="text-xl font-bold text-brandLightBlue flex items-center gap-2"><span>5.</span> Project Roadmap</h2>
+                <div class="space-y-3 text-xs md:text-sm text-gray-300">
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                        <span class="text-green-400 font-bold text-xs uppercase">Phase 1: Foundation & Community</span>
+                        <p class="mt-1">Concept creation, Mascot identity (Hope), Website v1.0 launch, Building in Public on X, and Whitepaper release.</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                        <span class="text-blue-400 font-bold text-xs uppercase">Phase 2: Launch & Awareness</span>
+                        <p class="mt-1">Official Token Fair Launch, Security audits, DEX listings, and initial community outreach partnerships.</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                        <span class="text-purple-400 font-bold text-xs uppercase">Phase 3: Real-World Impact</span>
+                        <p class="mt-1">Execution of 1st Official Charity Initiative, Proof-of-Impact video documentation, and community voting implementation.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6 -->
+            <section class="space-y-3 pt-4 border-t border-slate-800">
+                <h2 class="text-sm font-bold text-gray-400 uppercase tracking-wider">6. Disclaimer</h2>
+                <p class="text-gray-500 text-xs leading-relaxed">
+                    HopePaw is a community-driven project created for educational, entertainment, and social impact purposes. This document does not constitute financial or investment advice. Crypto assets carry market risks; always conduct your own research (DYOR).
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-8 text-xs text-gray-500 border-t border-slate-900">
+        <p>&copy; 2026 HopePaw Project. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
