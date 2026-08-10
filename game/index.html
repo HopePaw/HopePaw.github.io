@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>HopePaw: Run for Hope</title>
+  <style>
+    body { background: #0d1b2a; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: sans-serif; }
+    #game-container { position: relative; width: 100vw; max-width: 400px; height: 90vh; background: #1b263b; border: 2px solid #77abb7; border-radius: 16px; overflow: hidden; }
+    canvas { width: 100%; height: 100%; display: block; }
+    .ui { position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; color: white; font-weight: bold; pointer-events: none; z-index: 5; }
+    .controls { position: absolute; bottom: 20px; width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; padding: 0 10px; box-sizing: border-box; z-index: 5; }
+    .btn { background: rgba(255,255,255,0.2); color: white; padding: 15px 0; text-align: center; border-radius: 8px; font-weight: bold; font-size: 14px; user-select: none; touch-action: manipulation; }
+    .btn:active { background: rgba(255,255,255,0.4); }
+  </style>
+</head>
+<body>
+
+<div id="game-container">
+  <div class="ui">
+    <div>SCORE: <span id="score">0</span></div>
+    <div>DIST: <span id="dist">0</span>m</div>
+  </div>
+  <canvas id="gameCanvas" width="400" height="600"></canvas>
+  <div class="controls">
+    <div class="btn" id="bL">◄ Kiri</div>
+    <div class="btn" id="bJ">▲ Lompat</div>
+    <div class="btn" id="bS">▼ Slide</div>
+    <div class="btn" id="bR">Kanan ►</div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+// LOAD 1 SPRITE SHEET
+const spriteSheet = new Image();
+spriteSheet.src = "hopepaw-sprites.png"; // PASTI SAMA DENGAN NAMA FILE KAMU!
+
+// Koordinat potongan gambar (Sesuaikan angka ini dengan lebar sprite sheet kamu!)
+// Asumsi: 4 pose berjejer horizontal (0=run, 1=jump, 2=slide, 3=idle)
+const frameW = 256; // Lebar 1 kotak karakter
+const frameH = 256; // Tinggi 1 kotak karakter
+
+const poses = {
+  run:   {sx: 0,    sy: 0},
+  jump:  {sx: 256,  sy: 0},
+  slide: {sx: 512,  sy: 0},
+  idle:  {sx: 768,  sy: 0}
+};
+
+let player = { x: 200, y: 500, lane: 1, jump: 0, jumpPower: 0, sliding: false, score: 0, dist: 0 };
+
+// INPUT HANDLING (Hanya Touchstart agar tidak double trigger)
+function setupControls() {
+  const btns = { bL: 'L', bJ: 'J', bS: 'S', bR: 'R' };
+  for(let id in btns) {
+    document.getElementById(id).addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const action = btns[id];
+      if(action === 'L' && player.lane > 0) player.lane--;
+      if(action === 'R' && player.lane < 2) player.lane++;
+      if(action === 'J' && player.jump === 0) { player.jump = 1; player.jumpPower = 18; }
+      if(action === 'S' && player.jump === 0) { player.sliding = true; setTimeout(()=>player.sliding=false, 600); }
+    }, {passive: false});
+  }
+}
+setupControls();
+
+function loop() {
+  ctx.clearRect(0, 0, 400, 600);
+  
+  // Logic
+  player.x = 65 + (player.lane * 133);
+  if(player.jump > 0) {
+    player.jumpPower -= 1;
+    if(player.jumpPower <= -18) { player.jump = 0; player.jumpPower = 0; }
+  }
+  player.dist += 0.05;
+  document.getElementById('score').innerText = Math.floor(player.dist);
+
+  // Gambar Background
+  ctx.strokeStyle = "rgba(255,255,255,0.1)";
+  ctx.beginPath();
+  ctx.moveTo(133,0); ctx.lineTo(133,600);
+  ctx.moveTo(266,0); ctx.lineTo(266,600);
+  ctx.stroke();
+
+  // Gambar Karakter dari Sprite Sheet
+  let pose = poses.run;
+  if(player.jump > 0) pose = poses.jump;
+  if(player.sliding) pose = poses.slide;
+
+  let jumpH = (player.jump > 0) ? (18 * 18 - Math.pow(player.jumpPower, 2)) * 0.45 : 0;
+  
+  if (spriteSheet.complete) {
+    ctx.drawImage(spriteSheet, pose.sx, pose.sy, frameW, frameH, player.x - 50, player.y - jumpH - 50, 100, 100);
+  } else {
+    // Fallback kalau gambar belum load
+    ctx.fillStyle = "orange";
+    ctx.beginPath(); ctx.arc(player.x, player.y - jumpH, 30, 0, Math.PI*2); ctx.fill();
+  }
+  
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
