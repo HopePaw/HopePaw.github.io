@@ -83,23 +83,22 @@
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Muat Gambar Aset
-    const imgRun = new Image(); imgRun.src = 'hopepaw-run.png';
-    const imgJump = new Image(); imgJump.src = 'hopepaw-jump.png';
-    const imgSlide = new Image(); imgSlide.src = 'hopepaw-slide.png';
+    // Load Gambar menggunakan Jalur Eksplisit
+    const imgRun = new Image();
+    const imgJump = new Image();
+    const imgSlide = new Image();
 
-    let runLoaded = false, jumpLoaded = false, slideLoaded = false;
-    imgRun.onload = () => runLoaded = true;
-    imgJump.onload = () => jumpLoaded = true;
-    imgSlide.onload = () => slideLoaded = true;
+    imgRun.src = './hopepaw-run.png';
+    imgJump.src = './hopepaw-jump.png';
+    imgSlide.src = './hopepaw-slide.png';
 
     const lanes = [80, 200, 320];
     const player = {
       lane: 1,
       x: lanes[1],
       y: 460,
-      width: 80,
-      height: 80,
+      width: 90,
+      height: 90,
       targetX: lanes[1],
       isJumping: false,
       isSliding: false,
@@ -108,13 +107,7 @@
       slideTimer: 0
     };
 
-    // Tombol Sentuh
-    document.getElementById('btnLeft').addEventListener('touchstart', (e) => { e.preventDefault(); if (player.lane > 0) player.lane--; });
-    document.getElementById('btnRight').addEventListener('touchstart', (e) => { e.preventDefault(); if (player.lane < 2) player.lane++; });
-    document.getElementById('btnJump').addEventListener('touchstart', (e) => { e.preventDefault(); if (!player.isJumping) triggerJump(); });
-    document.getElementById('btnSlide').addEventListener('touchstart', (e) => { e.preventDefault(); if (!player.isSliding) triggerSlide(); });
-
-    // Dukungan Klik Mouse / Laptop
+    // Tombol Sentuh HP
     document.getElementById('btnLeft').onclick = () => { if (player.lane > 0) player.lane--; };
     document.getElementById('btnRight').onclick = () => { if (player.lane < 2) player.lane++; };
     document.getElementById('btnJump').onclick = () => { if (!player.isJumping) triggerJump(); };
@@ -152,25 +145,17 @@
 
       // Pilih Gambar Aktif
       let currentImg = imgRun;
-      let isReady = runLoaded;
       let drawW = player.width;
       let drawH = player.height;
 
-      if (player.isJumping) { currentImg = imgJump; isReady = jumpLoaded; }
-      if (player.isSliding) { currentImg = imgSlide; isReady = slideLoaded; drawH = 50; }
+      if (player.isJumping) { currentImg = imgJump; }
+      if (player.isSliding) { currentImg = imgSlide; drawH = 55; }
 
       const drawX = player.x - drawW / 2;
       const drawY = player.y - player.jumpOffset - drawH / 2;
 
-      if (isReady) {
-        ctx.drawImage(currentImg, drawX, drawY, drawW, drawH);
-      } else {
-        // Cadangan Karakter jika Gambar Masih Loading
-        ctx.fillStyle = '#e0a96d';
-        ctx.beginPath();
-        ctx.arc(player.x, player.y - player.jumpOffset, 30, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      // Langsung gambar ke canvas
+      ctx.drawImage(currentImg, drawX, drawY, drawW, drawH);
     }
 
     function gameLoop() {
