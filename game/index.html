@@ -6,115 +6,81 @@
   <title>HopePaw: Run for Hope</title>
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    html, body { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; background: #0b132b; font-family: 'Segoe UI', Arial, sans-serif; }
+    html, body { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; background: #080d1a; font-family: 'Segoe UI', system-ui, sans-serif; }
     body { display: flex; justify-content: center; align-items: center; }
-    #game-container { position: relative; width: 100vw; max-width: 400px; height: 100vh; max-height: 600px; aspect-ratio: 2/3; background: #1c2541; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    #game-container { position: relative; width: 100vw; max-width: 400px; height: 100vh; max-height: 600px; aspect-ratio: 2/3; background: #0f172a; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
     #gameCanvas { display: block; width: 100%; height: 100%; }
     
-    /* UI Overlay Gameplay */
-    .ui-layer { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; color: white; font-size: 13px; font-weight: bold; z-index: 10; pointer-events: none; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-    .hope-bar-container { position: absolute; top: 32px; left: 10px; right: 10px; height: 12px; background: rgba(0,0,0,0.5); border-radius: 6px; border: 1px solid #48cae4; overflow: hidden; z-index: 10; pointer-events: none; }
-    .hope-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #0077b6, #48cae4); transition: width 0.3s; }
-    .zone-banner { position: absolute; top: 48px; width: 100%; text-align: center; color: #caf0f8; font-size: 11px; font-weight: bold; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); pointer-events: none; }
+    /* UI Bar Glow Modern */
+    .ui-layer { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; color: #f8fafc; font-size: 13px; font-weight: 800; z-index: 10; pointer-events: none; text-shadow: 0 2px 8px rgba(0,0,0,0.9); }
+    .hope-bar-container { position: absolute; top: 36px; left: 12px; right: 12px; height: 10px; background: rgba(15, 23, 42, 0.7); border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.4); overflow: hidden; z-index: 10; pointer-events: none; backdrop-filter: blur(4px); }
+    .hope-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #0284c7, #38bdf8); box-shadow: 0 0 12px #38bdf8; transition: width 0.3s; }
+    .zone-banner { position: absolute; top: 52px; width: 100%; text-align: center; color: #7dd3fc; font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-shadow: 0 2px 6px rgba(0,0,0,0.9); pointer-events: none; }
     
-    /* Touch Controls */
-    .controls { position: absolute; left: 0; bottom: 8px; width: 100%; padding: 0 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; z-index: 20; }
-    .btn { background: rgba(255,255,255,0.22); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 12px 0; text-align: center; font-size: 12px; font-weight: bold; user-select: none; touch-action: manipulation; }
-    .btn:active { background: rgba(255,255,255,0.45); transform: scale(0.95); }
+    /* Sleek Controls Overlay */
+    .controls { position: absolute; left: 0; bottom: 12px; width: 100%; padding: 0 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; z-index: 20; }
+    .btn { background: rgba(255, 255, 255, 0.08); color: #f8fafc; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 14px 0; text-align: center; font-size: 12px; font-weight: 700; backdrop-filter: blur(8px); user-select: none; touch-action: manipulation; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: all 0.1s ease; }
+    .btn:active { background: rgba(56, 189, 248, 0.3); border-color: #38bdf8; transform: scale(0.94); }
 
-    /* Modal / Overlay Screens */
-    .overlay-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.96); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; z-index: 30; padding: 20px; text-align: center; }
-    .overlay-screen h1 { margin: 0 0 4px 0; color: #48cae4; font-size: 26px; }
-    .overlay-screen h3 { margin: 0 0 12px 0; color: #90e0ef; font-size: 13px; font-weight: normal; }
-    .overlay-screen p { font-size: 12px; color: #ccc; margin-bottom: 14px; line-height: 1.4; max-width: 320px; }
-    .menu-btn { background: #0077b6; color: white; border: none; padding: 11px 20px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; width: 85%; max-width: 220px; margin: 4px 0; transition: background 0.2s; }
-    .menu-btn:active { background: #90e0ef; color: #000; }
-    .stats-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 16px; margin-bottom: 12px; width: 85%; font-size: 12px; text-align: left; }
-    .stats-card div { display: flex; justify-content: space-between; margin: 4px 0; }
+    /* Glassmorphism Overlay Screens */
+    .overlay-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(8, 13, 26, 0.92); backdrop-filter: blur(10px); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; z-index: 30; padding: 24px; text-align: center; }
+    .overlay-screen h1 { margin: 0; color: #38bdf8; font-size: 28px; font-weight: 900; letter-spacing: 1px; text-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
+    .overlay-screen h3 { margin: 4px 0 16px 0; color: #94a3b8; font-size: 12px; font-weight: 600; }
+    .overlay-screen p { font-size: 12px; color: #cbd5e1; margin-bottom: 20px; line-height: 1.5; max-width: 300px; }
+    .menu-btn { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-size: 13px; font-weight: 800; cursor: pointer; width: 85%; max-width: 220px; margin: 5px 0; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); transition: all 0.2s; }
+    .menu-btn:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(2, 132, 199, 0.2); }
+    .stats-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; width: 85%; font-size: 12px; text-align: left; }
+    .stats-card div { display: flex; justify-content: space-between; margin: 6px 0; }
   </style>
 </head>
 <body>
 
   <div id="game-container">
-    <!-- UI Status Bar Gameplay -->
     <div class="ui-layer">
       <div>🐾 <span id="ui-coins">0</span></div>
-      <div>SCORE: <span id="ui-score" style="color:#48cae4;">0</span></div>
+      <div>SCORE: <span id="ui-score" style="color:#38bdf8;">0</span></div>
       <div>DIST: <span id="ui-dist">0</span>m</div>
     </div>
     
     <div class="hope-bar-container"><div class="hope-bar-fill" id="hopeFill"></div></div>
     <div class="zone-banner" id="ui-zone">LOCATION: HOPE FOREST</div>
 
-    <!-- Canvas -->
     <canvas id="gameCanvas" width="400" height="600"></canvas>
 
-    <!-- Controls -->
     <div class="controls">
-      <div class="btn" id="bL">◄ Kiri</div>
-      <div class="btn" id="bJ">▲ Jump</div>
-      <div class="btn" id="bS">▼ Slide</div>
-      <div class="btn" id="bR">Kanan ►</div>
+      <div class="btn" id="bL">◄</div>
+      <div class="btn" id="bJ">▲ JUMP</div>
+      <div class="btn" id="bS">▼ SLIDE</div>
+      <div class="btn" id="bR">►</div>
     </div>
 
-    <!-- 1. MAIN MENU SCREEN -->
     <div class="overlay-screen" id="mainMenu">
       <h1>HOPEPAW</h1>
-      <h3>Run for Hope 🐾</h3>
+      <h3>RUN FOR HOPE 🐾</h3>
       <div class="stats-card">
         <div><span>Best Distance:</span><b id="menu-best-dist">0 m</b></div>
         <div><span>Best Score:</span><b id="menu-best-score">0</b></div>
         <div><span>Total Paw Coins:</span><b id="menu-total-coins">0</b></div>
       </div>
-      <button class="menu-btn" onclick="startGame()">PLAY GAME</button>
-      <button class="menu-btn" style="background:#1c2541; border:1px solid #0077b6;" onclick="showScreen('missionsScreen')">MISSIONS & REWARDS</button>
-      <button class="menu-btn" style="background:#1c2541; border:1px solid #0077b6;" onclick="showScreen('leaderboardScreen')">LEADERBOARD</button>
-      <button class="menu-btn" style="background:#1c2541; border:1px solid #0077b6;" onclick="showScreen('aboutScreen')">ABOUT HOPEPAW</button>
+      <button class="menu-btn" onclick="startGame()">START RUN</button>
+      <button class="menu-btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); box-shadow:none;" onclick="showScreen('aboutScreen')">ABOUT PROJECT</button>
     </div>
 
-    <!-- 2. MISSIONS SCREEN -->
-    <div class="overlay-screen" id="missionsScreen" style="display:none;">
-      <h1>DAILY MISSIONS</h1>
-      <div class="stats-card">
-        <div><span>🏃 Run 300m Total:</span><b id="m1-status">0/300m</b></div>
-        <div><span>🪙 Collect 30 Paw Coins:</span><b id="m2-status">0/30</b></div>
-      </div>
-      <button class="menu-btn" onclick="showScreen('mainMenu')">KEMBALI</button>
-    </div>
-
-    <!-- 3. LEADERBOARD SCREEN -->
-    <div class="overlay-screen" id="leaderboardScreen" style="display:none;">
-      <h1>TOP RUNNERS</h1>
-      <h3>Local Leaderboard</h3>
-      <div class="stats-card" id="leaderboardList">
-        <div><span>1. HopePaw Mascot</span><b>9,999</b></div>
-        <div><span>2. You (Best)</span><b id="lb-your-score">0</b></div>
-        <div><span>3. Hope Supporter</span><b>1,250</b></div>
-      </div>
-      <button class="menu-btn" onclick="showScreen('mainMenu')">KEMBALI</button>
-    </div>
-
-    <!-- 4. ABOUT & MISSION SCREEN -->
     <div class="overlay-screen" id="aboutScreen" style="display:none;">
       <h1>ABOUT HOPEPAW</h1>
-      <p>HopePaw bukan sekadar game. Kami membangun komunitas global berbasis kebaikan dan bantuan pendidikan nyata untuk anak-anak yang membutuhkan.</p>
-      <div class="stats-card" style="font-size:11px;">
-        <div><span>Children Supported:</span><b>Targeting Stage 1</b></div>
-        <div><span>School Supplies:</span><b>In Progress</b></div>
-      </div>
+      <p>HopePaw adalah proyek berbasis komunitas untuk membantu pendidikan dan anak-anak yang membutuhkan melalui ekosistem digital.</p>
       <button class="menu-btn" onclick="showScreen('mainMenu')">KEMBALI</button>
     </div>
 
-    <!-- 5. GAME OVER SCREEN -->
     <div class="overlay-screen" id="gameOverScreen" style="display:none;">
-      <h1 style="color:#ff5252;">MISSION ENDED</h1>
+      <h1 style="color:#f43f5e;">GAME OVER</h1>
       <div class="stats-card">
         <div><span>Jarak:</span><b id="go-dist">0m</b></div>
         <div><span>Paw Coins:</span><b id="go-coins">0</b></div>
         <div><span>Score:</span><b id="go-score">0</b></div>
       </div>
       <button class="menu-btn" onclick="startGame()">MAIN LAGI</button>
-      <button class="menu-btn" style="background:#1c2541; border:1px solid #0077b6;" onclick="showScreen('mainMenu')">MAIN MENU</button>
+      <button class="menu-btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); box-shadow:none;" onclick="showScreen('mainMenu')">MAIN MENU</button>
     </div>
   </div>
 
@@ -122,48 +88,39 @@
   const canvas = document.getElementById("gameCanvas");
   const ctx = canvas.getContext("2d");
 
-  // LocalStorage Data
-  let saveData = JSON.parse(localStorage.getItem("HOPEPAW_DATA")) || {
-    bestDist: 0, bestScore: 0, totalCoins: 0, runDistAccum: 0, coinsAccum: 0
-  };
+  // Load Sprites SVG Data URIs
+  const sprDog = new Image();
+  sprDog.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23f59e0b"/><ellipse cx="25" cy="40" rx="10" ry="20" fill="%23d97706"/><ellipse cx="75" cy="40" rx="10" ry="20" fill="%23d97706"/><circle cx="40" cy="45" r="5" fill="%230f172a"/><circle cx="60" cy="45" r="5" fill="%230f172a"/><ellipse cx="50" cy="60" rx="12" ry="8" fill="%23fef3c7"/><ellipse cx="50" cy="56" rx="5" ry="3" fill="%230f172a"/><polygon points="40,68 60,68 50,80" fill="%230284c7"/></svg>';
+
+  const sprCoin = new Image();
+  sprCoin.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="%2338bdf8" stroke="%23f8fafc" stroke-width="3"/><circle cx="25" cy="25" r="14" fill="%230284c7"/><path d="M25 15 L28 22 L35 22 L30 26 L32 33 L25 29 L18 33 L20 26 L15 22 L22 22 Z" fill="%23f8fafc"/></svg>';
+
+  let saveData = JSON.parse(localStorage.getItem("HOPEPAW_DATA")) || { bestDist: 0, bestScore: 0, totalCoins: 0 };
 
   function updateSaveData() {
     localStorage.setItem("HOPEPAW_DATA", JSON.stringify(saveData));
     document.getElementById("menu-best-dist").innerText = saveData.bestDist + " m";
     document.getElementById("menu-best-score").innerText = saveData.bestScore;
     document.getElementById("menu-total-coins").innerText = saveData.totalCoins;
-    document.getElementById("lb-your-score").innerText = saveData.bestScore;
-    
-    // Missions UI Update
-    document.getElementById("m1-status").innerText = Math.min(300, saveData.runDistAccum) + "/300m " + (saveData.runDistAccum >= 300 ? "✅" : "");
-    document.getElementById("m2-status").innerText = Math.min(30, saveData.coinsAccum) + "/30 " + (saveData.coinsAccum >= 30 ? "✅" : "");
   }
 
-  // State Game
-  let isRunning = false;
-  let gameOver = false;
-  let gameSpeed = 4;
-  let tick = 0;
-
+  let isRunning = false, gameOver = false, gameSpeed = 4, tick = 0;
   const player = { lane: 1, targetX: 200, currentX: 200, y: 500, jumpH: 0, jumpPower: 0, isJumping: false, isSliding: false, coins: 0, dist: 0, score: 0 };
 
   const ZONES = [
-    { name: "HOPE FOREST", bg: "#1c2541", grass: "#2d6a4f", road: "#343a40" },
-    { name: "HOPE VILLAGE", bg: "#2b1e3a", grass: "#805b10", road: "#495057" },
-    { name: "SCHOOL ROAD", bg: "#0f2b46", grass: "#1b4965", road: "#212529" },
-    { name: "HOPE CITY", bg: "#0d1b2a", grass: "#1b263b", road: "#161a1d" }
+    { name: "HOPE FOREST", skyTop: "#0f172a", skyBot: "#1e293b", grass: "#14532d", road: "#334155" },
+    { name: "HOPE VILLAGE", skyTop: "#2e1065", skyBot: "#4c1d95", grass: "#713f12", road: "#475569" },
+    { name: "SCHOOL ROAD", skyTop: "#0c4a6e", skyBot: "#0369a1", grass: "#164e63", road: "#1e293b" },
+    { name: "HOPE CITY", skyTop: "#020617", skyBot: "#0f172a", grass: "#0f172a", road: "#0f172a" }
   ];
   let currentZoneIdx = 0;
-
-  let obstacles = [];
-  let coinItems = [];
+  let obstacles = [], coinItems = [];
 
   function getPerspectiveX(lane, yProgress) {
-    let topWidth = 140; let bottomWidth = 340;
-    let curWidth = topWidth + (bottomWidth - topWidth) * yProgress;
-    let leftEdge = 200 - (curWidth / 2);
-    let laneWidth = curWidth / 3;
-    return leftEdge + laneWidth * (lane + 0.5);
+    let topW = 120, botW = 320;
+    let curW = topW + (botW - topW) * yProgress;
+    let leftEdge = 200 - (curW / 2);
+    return leftEdge + (curW / 3) * (lane + 0.5);
   }
 
   function moveLeft() { if (isRunning && !gameOver && player.lane > 0) player.lane--; }
@@ -176,9 +133,9 @@
   document.getElementById("bJ").onclick = jump;
   document.getElementById("bS").onclick = slide;
 
-  function showScreen(screenId) {
+  function showScreen(id) {
     document.querySelectorAll('.overlay-screen').forEach(s => s.style.display = 'none');
-    document.getElementById(screenId).style.display = 'flex';
+    document.getElementById(id).style.display = 'flex';
     updateSaveData();
   }
 
@@ -188,49 +145,15 @@
     player.lane = 1; player.currentX = 200; player.dist = 0; player.coins = 0; player.score = 0;
     player.isJumping = false; player.isSliding = false;
     obstacles = []; coinItems = []; currentZoneIdx = 0;
-    updateUI();
-    loop();
+    updateUI(); loop();
   }
 
   function updateUI() {
     document.getElementById("ui-coins").innerText = player.coins;
     document.getElementById("ui-dist").innerText = Math.floor(player.dist);
     document.getElementById("ui-score").innerText = player.score;
-    let hopePercent = Math.min(100, Math.floor((player.coins / 30) * 100));
-    document.getElementById("hopeFill").style.width = hopePercent + "%";
+    document.getElementById("hopeFill").style.width = Math.min(100, Math.floor((player.coins / 30) * 100)) + "%";
     document.getElementById("ui-zone").innerText = "LOCATION: " + ZONES[currentZoneIdx].name;
-  }
-
-  function drawHopePaw(x, y, isSliding, jumpH) {
-    ctx.save();
-    ctx.translate(x, y - jumpH);
-    let legCycle = Math.sin(tick * 0.3) * 5;
-
-    ctx.fillStyle = "rgba(0,0,0,0.25)";
-    ctx.beginPath(); ctx.ellipse(0, jumpH + 20, isSliding ? 28 : 18, 6, 0, 0, Math.PI * 2); ctx.fill();
-
-    if (isSliding) {
-      ctx.fillStyle = "#F3A723"; ctx.beginPath(); ctx.ellipse(0, 5, 26, 12, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "#0077B6"; ctx.beginPath(); ctx.moveTo(0, -2); ctx.lineTo(16, 8); ctx.lineTo(6, 15); ctx.closePath(); ctx.fill();
-      ctx.fillStyle = "#F3A723"; ctx.beginPath(); ctx.arc(14, -4, 14, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "#D48C18"; ctx.beginPath(); ctx.ellipse(6, -8, 5, 10, Math.PI/4, 0, Math.PI * 2); ctx.fill();
-    } else {
-      ctx.fillStyle = "#F3A723"; ctx.beginPath(); ctx.ellipse(0, 4, 18, 15, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "#0077B6"; ctx.beginPath(); ctx.moveTo(-12, -4); ctx.lineTo(12, -4); ctx.lineTo(0, 12); ctx.closePath(); ctx.fill();
-      ctx.fillStyle = "#FFFFFF"; ctx.beginPath(); ctx.arc(0, 3, 2, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "#D48C18";
-      ctx.beginPath(); ctx.arc(-8 + legCycle, 16, 4.5, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.arc(8 - legCycle, 16, 4.5, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "#F3A723"; ctx.beginPath(); ctx.arc(0, -14, 16, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "#FFE8B6"; ctx.beginPath(); ctx.ellipse(0, -9, 7, 5, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "#222222"; ctx.beginPath(); ctx.ellipse(0, -11, 3, 2, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.arc(-6, -18, 2.8, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.arc(6, -18, 2.8, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "#D48C18";
-      ctx.beginPath(); ctx.ellipse(-16, -14, 5, 12, Math.PI / 8, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.ellipse(16, -14, 5, 12, -Math.PI / 8, 0, Math.PI * 2); ctx.fill();
-    }
-    ctx.restore();
   }
 
   function loop() {
@@ -239,54 +162,63 @@
     ctx.clearRect(0, 0, 400, 600);
 
     let zone = ZONES[currentZoneIdx];
-    ctx.fillStyle = zone.bg; ctx.fillRect(0, 0, 400, 220);
-    ctx.fillStyle = zone.grass; ctx.fillRect(0, 220, 400, 380);
 
-    ctx.beginPath(); ctx.moveTo(130, 220); ctx.lineTo(270, 220); ctx.lineTo(370, 600); ctx.lineTo(30, 600); ctx.closePath();
+    // Sky Gradient
+    let skyGrad = ctx.createLinearGradient(0, 0, 0, 240);
+    skyGrad.addColorStop(0, zone.skyTop); skyGrad.addColorStop(1, zone.skyBot);
+    ctx.fillStyle = skyGrad; ctx.fillRect(0, 0, 400, 240);
+
+    // Dynamic Mountains / Horizon
+    ctx.fillStyle = "rgba(255,255,255,0.05)";
+    ctx.beginPath(); ctx.arc(100, 240, 90, Math.PI, 0); ctx.arc(300, 240, 110, Math.PI, 0); ctx.fill();
+
+    // Ground
+    ctx.fillStyle = zone.grass; ctx.fillRect(0, 240, 400, 360);
+
+    // Road Projection
+    ctx.beginPath(); ctx.moveTo(140, 240); ctx.lineTo(260, 240); ctx.lineTo(360, 600); ctx.lineTo(40, 600); ctx.closePath();
     ctx.fillStyle = zone.road; ctx.fill();
 
-    ctx.strokeStyle = "#48cae4"; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(130, 220); ctx.lineTo(30, 600); ctx.moveTo(270, 220); ctx.lineTo(370, 600); ctx.stroke();
+    // Road Side Neon Lines
+    ctx.strokeStyle = "#38bdf8"; ctx.lineWidth = 3; ctx.shadowBlur = 10; ctx.shadowColor = "#38bdf8";
+    ctx.beginPath(); ctx.moveTo(140, 240); ctx.lineTo(40, 600); ctx.moveTo(260, 240); ctx.lineTo(360, 600); ctx.stroke();
+    ctx.shadowBlur = 0;
 
+    // Spawning Logic
     if (Math.random() < 0.02) {
       let l = Math.floor(Math.random() * 3);
-      if (obstacles.length === 0 || obstacles[obstacles.length - 1].y > 320) {
-        obstacles.push({ lane: l, y: 220, type: Math.random() > 0.5 ? 'jump' : 'slide' });
-      }
+      if (obstacles.length === 0 || obstacles[obstacles.length - 1].y > 320) obstacles.push({ lane: l, y: 240, type: Math.random() > 0.5 ? 'jump' : 'slide' });
     }
     if (Math.random() < 0.03) {
       let l = Math.floor(Math.random() * 3);
-      if (coinItems.length === 0 || coinItems[coinItems.length - 1].y > 280) {
-        coinItems.push({ lane: l, y: 220 });
-      }
+      if (coinItems.length === 0 || coinItems[coinItems.length - 1].y > 280) coinItems.push({ lane: l, y: 240 });
     }
 
+    // Render Coins (SVG)
     for (let i = coinItems.length - 1; i >= 0; i--) {
       let c = coinItems[i]; c.y += gameSpeed;
-      let progress = (c.y - 220) / 380;
+      let progress = (c.y - 240) / 360;
       let x = getPerspectiveX(c.lane, progress);
-      let scale = 0.4 + progress * 0.6;
+      let sz = 16 * (0.4 + progress * 0.6);
 
-      ctx.fillStyle = "#48cae4"; ctx.beginPath(); ctx.arc(x, c.y, 10 * scale, 0, Math.PI * 2); ctx.fill();
+      ctx.drawImage(sprCoin, x - sz/2, c.y - sz/2, sz, sz);
 
       if (Math.abs(c.y - player.y) < 20 && c.lane === player.lane && !player.isJumping) {
-        player.coins += 1;
-        player.score += 50;
-        coinItems.splice(i, 1);
-        updateUI();
+        player.coins++; player.score += 50; coinItems.splice(i, 1); updateUI();
       } else if (c.y > 610) coinItems.splice(i, 1);
     }
 
+    // Render Obstacles (Styled Boulders/Barriers)
     for (let i = obstacles.length - 1; i >= 0; i--) {
       let o = obstacles[i]; o.y += gameSpeed;
-      let progress = (o.y - 220) / 380;
+      let progress = (o.y - 240) / 360;
       let x = getPerspectiveX(o.lane, progress);
       let scale = 0.5 + progress * 0.5;
 
       if (o.type === 'jump') {
-        ctx.fillStyle = "#d90429"; ctx.fillRect(x - 18 * scale, o.y - 15 * scale, 36 * scale, 18 * scale);
+        ctx.fillStyle = "#f43f5e"; ctx.fillRect(x - 20 * scale, o.y - 12 * scale, 40 * scale, 15 * scale);
       } else {
-        ctx.fillStyle = "#ffb703"; ctx.fillRect(x - 22 * scale, o.y - 35 * scale, 44 * scale, 15 * scale);
+        ctx.fillStyle = "#fbbf24"; ctx.fillRect(x - 22 * scale, o.y - 35 * scale, 44 * scale, 14 * scale);
       }
 
       if (Math.abs(o.y - player.y) < 18 && o.lane === player.lane) {
@@ -296,35 +228,38 @@
       if (o.y > 620) obstacles.splice(i, 1);
     }
 
+    // Physics Update
     if (!gameOver) {
       if (player.isJumping) {
-        player.jumpH += player.jumpPower;
-        player.jumpPower -= 0.9;
+        player.jumpH += player.jumpPower; player.jumpPower -= 0.9;
         if (player.jumpH <= 0) { player.jumpH = 0; player.isJumping = false; }
       }
-      player.dist += 0.1;
-      player.score += 1;
+      player.dist += 0.1; player.score += 1;
       gameSpeed = 4 + Math.floor(player.dist / 100) * 0.3;
-      
-      let newZoneIdx = Math.min(ZONES.length - 1, Math.floor(player.dist / 300));
-      if (newZoneIdx !== currentZoneIdx) { currentZoneIdx = newZoneIdx; updateUI(); }
-
+      let newZone = Math.min(ZONES.length - 1, Math.floor(player.dist / 300));
+      if (newZone !== currentZoneIdx) { currentZoneIdx = newZone; updateUI(); }
       updateUI();
     }
 
-    player.targetX = getPerspectiveX(player.lane, (player.y - 220) / 380);
-    player.currentX += (player.targetX - player.currentX) * 0.2;
+    // Smooth Movement Lerp
+    player.targetX = getPerspectiveX(player.lane, (player.y - 240) / 360);
+    player.currentX += (player.targetX - player.currentX) * 0.25;
 
-    drawHopePaw(player.currentX, player.y, player.isSliding, player.jumpH);
+    // Render HopePaw Character
+    let charSz = player.isSliding ? 34 : 46;
+    ctx.save();
+    ctx.translate(player.currentX, player.y - player.jumpH);
+    // Shadow
+    ctx.fillStyle = "rgba(0,0,0,0.3)";
+    ctx.beginPath(); ctx.ellipse(0, player.jumpH + 18, 16, 6, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.drawImage(sprDog, -charSz/2, -charSz/2, charSz, charSz);
+    ctx.restore();
 
     if (gameOver) {
       isRunning = false;
       saveData.totalCoins += player.coins;
-      saveData.runDistAccum += Math.floor(player.dist);
-      saveData.coinsAccum += player.coins;
       if (Math.floor(player.dist) > saveData.bestDist) saveData.bestDist = Math.floor(player.dist);
       if (player.score > saveData.bestScore) saveData.bestScore = player.score;
-      
       document.getElementById("go-dist").innerText = Math.floor(player.dist) + " m";
       document.getElementById("go-coins").innerText = player.coins;
       document.getElementById("go-score").innerText = player.score;
