@@ -11,48 +11,54 @@
       color: #fff;
       font-family: sans-serif;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       min-height: 100vh;
       overflow: hidden;
     }
     #game-container {
       position: relative;
-      width: 100%;
-      max-width: 400px;
-      height: 600px;
+      width: 100vw;
+      max-width: 420px;
+      height: 90vh;
+      max-height: 750px;
       background: linear-gradient(180deg, #1b263b 0%, #415a77 100%);
-      border: 3px solid #77abb7;
-      border-radius: 12px;
+      border: 2px solid #77abb7;
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     canvas { display: block; width: 100%; height: 100%; }
     .ui-layer {
       position: absolute;
       top: 15px; left: 15px; right: 15px;
       display: flex; justify-content: space-between;
-      font-weight: bold; font-size: 16px;
+      font-weight: bold; font-size: 15px;
       pointer-events: none;
       z-index: 10;
+      text-shadow: 1px 1px 3px #000;
     }
     .touch-controls {
       position: absolute;
-      bottom: 20px; left: 0; right: 0;
-      display: flex; justify-content: space-around;
-      padding: 0 20px;
+      bottom: 20px; left: 10px; right: 10px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
       z-index: 10;
     }
     .btn {
-      background: rgba(255, 255, 255, 0.2);
-      border: 2px solid #fff;
+      background: rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.6);
       color: #fff;
-      padding: 12px 20px;
-      border-radius: 8px;
+      padding: 14px 0;
+      border-radius: 10px;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 13px;
+      text-align: center;
+      backdrop-filter: blur(4px);
       touch-action: manipulation;
     }
+    .btn:active { background: rgba(224, 169, 109, 0.6); }
   </style>
 </head>
 <body>
@@ -65,12 +71,11 @@
     
     <canvas id="gameCanvas" width="400" height="600"></canvas>
 
-    <!-- Tombol Sentuh Layar HP -->
     <div class="touch-controls">
-      <button class="btn" id="btnLeft">◄ Kiri</button>
-      <button class="btn" id="btnJump">▲ Lompat</button>
-      <button class="btn" id="btnSlide">▼ Slide</button>
-      <button class="btn" id="btnRight">Kanan ►</button>
+      <div class="btn" id="btnLeft">◄ Kiri</div>
+      <div class="btn" id="btnJump">▲ Lompat</div>
+      <div class="btn" id="btnSlide">▼ Slide</div>
+      <div class="btn" id="btnRight">Kanan ►</div>
     </div>
   </div>
 
@@ -78,18 +83,23 @@
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Load Gambar
+    // Muat Gambar Aset
     const imgRun = new Image(); imgRun.src = 'hopepaw-run.png';
     const imgJump = new Image(); imgJump.src = 'hopepaw-jump.png';
     const imgSlide = new Image(); imgSlide.src = 'hopepaw-slide.png';
+
+    let runLoaded = false, jumpLoaded = false, slideLoaded = false;
+    imgRun.onload = () => runLoaded = true;
+    imgJump.onload = () => jumpLoaded = true;
+    imgSlide.onload = () => slideLoaded = true;
 
     const lanes = [80, 200, 320];
     const player = {
       lane: 1,
       x: lanes[1],
-      y: 440,
-      width: 90,
-      height: 90,
+      y: 460,
+      width: 80,
+      height: 80,
       targetX: lanes[1],
       isJumping: false,
       isSliding: false,
@@ -98,30 +108,28 @@
       slideTimer: 0
     };
 
-    // Kontrol Tombol HP
+    // Tombol Sentuh
+    document.getElementById('btnLeft').addEventListener('touchstart', (e) => { e.preventDefault(); if (player.lane > 0) player.lane--; });
+    document.getElementById('btnRight').addEventListener('touchstart', (e) => { e.preventDefault(); if (player.lane < 2) player.lane++; });
+    document.getElementById('btnJump').addEventListener('touchstart', (e) => { e.preventDefault(); if (!player.isJumping) triggerJump(); });
+    document.getElementById('btnSlide').addEventListener('touchstart', (e) => { e.preventDefault(); if (!player.isSliding) triggerSlide(); });
+
+    // Dukungan Klik Mouse / Laptop
     document.getElementById('btnLeft').onclick = () => { if (player.lane > 0) player.lane--; };
     document.getElementById('btnRight').onclick = () => { if (player.lane < 2) player.lane++; };
     document.getElementById('btnJump').onclick = () => { if (!player.isJumping) triggerJump(); };
     document.getElementById('btnSlide').onclick = () => { if (!player.isSliding) triggerSlide(); };
 
-    // Kontrol Keyboard
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft' && player.lane > 0) player.lane--;
-      if (e.key === 'ArrowRight' && player.lane < 2) player.lane++;
-      if (e.key === 'ArrowUp' && !player.isJumping) triggerJump();
-      if (e.key === 'ArrowDown' && !player.isSliding) triggerSlide();
-    });
-
-    function triggerJump() { player.isJumping = true; player.jumpSpeed = 12; }
+    function triggerJump() { player.isJumping = true; player.jumpSpeed = 13; }
     function triggerSlide() { player.isSliding = true; player.slideTimer = 25; }
 
     function update() {
       player.targetX = lanes[player.lane];
-      player.x += (player.targetX - player.x) * 0.2;
+      player.x += (player.targetX - player.x) * 0.25;
 
       if (player.isJumping) {
         player.jumpOffset += player.jumpSpeed;
-        player.jumpSpeed -= 0.8;
+        player.jumpSpeed -= 0.85;
         if (player.jumpOffset <= 0) { player.jumpOffset = 0; player.isJumping = false; }
       }
 
@@ -134,7 +142,7 @@
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Garis Jalur
+      // Jalur Lari
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -142,16 +150,27 @@
       ctx.moveTo(260, 0); ctx.lineTo(260, 600);
       ctx.stroke();
 
-      // Pilih Pose Gambar
+      // Pilih Gambar Aktif
       let currentImg = imgRun;
+      let isReady = runLoaded;
       let drawW = player.width;
       let drawH = player.height;
 
-      if (player.isJumping) currentImg = imgJump;
-      if (player.isSliding) { currentImg = imgSlide; drawH = 55; }
+      if (player.isJumping) { currentImg = imgJump; isReady = jumpLoaded; }
+      if (player.isSliding) { currentImg = imgSlide; isReady = slideLoaded; drawH = 50; }
 
-      // Gambar Karakter
-      ctx.drawImage(currentImg, player.x - drawW / 2, player.y - player.jumpOffset - drawH / 2, drawW, drawH);
+      const drawX = player.x - drawW / 2;
+      const drawY = player.y - player.jumpOffset - drawH / 2;
+
+      if (isReady) {
+        ctx.drawImage(currentImg, drawX, drawY, drawW, drawH);
+      } else {
+        // Cadangan Karakter jika Gambar Masih Loading
+        ctx.fillStyle = '#e0a96d';
+        ctx.beginPath();
+        ctx.arc(player.x, player.y - player.jumpOffset, 30, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
 
     function gameLoop() {
