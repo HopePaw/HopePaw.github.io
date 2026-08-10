@@ -34,25 +34,15 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// LOAD 1 SPRITE SHEET
-const spriteSheet = new Image();
-spriteSheet.src = "hopepaw-sprites.png"; // PASTI SAMA DENGAN NAMA FILE KAMU!
-
-// Koordinat potongan gambar (Sesuaikan angka ini dengan lebar sprite sheet kamu!)
-// Asumsi: 4 pose berjejer horizontal (0=run, 1=jump, 2=slide, 3=idle)
-const frameW = 256; // Lebar 1 kotak karakter
-const frameH = 256; // Tinggi 1 kotak karakter
-
-const poses = {
-  run:   {sx: 0,    sy: 0},
-  jump:  {sx: 256,  sy: 0},
-  slide: {sx: 512,  sy: 0},
-  idle:  {sx: 768,  sy: 0}
-};
+// LOAD GAMBAR TERPISAH
+const images = { run: new Image(), jump: new Image(), slide: new Image() };
+images.run.src = "hopepaw-run.png";
+images.jump.src = "hopepaw-jump.png";
+images.slide.src = "hopepaw-slide.png";
 
 let player = { x: 200, y: 500, lane: 1, jump: 0, jumpPower: 0, sliding: false, score: 0, dist: 0 };
 
-// INPUT HANDLING (Hanya Touchstart agar tidak double trigger)
+// INPUT HANDLING (Touchstart saja)
 function setupControls() {
   const btns = { bL: 'L', bJ: 'J', bS: 'S', bR: 'R' };
   for(let id in btns) {
@@ -87,17 +77,17 @@ function loop() {
   ctx.moveTo(266,0); ctx.lineTo(266,600);
   ctx.stroke();
 
-  // Gambar Karakter dari Sprite Sheet
-  let pose = poses.run;
-  if(player.jump > 0) pose = poses.jump;
-  if(player.sliding) pose = poses.slide;
+  // Pilih Gambar
+  let img = images.run;
+  if(player.jump > 0) img = images.jump;
+  if(player.sliding) img = images.slide;
 
   let jumpH = (player.jump > 0) ? (18 * 18 - Math.pow(player.jumpPower, 2)) * 0.45 : 0;
   
-  if (spriteSheet.complete) {
-    ctx.drawImage(spriteSheet, pose.sx, pose.sy, frameW, frameH, player.x - 50, player.y - jumpH - 50, 100, 100);
+  // Render
+  if (img.complete && img.naturalWidth > 0) {
+    ctx.drawImage(img, player.x - 50, player.y - jumpH - 50, 100, 100);
   } else {
-    // Fallback kalau gambar belum load
     ctx.fillStyle = "orange";
     ctx.beginPath(); ctx.arc(player.x, player.y - jumpH, 30, 0, Math.PI*2); ctx.fill();
   }
