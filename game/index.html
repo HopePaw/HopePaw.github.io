@@ -1,100 +1,693 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+  <meta
+    name="viewport"
+    content="width=device-width,
+             initial-scale=1.0,
+             maximum-scale=1.0,
+             user-scalable=no"
+  >
+
   <title>HopePaw: Run for Hope</title>
+
   <style>
-    body { background: #0d1b2a; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: sans-serif; }
-    #game-container { position: relative; width: 100vw; max-width: 400px; height: 90vh; background: #1b263b; border: 2px solid #77abb7; border-radius: 16px; overflow: hidden; }
-    canvas { width: 100%; height: 100%; display: block; }
-    .ui { position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; color: white; font-weight: bold; pointer-events: none; z-index: 5; }
-    .controls { position: absolute; bottom: 20px; width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; padding: 0 10px; box-sizing: border-box; z-index: 5; }
-    .btn { background: rgba(255,255,255,0.2); color: white; padding: 15px 0; text-align: center; border-radius: 8px; font-weight: bold; font-size: 14px; user-select: none; touch-action: manipulation; }
-    .btn:active { background: rgba(255,255,255,0.4); }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+
+      overflow: hidden;
+
+      background: #0d1b2a;
+
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* =========================
+       GAME CONTAINER
+    ========================= */
+
+    #game-container {
+
+      position: relative;
+
+      width: 100vw;
+      max-width: 400px;
+
+      height: 100vh;
+      max-height: 700px;
+
+      background: #1b263b;
+
+      border: 2px solid #77abb7;
+
+      border-radius: 16px;
+
+      overflow: hidden;
+    }
+
+
+    /* =========================
+       CANVAS
+    ========================= */
+
+    #gameCanvas {
+
+      display: block;
+
+      width: 100%;
+      height: 100%;
+    }
+
+
+    /* =========================
+       TOP UI
+    ========================= */
+
+    .ui {
+
+      position: absolute;
+
+      top: 18px;
+      left: 18px;
+      right: 18px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      color: white;
+
+      font-size: 19px;
+
+      font-weight: bold;
+
+      z-index: 10;
+
+      pointer-events: none;
+
+      text-shadow:
+        0 2px 4px rgba(0,0,0,0.5);
+    }
+
+
+    /* =========================
+       CONTROLS
+    ========================= */
+
+    .controls {
+
+      position: absolute;
+
+      left: 0;
+      bottom: 14px;
+
+      width: 100%;
+
+      padding: 0 10px;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 6px;
+
+      z-index: 20;
+    }
+
+
+    .btn {
+
+      background:
+        rgba(255,255,255,0.20);
+
+      color: white;
+
+      border:
+        1px solid
+        rgba(255,255,255,0.10);
+
+      border-radius: 10px;
+
+      padding: 16px 2px;
+
+      text-align: center;
+
+      font-size: 14px;
+
+      font-weight: bold;
+
+      user-select: none;
+
+      touch-action: manipulation;
+
+      transition:
+        transform 0.08s,
+        background 0.08s;
+    }
+
+
+    .btn:active {
+
+      background:
+        rgba(255,255,255,0.40);
+
+      transform: scale(0.96);
+    }
+
+
+    /* =========================
+       SMALL PHONE
+    ========================= */
+
+    @media (max-width: 400px) {
+
+      #game-container {
+
+        width: 100vw;
+        height: 100vh;
+
+        max-width: none;
+        max-height: none;
+
+        border-radius: 0;
+      }
+
+
+      .ui {
+
+        font-size: 18px;
+      }
+
+
+      .btn {
+
+        font-size: 13px;
+
+        padding:
+          15px 1px;
+      }
+    }
+
   </style>
 </head>
+
+
 <body>
 
-<div id="game-container">
-  <div class="ui">
-    <div>SCORE: <span id="score">0</span></div>
-    <div>DIST: <span id="dist">0</span>m</div>
+
+  <div id="game-container">
+
+
+    <!-- =====================
+         SCORE
+    ====================== -->
+
+    <div class="ui">
+
+      <div>
+        SCORE:
+        <span id="score">0</span>
+      </div>
+
+      <div>
+        DIST:
+        <span id="dist">0</span>m
+      </div>
+
+    </div>
+
+
+    <!-- =====================
+         GAME CANVAS
+    ====================== -->
+
+    <canvas
+      id="gameCanvas"
+      width="400"
+      height="600"
+    ></canvas>
+
+
+    <!-- =====================
+         CONTROLS
+    ====================== -->
+
+    <div class="controls">
+
+      <div
+        class="btn"
+        id="bL"
+      >
+        ◄ Kiri
+      </div>
+
+
+      <div
+        class="btn"
+        id="bJ"
+      >
+        ▲ Lompat
+      </div>
+
+
+      <div
+        class="btn"
+        id="bS"
+      >
+        ▼ Slide
+      </div>
+
+
+      <div
+        class="btn"
+        id="bR"
+      >
+        Kanan ►
+      </div>
+
+    </div>
+
   </div>
-  <canvas id="gameCanvas" width="400" height="600"></canvas>
-  <div class="controls">
-    <div class="btn" id="bL">◄ Kiri</div>
-    <div class="btn" id="bJ">▲ Lompat</div>
-    <div class="btn" id="bS">▼ Slide</div>
-    <div class="btn" id="bR">Kanan ►</div>
-  </div>
-</div>
+
+
 
 <script>
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
 
-// LOAD GAMBAR TERPISAH
-const images = { run: new Image(), jump: new Image(), slide: new Image() };
-images.run.src = "hopepaw-run.png";
-images.jump.src = "hopepaw-jump.png";
-images.slide.src = "hopepaw-slide.png";
+  /* =====================================================
+     CANVAS
+  ===================================================== */
 
-let player = { x: 200, y: 500, lane: 1, jump: 0, jumpPower: 0, sliding: false, score: 0, dist: 0 };
+  const canvas =
+    document.getElementById("gameCanvas");
 
-// INPUT HANDLING (Touchstart saja)
-function setupControls() {
-  const btns = { bL: 'L', bJ: 'J', bS: 'S', bR: 'R' };
-  for(let id in btns) {
-    document.getElementById(id).addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      const action = btns[id];
-      if(action === 'L' && player.lane > 0) player.lane--;
-      if(action === 'R' && player.lane < 2) player.lane++;
-      if(action === 'J' && player.jump === 0) { player.jump = 1; player.jumpPower = 18; }
-      if(action === 'S' && player.jump === 0) { player.sliding = true; setTimeout(()=>player.sliding=false, 600); }
-    }, {passive: false});
+  const ctx =
+    canvas.getContext("2d");
+
+
+  /* =====================================================
+     HOPEPAW IMAGES
+     
+     SEMUA FILE BERADA DI FOLDER YANG SAMA
+     DENGAN index.html
+     
+     game/
+       index.html
+       hopepaw-idle.png
+       hopepaw-run.png
+       hopepaw-jump.png
+       hopepaw-slide.png
+  ===================================================== */
+
+  const images = {
+
+    idle: new Image(),
+
+    run: new Image(),
+
+    jump: new Image(),
+
+    slide: new Image()
+
+  };
+
+
+  images.idle.src =
+    "hopepaw-idle.png";
+
+  images.run.src =
+    "hopepaw-run.png";
+
+  images.jump.src =
+    "hopepaw-jump.png";
+
+  images.slide.src =
+    "hopepaw-slide.png";
+
+
+  /* =====================================================
+     CHECK IMAGE
+  ===================================================== */
+
+  images.idle.onload = function() {
+
+    console.log(
+      "✅ HopePaw idle loaded"
+    );
+
+  };
+
+
+  images.run.onload = function() {
+
+    console.log(
+      "✅ HopePaw run loaded"
+    );
+
+  };
+
+
+  images.jump.onload = function() {
+
+    console.log(
+      "✅ HopePaw jump loaded"
+    );
+
+  };
+
+
+  images.slide.onload = function() {
+
+    console.log(
+      "✅ HopePaw slide loaded"
+    );
+
+  };
+
+
+  images.idle.onerror = function() {
+
+    console.error(
+      "❌ hopepaw-idle.png tidak ditemukan"
+    );
+
+  };
+
+
+  images.run.onerror = function() {
+
+    console.error(
+      "❌ hopepaw-run.png tidak ditemukan"
+    );
+
+  };
+
+
+  images.jump.onerror = function() {
+
+    console.error(
+      "❌ hopepaw-jump.png tidak ditemukan"
+    );
+
+  };
+
+
+  images.slide.onerror = function() {
+
+    console.error(
+      "❌ hopepaw-slide.png tidak ditemukan"
+    );
+
+  };
+
+
+  /* =====================================================
+     PLAYER
+  ===================================================== */
+
+  const player = {
+
+    lane: 1,
+
+    x: 200,
+
+    y: 500,
+
+    jump: 0,
+
+    jumpPower: 0,
+
+    sliding: false,
+
+    dist: 0,
+
+    score: 0
+
+  };
+
+
+  /* =====================================================
+     LANE POSITION
+  ===================================================== */
+
+  function updatePlayerPosition() {
+
+    if (player.lane === 0) {
+
+      player.x = 65;
+
+    }
+
+    else if (player.lane === 1) {
+
+      player.x = 200;
+
+    }
+
+    else {
+
+      player.x = 335;
+
+    }
+
   }
-}
-setupControls();
 
-function loop() {
-  ctx.clearRect(0, 0, 400, 600);
-  
-  // Logic
-  player.x = 65 + (player.lane * 133);
-  if(player.jump > 0) {
-    player.jumpPower -= 1;
-    if(player.jumpPower <= -18) { player.jump = 0; player.jumpPower = 0; }
+
+  /* =====================================================
+     MOVE LEFT
+  ===================================================== */
+
+  function moveLeft() {
+
+    if (player.lane > 0) {
+
+      player.lane--;
+
+      updatePlayerPosition();
+
+    }
+
   }
-  player.dist += 0.05;
-  document.getElementById('score').innerText = Math.floor(player.dist);
 
-  // Gambar Background
-  ctx.strokeStyle = "rgba(255,255,255,0.1)";
-  ctx.beginPath();
-  ctx.moveTo(133,0); ctx.lineTo(133,600);
-  ctx.moveTo(266,0); ctx.lineTo(266,600);
-  ctx.stroke();
 
-  // Pilih Gambar
-  let img = images.run;
-  if(player.jump > 0) img = images.jump;
-  if(player.sliding) img = images.slide;
+  /* =====================================================
+     MOVE RIGHT
+  ===================================================== */
 
-  let jumpH = (player.jump > 0) ? (18 * 18 - Math.pow(player.jumpPower, 2)) * 0.45 : 0;
-  
-  // Render
-  if (img.complete && img.naturalWidth > 0) {
-    ctx.drawImage(img, player.x - 50, player.y - jumpH - 50, 100, 100);
-  } else {
-    ctx.fillStyle = "orange";
-    ctx.beginPath(); ctx.arc(player.x, player.y - jumpH, 30, 0, Math.PI*2); ctx.fill();
+  function moveRight() {
+
+    if (player.lane < 2) {
+
+      player.lane++;
+
+      updatePlayerPosition();
+
+    }
+
   }
-  
-  requestAnimationFrame(loop);
-}
-loop();
-</script>
-</body>
-</html>
+
+
+  /* =====================================================
+     JUMP
+  ===================================================== */
+
+  function jump() {
+
+    if (
+      player.jump === 0 &&
+      !player.sliding
+    ) {
+
+      player.jump = 1;
+
+      player.jumpPower = 18;
+
+    }
+
+  }
+
+
+  /* =====================================================
+     SLIDE
+  ===================================================== */
+
+  function slide() {
+
+    if (player.jump === 0) {
+
+      player.sliding = true;
+
+
+      setTimeout(
+        function() {
+
+          player.sliding = false;
+
+        },
+        600
+      );
+
+    }
+
+  }
+
+
+  /* =====================================================
+     TOUCH CONTROLS
+  ===================================================== */
+
+  document
+    .getElementById("bL")
+    .addEventListener(
+      "touchstart",
+      function(e) {
+
+        e.preventDefault();
+
+        moveLeft();
+
+      },
+      { passive: false }
+    );
+
+
+  document
+    .getElementById("bR")
+    .addEventListener(
+      "touchstart",
+      function(e) {
+
+        e.preventDefault();
+
+        moveRight();
+
+      },
+      { passive: false }
+    );
+
+
+  document
+    .getElementById("bJ")
+    .addEventListener(
+      "touchstart",
+      function(e) {
+
+        e.preventDefault();
+
+        jump();
+
+      },
+      { passive: false }
+    );
+
+
+  document
+    .getElementById("bS")
+    .addEventListener(
+      "touchstart",
+      function(e) {
+
+        e.preventDefault();
+
+        slide();
+
+      },
+      { passive: false }
+    );
+
+
+  /* =====================================================
+     MOUSE SUPPORT
+  ===================================================== */
+
+  document
+    .getElementById("bL")
+    .addEventListener(
+      "click",
+      moveLeft
+    );
+
+
+  document
+    .getElementById("bR")
+    .addEventListener(
+      "click",
+      moveRight
+    );
+
+
+  document
+    .getElementById("bJ")
+    .addEventListener(
+      "click",
+      jump
+    );
+
+
+  document
+    .getElementById("bS")
+    .addEventListener(
+      "click",
+      slide
+    );
+
+
+  /* =====================================================
+     KEYBOARD SUPPORT
+  ===================================================== */
+
+  document.addEventListener(
+    "keydown",
+    function(e) {
+
+      if (
+        e.key === "ArrowLeft"
+      ) {
+
+        moveLeft();
+
+      }
+
+
+      if (
+        e.key === "ArrowRight"
+      ) {
+
+        moveRight();
+
+      }
+
+
+      if (
+        e.key === "ArrowUp" ||
+        e.key === " "
+      ) {
+
+        jump();
+
+      }
+
+
+      if (
+        e.key === "ArrowDown"
+      ) {
+
+       
