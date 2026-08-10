@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>HopePaw: Run for Hope 🐾</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body {
+      background-color: #0d1b2a;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    #game-container {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 600px;
+      background: linear-gradient(180deg, #1b263b 0%, #415a77 100%);
+      border: 3px solid #77abb7;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    canvas { display: block; width: 100%; height: 100%; }
+    .ui-layer {
+      position: absolute;
+      top: 15px; left: 15px; right: 15px;
+      display: flex; justify-content: space-between;
+      font-weight: bold; font-size: 16px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game-container">
+    <div class="ui-layer">
+      <div>HOPE SCORE: <span id="scoreText" style="color: #e0a96d;">0</span></div>
+      <div>DIST: <span id="distText">0</span>m</div>
+    </div>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Load Gambar Maskot
+    const images = {};
+    let imagesLoaded = 0;
+    const sources = {
+      run: 'hopepaw-run.png',
+      jump: 'hopepaw-jump.png',
+      slide: 'hopepaw-slide.png'
+    };
+
+    for (let src in sources) {
+      images[src] = new Image();
+      images[src].src = sources[src];
+      images[src].onload = () => {
+        imagesLoaded++;
+        if (imagesLoaded === 3) gameLoop();
+      };
+    }
+
+    const lanes = [80, 200, 320];
+    const player = {
+      lane: 1,
+      x: lanes[1],
+      y: 480,
+      width: 80,
+      height: 80,
+      targetX: lanes[1],
+      isJumping: false,
+      isSliding: false,
+      jumpOffset: 0,
+      jumpSpeed: 0,
+      slideTimer: 0
+    };
+
+    // Kontrol Keyboard
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && player.lane > 0) player.lane--;
+      if (e.key === 'ArrowRight' && player.lane < 2) player.lane++;
+      if (e.key === 'ArrowUp' && !player.isJumping) triggerJump();
+      if (e.key === 'ArrowDown' && !player.isSliding) triggerSlide();
+    });
+
+    function triggerJump() {
+      player.isJumping = true;
+      player.jumpSpeed = 12;
+    }
+
+    function triggerSlide() {
+      player.isSliding = true;
+      player.slideTimer = 30;
+    }
+
+    function update() {
+      player.targetX = lanes[player.lane];
+      player.x += (player.targetX - player.x) * 0.2;
+
+      // Logika Lompat
+      if (player.isJumping) {
+        player.jumpOffset += player.jumpSpeed;
+        player.jumpSpeed -= 0.8;
+        if (player.jumpOffset <= 0) {
+          player.jumpOffset = 0;
+          player.isJumping = false;
+        }
+      }
+
+      // Logika Slide
+      if (player.isSliding) {
+        player.slideTimer--;
+        if (player.slideTimer <= 0) player.isSliding = false;
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Gambar Jalur
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(140, 0); ctx.lineTo(140, 600);
+      ctx.moveTo(260, 0); ctx.lineTo(260, 600);
+      ctx.stroke();
+
+      // Pilih Pose Gambar
+      let currentImg = images.run;
+      let drawWidth = player.width;
+      let drawHeight = player.height;
+
+      if (player.isJumping) {
+        currentImg = images.jump;
+      } else if (player.isSliding) {
+        currentImg = images.slide;
+        drawHeight = 50;
+      }
+
+      // Gambar Maskot HopePaw
+      ctx.drawImage(
+        currentImg, 
+        player.x - drawWidth / 2, 
+        player.y - player.jumpOffset - drawHeight / 2, 
+        drawWidth, 
+        drawHeight
+      );
+    }
+
+    function gameLoop() {
+      update();
+      draw();
+      requestAnimationFrame(gameLoop);
+    }
+  </script>
+</body>
+</html>
+
