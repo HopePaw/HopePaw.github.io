@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>HopePaw — One Small Hope</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07111f;font-family:Inter,Arial,sans-serif;touch-action:manipulation}
+body{display:flex;justify-content:center;align-items:center}
+button{font:inherit}
+
+#game{
+  position:relative;width:100vw;max-width:460px;height:100vh;max-height:820px;
+  overflow:hidden;background:#dbeafe;color:#0f172a;
+  box-shadow:0 20px 60px rgba(0,0,0,.45)
+}
+.scene{
+  position:absolute;inset:0;overflow:hidden;
+  background:linear-gradient(#a7d8ff 0%,#dff4ff 45%,#b8d6a3 45%,#8fbd76 100%);
+  transition:background 1s ease
+}
+.scene.sunset{
+  background:linear-gradient(#f8c47d 0%,#ffe5b0 44%,#c6b27d 44%,#8b8f5e 100%)
+}
+.scene.night{
+  background:linear-gradient(#14264d 0%,#31517c 45%,#5f7650 45%,#42543a 100%)
+}
+
+/* decorative world */
+.cloud{position:absolute;width:100px;height:28px;border-radius:30px;background:rgba(255,255,255,.7);filter:blur(.2px)}
+.cloud:before,.cloud:after{content:"";position:absolute;background:inherit;border-radius:50%}
+.cloud:before{width:42px;height:42px;left:18px;top:-19px}
+.cloud:after{width:54px;height:54px;right:12px;top:-28px}
+.c1{top:110px;left:-25px}.c2{top:175px;right:-30px;transform:scale(.7)}
+.sun{position:absolute;top:85px;right:55px;width:65px;height:65px;border-radius:50%;background:#fff3b0;box-shadow:0 0 45px #fff1a8}
+.hill{position:absolute;left:-15%;width:130%;height:170px;border-radius:50% 50% 0 0/100% 100% 0 0;background:#91b979;bottom:205px}
+.hill2{bottom:175px;background:#7fa66c;transform:translateX(-12%) scale(1.05)}
+
+/* classroom */
+#classroom{
+  position:absolute;left:7%;right:7%;bottom:76px;height:52%;min-height:360px;
+  border-radius:28px 28px 18px 18px;
+  background:linear-gradient(135deg,#f8fafc,#dbeafe);
+  border:5px solid rgba(30,64,175,.22);
+  box-shadow:0 20px 45px rgba(15,23,42,.22);
+  overflow:hidden;transition:all .8s ease
+}
+#classroom:before{
+  content:"";position:absolute;left:0;right:0;top:0;height:34%;
+  background:linear-gradient(135deg,#c7d2fe,#e0f2fe)
+}
+#classroom.built{background:linear-gradient(135deg,#fff,#eff6ff);border-color:#60a5fa}
+.board{
+  position:absolute;top:8%;left:12%;right:12%;height:22%;
+  border-radius:12px;background:#334155;border:8px solid #8b5e3c;
+  color:#e0f2fe;display:flex;align-items:center;justify-content:center;
+  text-align:center;font-weight:900;letter-spacing:2px;font-size:clamp(13px,4vw,18px);
+  transition:.7s
+}
+.built .board{background:#166534;color:#dcfce7}
+.board small{display:block;font-size:8px;letter-spacing:1px;margin-top:5px;color:#bfdbfe}
+.floor{position:absolute;left:0;right:0;bottom:0;height:42%;background:repeating-linear-gradient(90deg,#c89b68 0 55px,#b88959 55px 58px);opacity:.75}
+.window{
+  position:absolute;top:10%;width:18%;height:19%;border:6px solid #8b5e3c;background:#9ddcff;
+  box-shadow:inset 0 0 0 4px rgba(255,255,255,.3)
+}
+.w1{left:2%}.w2{right:2%}
+.window:after{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:3px solid #8b5e3c}
+.window:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:3px solid #8b5e3c}
+
+#decor{
+  position:absolute;inset:0;pointer-events:none
+}
+.plant{position:absolute;bottom:22%;font-size:38px;opacity:0;transform:translateY(20px) scale(.7);transition:.6s}
+.plant.show{opacity:1;transform:none}
+.p1{left:8%}.p2{right:8%}
+
+#deskArea{position:absolute;inset:0}
+.desk{
+  position:absolute;width:25%;height:12%;background:#a66b3f;border-radius:8px 8px 4px 4px;
+  box-shadow:0 6px 0 #754a2c;opacity:0;transform:translateY(20px);transition:.55s
+}
+.desk:after{content:"";position:absolute;left:8%;right:8%;bottom:-22px;height:22px;border-left:5px solid #754a2c;border-right:5px solid #754a2c}
+.d1{left:16%;bottom:27%}.d2{left:55%;bottom:27%}.d3{left:35%;bottom:13%}
+.desk.show{opacity:1;transform:none}
+
+#supplies{
+  position:absolute;inset:0;pointer-events:none
+}
+.supply{
+  position:absolute;font-size:26px;opacity:0;transform:scale(.3) rotate(-20deg);
+  transition:.5s
+}
+.supply.show{opacity:1;transform:scale(1) rotate(0)}
+.s1{left:23%;bottom:36%}.s2{left:63%;bottom:36%}.s3{left:43%;bottom:22%}
+
+/* mascot */
+#mascot{
+  position:absolute;z-index:8;left:50%;bottom:68px;width:min(55vw,240px);height:min(55vw,240px);
+  transform:translateX(-50%);pointer-events:none;display:flex;justify-content:center;align-items:flex-start;
+  transition:transform .5s ease
+}
+#mascot img{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+  mix-blend-mode:multiply;filter:saturate(1.05) drop-shadow(0 12px 14px rgba(0,0,0,.25));
+  border-radius:28px
+}
+#mascot.happy{animation:bounce .55s ease}
+@keyframes bounce{50%{transform:translateX(-50%) translateY(-15px) scale(1.04)}}
+
+/* UI */
+#top{
+  position:absolute;z-index:20;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center
+}
+.logo{
+  padding:8px 12px;border-radius:18px;background:rgba(5,15,28,.78);color:white;font-weight:900;font-size:12px;
+  backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15)
+}
+.stats{display:flex;gap:6px}
+.stat{min-width:62px;text-align:center;padding:7px 9px;border-radius:15px;background:rgba(5,15,28,.78);color:white;font-size:9px;font-weight:800}
+.stat b{display:block;font-size:15px;margin-top:1px}
+#hope{color:#7dd3fc}
+#progressWrap{
+  position:absolute;z-index:20;top:62px;left:12px;right:12px;padding:9px 11px;border-radius:14px;
+  background:rgba(5,15,28,.76);color:white;backdrop-filter:blur(8px)
+}
+.progressTitle{display:flex;justify-content:space-between;font-size:10px;font-weight:900;margin-bottom:6px}
+.bar{height:8px;border-radius:8px;background:rgba(255,255,255,.15);overflow:hidden}
+#progress{height:100%;width:0;background:linear-gradient(90deg,#38bdf8,#2563eb);border-radius:8px;transition:width .5s}
+
+#message{
+  position:absolute;z-index:22;left:18px;right:18px;top:108px;text-align:center;
+  color:#0f172a;font-size:13px;font-weight:800;line-height:1.4;text-shadow:0 1px rgba(255,255,255,.6)
+}
+#message span{display:inline-block;background:rgba(255,255,255,.82);padding:9px 14px;border-radius:18px;box-shadow:0 5px 18px rgba(0,0,0,.1)}
+
+#actions{
+  position:absolute;z-index:30;left:14px;right:14px;bottom:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px
+}
+.action{
+  min-height:58px;border:0;border-radius:17px;background:rgba(5,15,28,.9);color:white;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);font-weight:900;font-size:10px;transition:.15s
+}
+.action:active{transform:scale(.95)}
+.action.locked{opacity:.35}
+.action.done{background:#166534}
+.action .emoji{display:block;font-size:22px;margin-bottom:3px}
+
+#start,#finish,#resetConfirm{
+  position:absolute;z-index:100;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:28px;text-align:center;color:white;background:radial-gradient(circle at 50% 25%,#164e63,#07111f 68%)
+}
+#start .hero{width:210px;height:210px;overflow:hidden;border-radius:30px;margin-bottom:8px}
+#start img,#finish img{width:100%;height:100%;object-fit:cover;object-position:center top;mix-blend-mode:screen}
+h1{font-size:30px;letter-spacing:2px;margin:4px 0;color:#7dd3fc}
+.subtitle{font-size:11px;letter-spacing:3px;color:#cbd5e1;font-weight:800}
+.intro{max-width:320px;color:#cbd5e1;font-size:13px;line-height:1.6;margin:18px 0}
+.primary{
+  width:240px;padding:14px;border:0;border-radius:25px;background:linear-gradient(135deg,#0284c7,#2563eb);
+  color:white;font-weight:900;box-shadow:0 10px 25px rgba(37,99,235,.3)
+}
+.secondary{
+  width:240px;padding:12px;border:1px solid rgba(255,255,255,.15);border-radius:25px;background:rgba(255,255,255,.06);
+  color:white;font-weight:800;margin-top:8px
+}
+.hidden{display:none!important}
+
+#finish{background:radial-gradient(circle at 50% 25%,#0c4a6e,#07111f 68%)}
+#finish .hero{width:230px;height:230px;overflow:hidden;border-radius:30px}
+#finish h2{margin:10px 0 5px;font-size:25px;color:#7dd3fc}
+#finish p{max-width:300px;color:#cbd5e1;line-height:1.5;font-size:13px}
+.bigHope{font-size:40px;font-weight:900;color:#fff;margin:4px 0 12px}
+
+#toast{
+  position:absolute;z-index:80;left:50%;top:145px;transform:translate(-50%,-10px);
+  padding:10px 15px;border-radius:20px;background:#07111f;color:white;font-size:11px;font-weight:900;
+  opacity:0;pointer-events:none;transition:.25s;white-space:nowrap
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-height:650px){
+  #classroom{height:50%;bottom:68px;min-height:300px}
+  #mascot{bottom:62px;width:180px;height:180px}
+  #actions{bottom:8px}
+}
+</style>
+</head>
+<body>
+<div id="game">
+
+  <div class="scene" id="scene">
+    <div class="sun"></div>
+    <div class="cloud c1"></div><div class="cloud c2"></div>
+    <div class="hill hill2"></div><div class="hill"></div>
+
+    <div id="classroom">
+      <div class="window w1"></div><div class="window w2"></div>
+      <div class="board">
+        <div>HOPE SCHOOL<small>EVERY CHILD DESERVES A PLACE TO LEARN</small></div>
+      </div>
+      <div class="floor"></div>
+      <div id="deskArea">
+        <div class="desk d1"></div><div class="desk d2"></div><div class="desk d3"></div>
+      </div>
+      <div id="supplies">
+        <div class="supply s1">📚</div>
+        <div class="supply s2">🎒</div>
+        <div class="supply s3">✏️</div>
+      </div>
+      <div id="decor">
+        <div class="plant p1">🌱</div><div class="plant p2">🌱</div>
+      </div>
+    </div>
+
+    <div id="mascot">
+      <img src="hopepaw.png" alt="HopePaw mascot">
+    </div>
+  </div>
+
+  <div id="top">
+    <div class="logo">🐾 HOPEPAW</div>
+    <div class="stats">
+      <div class="stat">HOPE<b id="hope">0</b></div>
+      <div class="stat">STEP<b id="step">0/6</b></div>
+    </div>
+  </div>
+
+  <div id="progressWrap">
+    <div class="progressTitle"><span>BUILDING HOPE</span><span id="percent">0%</span></div>
+    <div class="bar"><div id="progress"></div></div>
+  </div>
+
+  <div id="message"><span id="messageText">A classroom is waiting for a little hope. 💙</span></div>
+
+  <div id="actions">
+    <button class="action" data-step="0" onclick="doStep(0)"><span class="emoji">📚</span>BOOKS</button>
+    <button class="action" data-step="1" onclick="doStep(1)"><span class="emoji">🎒</span>BACKPACKS</button>
+    <button class="action" data-step="2" onclick="doStep(2)"><span class="emoji">✏️</span>SUPPLIES</button>
+    <button class="action" data-step="3" onclick="doStep(3)"><span class="emoji">🪑</span>DESKS</button>
+    <button class="action" data-step="4" onclick="doStep(4)"><span class="emoji">🌱</span>GARDEN</button>
+    <button class="action" data-step="5" onclick="doStep(5)"><span class="emoji">☀️</span>OPEN THE DOORS</button>
+  </div>
+
+  <div id="toast"></div>
+
+  <section id="start">
+    <div class="hero"><img src="hopepaw.png" alt="HopePaw"></div>
+    <h1>ONE SMALL HOPE</h1>
+    <div class="subtitle">A HOPEPAW MINI GAME</div>
+    <div class="intro">
+      One small action can change a place.<br>
+      Help HopePaw turn an empty classroom into a place full of hope.
+    </div>
+    <button class="primary" onclick="startGame()">START BUILDING HOPE 🐾</button>
+    <button class="secondary" onclick="resetGame()">RESET PROGRESS</button>
+  </section>
+
+  <section id="finish" class="hidden">
+    <div class="hero"><img src="hopepaw.png" alt="HopePaw"></div>
+    <h2>HOPE SCHOOL IS READY 💙</h2>
+    <div class="bigHope">+100 HOPE</div>
+    <p>
+      You didn't build a perfect world.<br>
+      You simply made one small place better.
+    </p>
+    <p><b>That's how hope grows.</b> 🐾</p>
+    <button class="primary" onclick="closeFinish()">KEEP BUILDING</button>
+    <button class="secondary" onclick="resetGame()">START OVER</button>
+  </section>
+</div>
+
+<script>
+const KEY="HOPEPAW_ONE_SMALL_HOPE_V1";
+
+let state=JSON.parse(localStorage.getItem(KEY)||"null")||{
+  started:false,
+  steps:[false,false,false,false,false,false],
+  hope:0,
+  completed:false
+};
+
+const messages=[
+  "Books are ready. A child will have something to read. 📚",
+  "A backpack can carry more than books — it can carry a dream. 🎒",
+  "Small supplies. Small action. Real difference. ✏️",
+  "A desk gives a child a place to learn. 🪑",
+  "Even a little green can make a place feel alive. 🌱",
+  "The doors are open. Hope can come in. ☀️"
+];
+
+const actionButtons=[...document.querySelectorAll(".action")];
+
+function save(){
+  localStorage.setItem(KEY,JSON.stringify(state));
+}
+
+function startGame(){
+  state.started=true;
+  save();
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("finish").classList.add("hidden");
+  render();
+}
+
+function resetGame(){
+  if(!confirm("Hapus progress HopePaw dan mulai dari awal?")) return;
+  state={started:false,steps:[false,false,false,false,false,false],hope:0,completed:false};
+  save();
+  location.reload();
+}
+
+function toast(text){
+  const el=document.getElementById("toast");
+  el.textContent=text;
+  el.classList.add("show");
+  clearTimeout(window.toastTimer);
+  window.toastTimer=setTimeout(()=>el.classList.remove("show"),1800);
+}
+
+function doStep(index){
+  if(!state.started) return;
+  if(state.steps[index]){
+    toast("Bagian ini sudah dibangun 💙");
+    return;
+  }
+  if(index>0 && !state.steps[index-1]){
+    toast("Selesaikan langkah sebelumnya dulu 🐾");
+    return;
+  }
+
+  state.steps[index]=true;
+  state.hope += index===5 ? 20 : 16;
+  if(state.hope>100) state.hope=100;
+
+  const mascot=document.getElementById("mascot");
+  mascot.classList.remove("happy");
+  void mascot.offsetWidth;
+  mascot.classList.add("happy");
+
+  document.getElementById("messageText").textContent=messages[index];
+  toast(index===5 ? "The doors are open! 💙" : "+ Hope 💙");
+
+  if(index===3){
+    document.getElementById("classroom").classList.add("built");
+  }
+
+  if(index===5){
+    state.completed=true;
+    state.hope=100;
+    save();
+    render();
+    setTimeout(()=>document.getElementById("finish").classList.remove("hidden"),650);
+    return;
+  }
+
+  save();
+  render();
+}
+
+function render(){
+  const count=state.steps.filter(Boolean).length;
+  document.getElementById("hope").textContent=state.hope;
+  document.getElementById("step").textContent=count+"/6";
+  document.getElementById("percent").textContent=Math.round((count/6)*100)+"%";
+  document.getElementById("progress").style.width=(count/6*100)+"%";
+
+  actionButtons.forEach((btn,i)=>{
+    btn.classList.toggle("done",state.steps[i]);
+    btn.classList.toggle("locked",i>0 && !state.steps[i-1]);
+    btn.innerHTML=state.steps[i]
+      ? '<span class="emoji">✓</span>DONE'
+      : btn.dataset.original || btn.innerHTML;
+    if(!btn.dataset.original) btn.dataset.original=btn.innerHTML;
+  });
+
+  if(count>=3) document.getElementById("classroom").classList.add("built");
+
+  document.querySelector(".d1").classList.toggle("show",state.steps[3]);
+  document.querySelector(".d2").classList.toggle("show",state.steps[3]);
+  document.querySelector(".d3").classList.toggle("show",state.steps[3]);
+
+  document.querySelector(".s1").classList.toggle("show",state.steps[0]);
+  document.querySelector(".s2").classList.toggle("show",state.steps[1]);
+  document.querySelector(".s3").classList.toggle("show",state.steps[2]);
+
+  document.querySelector(".p1").classList.toggle("show",state.steps[4]);
+  document.querySelector(".p2").classList.toggle("show",state.steps[4]);
+
+  if(state.steps[5]){
+    document.getElementById("scene").classList.add("sunset");
+  }
+
+  if(!state.started){
+    document.getElementById("start").classList.remove("hidden");
+  }else{
+    document.getElementById("start").classList.add("hidden");
+  }
+}
+
+function closeFinish(){
+  document.getElementById("finish").classList.add("hidden");
+  document.getElementById("messageText").textContent="One small hope became a place for many more. 🐾";
+}
+
+render();
+</script>
+</body>
+</html>
