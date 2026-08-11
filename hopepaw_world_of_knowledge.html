@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>HopePaw — World of Knowledge</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#071522;font-family:Arial,sans-serif;touch-action:none}body{display:flex;justify-content:center;align-items:center}#game{position:relative;width:100vw;max-width:480px;height:100vh;max-height:850px;overflow:hidden;background:#9cdbff}canvas{position:absolute;inset:0;width:100%;height:100%;display:block}button{font:inherit;cursor:pointer}
+#hud{position:absolute;top:12px;left:12px;right:12px;z-index:10;display:none}.row{display:flex;gap:7px}.badge{flex:1;padding:8px;border-radius:14px;background:#071522c7;border:1px solid #ffffff45;color:#fff;font-size:10px;font-weight:800}.badge b{display:block;font-size:15px;margin-top:2px}#score{color:#fde68a}#best{color:#93c5fd}#lives{color:#fda4af}#bar{height:7px;margin-top:7px;border-radius:9px;background:#ffffff55;overflow:hidden}#fill{height:100%;width:0;background:#2563eb;transition:.3s}
+#quiz{position:absolute;left:14px;right:14px;bottom:18px;z-index:20;padding:12px;border-radius:18px;background:#071522e8;border:1px solid #ffffff2e;box-shadow:0 12px 35px #0005;display:none}#cat{font-size:9px;letter-spacing:1.5px;color:#7dd3fc;font-weight:900}#question{font-size:14px;line-height:1.35;color:white;font-weight:800;margin:4px 0 9px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:7px}.answer{min-height:43px;border:1px solid #ffffff20;border-radius:12px;background:#13283a;color:#fff;padding:8px;font-size:11px;font-weight:750;text-align:left}.answer.correct{background:#166534;border-color:#4ade80}.answer.wrong{background:#991b1b;border-color:#fb7185}.answer:disabled{opacity:.96}#feedback{height:16px;margin-top:6px;text-align:center;font-size:10px;font-weight:900}
+.screen{position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px;text-align:center;color:#fff;background:linear-gradient(180deg,#0b2940,#071522)}#result{display:none}.logo{width:105px;height:105px;object-fit:contain;border-radius:28px;filter:drop-shadow(0 12px 18px #0004)}.fallback{font-size:65px}.screen h1{margin:8px 0 0;color:#bae6fd;font-size:31px;letter-spacing:1px}.sub{margin:5px 0 15px;color:#cbd5e1;font-size:11px;letter-spacing:2px;font-weight:800}.desc{max-width:330px;color:#cbd5e1;font-size:12px;line-height:1.55;margin:0 0 18px}.main,.secondary{width:240px;padding:13px;margin:5px;border-radius:25px;font-weight:900}.main{border:0;background:linear-gradient(135deg,#0ea5e9,#2563eb);color:white}.secondary{background:#ffffff12;border:1px solid #ffffff26;color:#e2e8f0}#toast{position:absolute;z-index:40;top:115px;left:50%;transform:translate(-50%,-10px);opacity:0;padding:9px 14px;border-radius:20px;background:#071522e8;color:#fff;font-size:11px;font-weight:900;transition:.22s;pointer-events:none;white-space:nowrap}.show{opacity:1!important;transform:translate(-50%,0)!important}
+</style>
+</head>
+<body><div id="game">
+<canvas id="canvas" width="480" height="850"></canvas>
+<div id="hud"><div class="row">
+<div class="badge">⭐ SCORE<b id="score">0</b></div><div class="badge">🏆 BEST<b id="best">0</b></div><div class="badge">❤️ LIVES<b id="lives">3</b></div>
+</div><div id="bar"><div id="fill"></div></div></div>
+<div id="toast"></div>
+<div id="quiz"><div id="cat"></div><div id="question"></div><div class="answers" id="answers"></div><div id="feedback"></div></div>
+
+<div class="screen" id="menu">
+<img class="logo" src="hopepaw.png" onerror="this.style.display='none'" alt="HopePaw">
+<div class="fallback">🐾</div><h1>HOPEPAW</h1><div class="sub">WORLD OF KNOWLEDGE</div>
+<p class="desc">Jawab pertanyaan pengetahuan umum, bantu HopePaw terus berjalan, kumpulkan skor, dan kejar high score. Pertanyaan serta pilihan jawaban diacak setiap permainan.</p>
+<button class="main" onclick="start()">START ADVENTURE</button><button class="secondary" onclick="resetBest()">RESET HIGH SCORE</button>
+<div style="font-size:9px;color:#94a3b8;margin-top:9px">Letakkan <b>hopepaw.png</b> di folder yang sama agar maskot resmi tampil.</div>
+</div>
+
+<div class="screen" id="result"><div style="font-size:65px">🐾</div><h1 id="title">GOOD RUN!</h1><div class="sub" id="resultSub"></div><p class="desc" id="resultText"></p><button class="main" onclick="start()">PLAY AGAIN</button><button class="secondary" onclick="menu()">MAIN MENU</button></div>
+</div>
+
+<script>
+const C=document.getElementById("canvas"),X=C.getContext("2d"),W=480,H=850;
+const img=new Image();img.src="hopepaw.png";
+let best=+localStorage.getItem("HOPEPAW_KNOWLEDGE_BEST")||0,playing=false,locked=false,qi=0,score=0,lives=3,streak=0,dist=0,road=0,parts=[];
+const BANK=[
+["GEOGRAPHY","Apa ibu kota Jepang?","Tokyo","Kyoto","Osaka","Nagoya"],
+["GEOGRAPHY","Benua terbesar di dunia adalah...","Asia","Afrika","Eropa","Amerika Selatan"],
+["GEOGRAPHY","Sungai terbesar berdasarkan debit air di dunia adalah...","Amazon","Nil","Yangtze","Mississippi"],
+["GEOGRAPHY","Gunung Everest berada di pegunungan...","Himalaya","Alpen","Andes","Rocky"],
+["GEOGRAPHY","Negara terluas di dunia adalah...","Rusia","Kanada","China","AS"],
+["GEOGRAPHY","Samudra terbesar adalah...","Pasifik","Atlantik","Hindia","Arktik"],
+["GEOGRAPHY","Ibu kota Australia adalah...","Canberra","Sydney","Melbourne","Perth"],
+["GEOGRAPHY","Mesir berada di benua...","Afrika","Asia","Eropa","Amerika"],
+["GEOGRAPHY","Gurun Sahara berada di...","Afrika","Asia","Australia","Amerika"],
+["GEOGRAPHY","Ibu kota Prancis adalah...","Paris","Lyon","Marseille","Nice"],
+["GEOGRAPHY","Pulau terbesar di dunia adalah...","Greenland","Madagaskar","Borneo","Papua"],
+["GEOGRAPHY","Ibu kota Kanada adalah...","Ottawa","Toronto","Vancouver","Montreal"],
+["GEOGRAPHY","Pegunungan Andes terutama membentang di sisi ... Amerika Selatan.","barat","timur","utara","tengah"],
+["GEOGRAPHY","Ibu kota Brasil adalah...","Brasilia","Rio de Janeiro","Sao Paulo","Salvador"],
+["GEOGRAPHY","Ibu kota Korea Selatan adalah...","Seoul","Busan","Incheon","Daegu"],
+["GEOGRAPHY","Sungai Nil bermuara di...","Laut Mediterania","Laut Merah","Samudra Hindia","Teluk Persia"],
+["GEOGRAPHY","Ibu kota Thailand adalah...","Bangkok","Chiang Mai","Phuket","Pattaya"],
+["GEOGRAPHY","Benua terkecil adalah...","Australia","Eropa","Antarktika","Amerika Selatan"],
+["GEOGRAPHY","Ibu kota Italia adalah...","Roma","Milan","Naples","Venice"],
+["GEOGRAPHY","Ibu kota Spanyol adalah...","Madrid","Barcelona","Seville","Valencia"],
+
+["SCIENCE","Planet terbesar di Tata Surya adalah...","Jupiter","Saturnus","Neptunus","Bumi"],
+["SCIENCE","Planet Merah adalah...","Mars","Venus","Merkurius","Jupiter"],
+["SCIENCE","Satelit alami Bumi adalah...","Bulan","Titan","Europa","Phobos"],
+["SCIENCE","Air membeku pada suhu ... Celsius.","0","10","-10","100"],
+["SCIENCE","Gas terbanyak di atmosfer Bumi adalah...","Nitrogen","Oksigen","CO2","Hidrogen"],
+["SCIENCE","Rumus kimia air adalah...","H2O","CO2","O2","NaCl"],
+["SCIENCE","Organ yang memompa darah adalah...","Jantung","Paru-paru","Hati","Ginjal"],
+["SCIENCE","Gaya yang menarik benda menuju Bumi disebut...","Gravitasi","Magnetisme","Gesekan","Apung"],
+["SCIENCE","Tumbuhan membuat makanan melalui...","Fotosintesis","Respirasi","Fermentasi","Osmosis"],
+["SCIENCE","Planet terdekat dengan Matahari adalah...","Merkurius","Venus","Bumi","Mars"],
+["SCIENCE","Kecepatan cahaya kira-kira...","300.000 km/s","30.000 km/s","3.000 km/s","3.000.000 km/s"],
+["SCIENCE","Unit dasar kehidupan adalah...","Sel","Atom","Organ","Jaringan"],
+["SCIENCE","Simbol Fe adalah...","Besi","Emas","Perak","Tembaga"],
+["SCIENCE","pH 7 menunjukkan sifat...","Netral","Asam kuat","Basa kuat","Radioaktif"],
+["SCIENCE","Mamalia terbesar adalah...","Paus biru","Gajah Afrika","Jerapah","Hiu paus"],
+["SCIENCE","Tulang terpanjang manusia adalah...","Femur","Tibia","Humerus","Radius"],
+["SCIENCE","Vitamin yang dibentuk tubuh dengan bantuan sinar matahari adalah...","Vitamin D","Vitamin C","B12","Vitamin K"],
+["SCIENCE","Lapisan atmosfer tempat sebagian besar cuaca terjadi adalah...","Troposfer","Stratosfer","Mesosfer","Termosfer"],
+["SCIENCE","Satuan SI untuk massa adalah...","Kilogram","Gram","Pound","Ton"],
+["SCIENCE","Alat untuk melihat benda sangat kecil disebut...","Mikroskop","Teleskop","Barometer","Kompas"],
+
+["HISTORY","Tembok Besar berada di...","China","Jepang","Korea Selatan","India"],
+["HISTORY","Colosseum berada di...","Roma","Athena","Paris","Madrid"],
+["HISTORY","Machu Picchu dibangun oleh peradaban...","Inca","Romawi","Mesir","Viking"],
+["HISTORY","Angkor Wat berada di...","Kamboja","Laos","Myanmar","Vietnam"],
+["HISTORY","Mesin cetak tipe modern awal terkait dengan...","Johannes Gutenberg","Isaac Newton","Galileo","Leonardo"],
+["HISTORY","Revolusi Industri pertama dimulai di...","Britania Raya","Jepang","China","Brasil"],
+["HISTORY","Perang Dunia II berakhir pada...","1945","1939","1942","1950"],
+["HISTORY","PBB didirikan pada...","1945","1919","1939","1960"],
+["HISTORY","Pompeii terkubur akibat letusan...","Vesuvius","Etna","Fuji","Kilimanjaro"],
+["HISTORY","Cleopatra adalah penguasa Mesir dari dinasti...","Ptolemaik","Ming","Romanov","Habsburg"],
+["HISTORY","Titanic tenggelam pada...","1912","1905","1920","1931"],
+["HISTORY","Jalur perdagangan kuno Asia-Eropa dikenal sebagai...","Jalur Sutra","Jalur Emas","Jalur Utara","Jalur Timur"],
+["HISTORY","Athena terkenal sebagai pusat...","Yunani Kuno","Mesir Kuno","Maya","Inca"],
+["HISTORY","Stonehenge berada di...","Inggris","Irlandia","Prancis","Jerman"],
+["HISTORY","Peradaban Maya berkembang terutama di...","Mesoamerika","Skandinavia","Siberia","Afrika Selatan"],
+["HISTORY","Alexander Agung berasal dari...","Makedonia","Mesir","Persia","Romawi"],
+["HISTORY","Samurai sangat terkait dengan...","Jepang","Korea","Mongolia","Vietnam"],
+["HISTORY","Piramida Giza berada di...","Mesir","Sudan","Maroko","Tunisia"],
+["HISTORY","Kapal Viking berasal dari kawasan...","Skandinavia","Amerika Selatan","Afrika Barat","Asia Tengah"],
+["HISTORY","Kota kuno yang terkenal dengan Colosseum adalah...","Roma","Berlin","Lisbon","Dublin"],
+
+["CULTURE","Bahasa yang paling banyak digunakan sebagai bahasa ibu berdasarkan jumlah penutur adalah...","Mandarin","Inggris","Spanyol","Arab"],
+["CULTURE","Tari flamenco identik dengan...","Spanyol","Brasil","India","Mesir"],
+["CULTURE","Sushi berasal dari...","Jepang","Korea","China","Thailand"],
+["CULTURE","Kimchi terkenal dalam kuliner...","Korea","Jepang","Vietnam","India"],
+["CULTURE","Taj Mahal berada di...","India","Pakistan","Bangladesh","Nepal"],
+["CULTURE","Menara Eiffel berada di...","Paris","London","Berlin","Roma"],
+["CULTURE","Patung Liberty berada di...","New York","Boston","Chicago","Miami"],
+["CULTURE","Opera House terkenal berada di...","Sydney","Melbourne","Auckland","Perth"],
+["CULTURE","Mata uang Jepang adalah...","Yen","Won","Yuan","Ringgit"],
+["CULTURE","Mata uang Inggris adalah...","Pound sterling","Euro","Franc","Krona"],
+["CULTURE","Festival Holi sangat terkenal di...","India","Jepang","Mesir","Meksiko"],
+["CULTURE","Tango sangat identik dengan...","Argentina","Kanada","Norwegia","Mesir"],
+["CULTURE","Pizza sangat terkait dengan kota...","Naples","Berlin","Lisbon","Oslo"],
+["CULTURE","Bahasa resmi Brasil adalah...","Portugis","Spanyol","Inggris","Prancis"],
+["CULTURE","Bahasa Spanyol berasal dari rumpun...","Roman","Slavia","Jermanik","Sino-Tibet"],
+["CULTURE","Mata uang Swiss adalah...","Franc Swiss","Euro","Pound","Krone"],
+["CULTURE","Kabuki merupakan teater tradisional...","Jepang","China","India","Korea"],
+["CULTURE","Samba sangat terkenal dalam budaya...","Brasil","Argentina","Chile","Peru"],
+["CULTURE","Cappadocia berada di...","Turki","Yunani","Italia","Mesir"],
+["CULTURE","Louvre adalah museum terkenal di...","Paris","London","Madrid","Wina"],
+
+["SPORTS","Piala Dunia FIFA 2022 dimenangkan oleh...","Argentina","Prancis","Brasil","Jerman"],
+["SPORTS","Olahraga dengan raket dan shuttlecock adalah...","Bulu tangkis","Tenis","Squash","Golf"],
+["SPORTS","Jumlah pemain sepak bola satu tim di lapangan adalah...","11","9","10","12"],
+["SPORTS","Olimpiade modern pertama diselenggarakan di...","Athena","Paris","London","Roma"],
+["SPORTS","Tinggi ring basket standar sekitar...","3,05 m","2,50 m","3,50 m","4,00 m"],
+["SPORTS","Tour de France adalah perlombaan...","Sepeda","Lari","Renang","Mobil"],
+["SPORTS","Wimbledon terkenal sebagai turnamen...","Tenis","Golf","Bulu tangkis","Atletik"],
+["SPORTS","Jarak maraton resmi sekitar...","42,195 km","40 km","45 km","50 km"],
+["SPORTS","Pemain yang menjaga gawang disebut...","Kiper","Bek","Gelandang","Striker"],
+["SPORTS","Sumo berasal dari...","Jepang","China","Korea","Mongolia"],
+["SPORTS","NBA adalah liga profesional untuk...","Basket","Baseball","Hoki","Sepak bola"],
+["SPORTS","Dalam tenis, skor nol disebut...","Love","Zero","Nil","Blank"],
+["SPORTS","Istilah birdie dan eagle digunakan dalam...","Golf","Tenis","Kriket","Polo"],
+["SPORTS","Piala Dunia FIFA biasanya berlangsung setiap...","4 tahun","2 tahun","3 tahun","5 tahun"],
+["SPORTS","Satu tim voli memiliki ... pemain di lapangan.","6","5","7","8"],
+["SPORTS","Simbol Olimpiade memiliki lima...","Cincin","Bintang","Panah","Api"],
+["SPORTS","Formula 1 menggunakan...","Mobil balap","Motor","Perahu","Pesawat"],
+["SPORTS","Dalam baseball, alat pemukul disebut...","Bat","Stick","Club","Racket"],
+["SPORTS","Tinju dilakukan di dalam...","Ring","Court","Track","Pitch"],
+["SPORTS","Olahraga es dengan puck adalah...","Hoki es","Curling","Skating","Polo es"],
+
+["NATURE","Hewan darat tercepat adalah...","Cheetah","Singa","Kuda","Serigala"],
+["NATURE","Hewan darat terbesar adalah...","Gajah Afrika","Badak putih","Jerapah","Kuda nil"],
+["NATURE","Panda raksasa berasal dari...","China","Jepang","India","Nepal"],
+["NATURE","Kanguru sangat identik dengan...","Australia","Afrika Selatan","India","Brasil"],
+["NATURE","Koala terutama memakan...","Daun eukaliptus","Rumput","Bambu","Buah"],
+["NATURE","Hewan yang terkenal dapat berubah warna untuk kamuflase adalah...","Bunglon","Zebra","Gajah","Penguin"],
+["NATURE","Penguin paling banyak hidup alami di belahan...","Selatan","Utara","Timur","Barat"],
+["NATURE","Hutan hujan Amazon sebagian besar berada di...","Brasil","Chile","Argentina","Kolombia"],
+["NATURE","Bunga nasional Jepang yang terkenal adalah...","Sakura","Mawar","Tulip","Melati"],
+["NATURE","Lumba-lumba termasuk...","Mamalia","Ikan","Reptil","Amfibi"],
+["NATURE","Buaya termasuk...","Reptil","Mamalia","Burung","Amfibi"],
+["NATURE","Lebah menghasilkan...","Madu","Susu","Sutra","Kapur"],
+["NATURE","Fungsi utama akar adalah...","Menyerap air dan mineral","Menghasilkan cahaya","Menghasilkan suara","Menghasilkan panas"],
+["NATURE","Hewan dengan leher sangat panjang adalah...","Jerapah","Zebra","Unta","Rusa"],
+["NATURE","Kelelawar adalah satu-satunya kelompok mamalia yang mampu...","Terbang aktif","Bernapas di air","Mengubah warna","Bertelur"],
+["NATURE","Terumbu karang dibangun terutama oleh...","Polip karang","Cacing tanah","Burung","Mamalia"],
+["NATURE","Pohon yang terkenal sangat tinggi dan tumbuh di California adalah...","Coast redwood","Baobab","Bonsai","Maple"],
+["NATURE","Bunga matahari cenderung mengikuti...","Cahaya","Bulan","Angin","Hujan"],
+["NATURE","Benua yang sebagian besar tertutup es adalah...","Antarktika","Afrika","Australia","Eropa"],
+["NATURE","Hewan yang terkenal tidur sambil bergantung terbalik adalah...","Kelelawar","Koala","Panda","Lumba-lumba"],
+
+["GENERAL","Segitiga memiliki berapa sisi?","3","4","5","6"],
+["GENERAL","Planet tempat kita hidup adalah...","Bumi","Mars","Venus","Jupiter"],
+["GENERAL","Tahun biasa memiliki berapa hari?","365","360","364","366"],
+["GENERAL","Satu hari memiliki berapa jam?","24","12","48","36"],
+["GENERAL","Satu jam memiliki berapa menit?","60","100","30","90"],
+["GENERAL","Simbol kimia O adalah...","Oksigen","Osmium","Emas","Ozon"],
+["GENERAL","12 × 8 = ...","96","86","108","92"],
+["GENERAL","Akar kuadrat 81 adalah...","9","8","7","10"],
+["GENERAL","Bangun dengan empat sisi sama panjang adalah...","Persegi","Segitiga","Trapesium","Lingkaran"],
+["GENERAL","Alat untuk mengukur suhu adalah...","Termometer","Barometer","Speedometer","Altimeter"],
+["GENERAL","Alat untuk mengukur tekanan udara adalah...","Barometer","Termometer","Mikroskop","Kompas"],
+["GENERAL","Kompas membantu menentukan...","Arah","Suhu","Berat","Waktu"],
+["GENERAL","Pelangi secara klasik disebut memiliki berapa warna?","7","5","6","8"],
+["GENERAL","Bahan utama kaca umumnya berasal dari...","Pasir silika","Kayu","Batu bara","Kapas"],
+["GENERAL","Satuan waktu lebih kecil dari menit adalah...","Detik","Jam","Hari","Minggu"],
+["GENERAL","Benua dengan jumlah negara paling banyak adalah...","Afrika","Eropa","Asia","Amerika Selatan"],
+["GENERAL","Benda yang mengorbit planet disebut...","Satelit","Meteorologi","Kompas","Komet"],
+["GENERAL","Lapisan gas yang menyelimuti Bumi disebut...","Atmosfer","Litosfer","Hidrosfer","Biosfer"],
+["GENERAL","Sumber energi utama bagi kehidupan di Bumi adalah...","Matahari","Bulan","Angin malam","Gunung berapi"],
+["GENERAL","Berapakah 15 + 27?","42","32","52","40"]
+];
+let qs=[];
+function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function build(){qs=BANK.map(r=>({cat:r[0],q:r[1],ans:r[2],ch:shuffle([r[2],r[3],r[4],r[5]])}));shuffle(qs)}
+function hud(){scoreEl.textContent=score;bestEl.textContent=Math.max(best,score);livesEl.textContent="❤️".repeat(lives)||"💔";fill.style.width=Math.min(100,qi/qs.length*100)+"%"}
+const scoreEl=document.getElementById("score"),bestEl=document.getElementById("best"),livesEl=document.getElementById("lives"),fill=document.getElementById("fill");
+function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),1600)}
+function ask(){if(qi>=qs.length)return finish(true);locked=false;let d=qs[qi];cat.textContent=d.cat+" • QUESTION "+(qi+1);question.textContent=d.q;feedback.textContent="";answers.innerHTML="";d.ch.forEach(c=>{let b=document.createElement("button");b.className="answer";b.textContent=c;b.onclick=()=>answer(c,b);answers.appendChild(b)})}
+function answer(c,b){if(locked)return;locked=true;let d=qs[qi];document.querySelectorAll(".answer").forEach(x=>x.disabled=true);if(c===d.ans){b.classList.add("correct");streak++;let n=10+Math.min(streak,10)*2;score+=n;dist+=40+streak*3;feedback.textContent="BENAR! +"+n+" ⭐";feedback.style.color="#86efac";toast(streak>2?"🔥 STREAK x"+streak:"💙 HopePaw maju!")}else{b.classList.add("wrong");document.querySelectorAll(".answer").forEach(x=>{if(x.textContent===d.ans)x.classList.add("correct")});lives--;streak=0;dist=Math.max(0,dist-15);feedback.textContent="SALAH! Jawaban: "+d.ans;feedback.style.color="#fda4af";toast(lives?"Jangan menyerah! 🐾":"Kesempatan habis!")}hud();qi++;setTimeout(()=>lives?ask():finish(false),850)}
+function start(){build();qi=0;score=0;lives=3;streak=0;dist=0;road=0;parts=[];playing=true;menuEl.style.display="none";result.style.display="none";hudEl.style.display="block";quiz.style.display="block";hud();ask()}
+function finish(done){playing=false;if(score>best){best=score;localStorage.setItem("HOPEPAW_KNOWLEDGE_BEST",best)}hudEl.style.display="none";quiz.style.display="none";result.style.display="flex";title.textContent=done?"KNOWLEDGE MASTER! 🏆":"KEEP GOING! 🐾";resultSub.textContent="SCORE "+score+" • BEST "+best;resultText.textContent=done?"Kamu menyelesaikan seluruh bank soal! Main lagi untuk mengalahkan skor terbaik.":"Kamu kehabisan nyawa. Coba lagi dan pecahkan high score!"}
+function menu(){result.style.display="none";menuEl.style.display="flex"}
+function resetBest(){best=0;localStorage.removeItem("HOPEPAW_KNOWLEDGE_BEST");toast("High score dihapus")}
+const menuEl=document.getElementById("menu"),result=document.getElementById("result"),hudEl=document.getElementById("hud"),quiz=document.getElementById("quiz"),cat=document.getElementById("cat"),question=document.getElementById("question"),answers=document.getElementById("answers"),feedback=document.getElementById("feedback"),title=document.getElementById("title"),resultSub=document.getElementById("resultSub"),resultText=document.getElementById("resultText");
+
+let clouds=Array.from({length:10},()=>({x:Math.random()*W,y:50+Math.random()*250,s:.6+Math.random()}));
+function tree(x,y,s){X.fillStyle="#754c24";X.fillRect(x-5*s,y,10*s,34*s);X.fillStyle="#166534";X.beginPath();X.arc(x,y,25*s,0,7);X.fill();X.fillStyle="#22c55e";X.beginPath();X.arc(x-14*s,y-10*s,17*s,0,7);X.fill();X.beginPath();X.arc(x+14*s,y-8*s,16*s,0,7);X.fill()}
+function draw(){
+ let g=X.createLinearGradient(0,0,0,H);g.addColorStop(0,"#72c9f5");g.addColorStop(.48,"#b9e8a2");g.addColorStop(1,"#79c56a");X.fillStyle=g;X.fillRect(0,0,W,H);
+ X.fillStyle="#76b96b";X.beginPath();X.moveTo(0,370);X.quadraticCurveTo(100,280,200,370);X.quadraticCurveTo(320,250,480,365);X.lineTo(480,500);X.lineTo(0,500);X.fill();
+ clouds.forEach(c=>{X.fillStyle="#ffffffb8";X.beginPath();X.arc(c.x,c.y,18*c.s,0,7);X.arc(c.x+22,c.y-5,25*c.s,0,7);X.arc(c.x+48,c.y+2,17*c.s,0,7);X.fill();c.x-=.12*c.s;if(c.x<-70)c.x=W+30});
+ X.fillStyle="#d9bd83";X.beginPath();X.moveTo(155,H);X.lineTo(195,0);X.lineTo(330,0);X.lineTo(370,H);X.closePath();X.fill();
+ X.strokeStyle="#ffffff45";X.lineWidth=3;for(let y=-50+(road%70);y<H;y+=70){X.beginPath();X.moveTo(258,y);X.lineTo(262,y+38);X.stroke()}
+ for(let i=0;i<8;i++){let y=110+i*105-(road%105);tree(65,y,.8+(i%3)*.12);tree(405,y+35,.75+(i%3)*.12)}
+ let finish=Math.max(55,300-dist/3);X.fillStyle="#ffffffe8";X.fillRect(178,finish-34,124,45);X.fillStyle="#2563eb";X.font="900 13px Arial";X.textAlign="center";X.fillText("💙 HOPE AHEAD",240,finish-7);X.strokeStyle="#475569";X.lineWidth=5;X.beginPath();X.moveTo(190,finish+10);X.lineTo(190,finish+75);X.moveTo(290,finish+10);X.lineTo(290,finish+75);X.stroke();
+ X.fillStyle="#0002";X.beginPath();X.ellipse(105,642,28,7,0,0,7);X.fill();
+ if(img.complete&&img.naturalWidth)X.drawImage(img,67,562,76,76);else{X.font="48px Arial";X.fillText("🐶",105,610)}
+}
+function loop(){if(playing)road+=1.2;draw();requestAnimationFrame(loop)}loop();
+</script></body></html>
