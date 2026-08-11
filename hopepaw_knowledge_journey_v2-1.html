@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>HopePaw — Knowledge Journey</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#06101d;font-family:Arial,Helvetica,sans-serif;touch-action:manipulation}
+body{display:flex;align-items:center;justify-content:center}
+#game{position:relative;width:100vw;height:100vh;max-width:520px;overflow:hidden;background:#8fd9f3}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#hud{position:absolute;top:12px;left:12px;right:12px;z-index:10;display:flex;gap:7px}
+.card{flex:1;min-width:0;padding:7px 9px;border:1px solid rgba(255,255,255,.35);border-radius:13px;background:rgba(4,25,43,.72);backdrop-filter:blur(8px);color:#fff;font-size:9px;font-weight:800}
+.card b{display:block;color:#9edfff;font-size:15px;margin-top:2px}
+#progress{position:absolute;top:76px;left:14px;right:14px;height:5px;border-radius:10px;background:rgba(255,255,255,.28);z-index:10;overflow:hidden}
+#progress i{display:block;width:0;height:100%;background:#fff;border-radius:10px;transition:.25s}
+#questionBox{position:absolute;left:12px;right:12px;bottom:14px;z-index:20;padding:13px 13px 12px;border-radius:20px;background:rgba(4,20,34,.9);border:1px solid rgba(255,255,255,.22);box-shadow:0 12px 35px rgba(0,0,0,.3);color:white}
+#category{font-size:9px;color:#7dd3fc;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}
+#question{font-size:14px;font-weight:800;line-height:1.35;margin:5px 0 10px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.answer{border:1px solid rgba(255,255,255,.13);background:#102c43;color:#fff;border-radius:12px;padding:10px 7px;font-size:11px;font-weight:800;min-height:43px}
+.answer:active{transform:scale(.97)}
+.answer.correct{background:#087f5b!important}
+.answer.wrong{background:#a72c3b!important}
+.answer:disabled{opacity:.9}
+#toast{position:absolute;left:50%;top:92px;transform:translate(-50%,-15px);z-index:30;opacity:0;padding:9px 15px;border-radius:30px;background:rgba(3,18,31,.88);color:#fff;font-weight:900;font-size:11px;white-space:nowrap;transition:.22s}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#menu,#gameover{position:absolute;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px;background:linear-gradient(180deg,rgba(4,28,47,.12),rgba(3,13,26,.94))}
+.panel{width:min(390px,100%);padding:25px 20px;border-radius:28px;background:rgba(4,20,34,.9);border:1px solid rgba(125,211,252,.25);box-shadow:0 20px 60px rgba(0,0,0,.4);color:#fff}
+.logo{font-size:48px;margin-bottom:3px}
+h1{margin:0;color:#8bd8ff;font-size:29px;letter-spacing:2px}
+.sub{margin:6px 0 15px;color:#c8d8e5;font-size:11px;letter-spacing:2px}
+.desc{font-size:12px;line-height:1.65;color:#cbd5e1;margin:0 auto 18px;max-width:320px}
+.btn{width:100%;padding:14px;border:0;border-radius:25px;background:linear-gradient(135deg,#0798dc,#1465d7);color:white;font-weight:900;font-size:13px;margin-top:7px}
+.btn.secondary{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15)}
+#gameover{display:none}
+.result{font-size:12px;color:#cbd5e1;line-height:1.7;margin:12px 0}
+.result strong{color:#7dd3fc;font-size:25px}
+.tip{font-size:10px;color:#94a3b8;margin-top:12px}
+#flash{position:absolute;inset:0;z-index:25;pointer-events:none;opacity:0;background:#fff;transition:.1s}
+</style>
+</head>
+<body>
+<div id="game">
+<canvas id="canvas"></canvas>
+<div id="flash"></div>
+
+<div id="hud">
+  <div class="card">⭐ SCORE<b id="score">0</b></div>
+  <div class="card">🏆 BEST<b id="best">0</b></div>
+  <div class="card">❤️ LIVES<b id="lives">3</b></div>
+  <div class="card">🐾 STREAK<b id="streak">0</b></div>
+</div>
+<div id="progress"><i id="bar"></i></div>
+<div id="toast"></div>
+
+<div id="questionBox" style="display:none">
+  <div id="category">WORLD</div>
+  <div id="question"></div>
+  <div class="answers" id="answers"></div>
+</div>
+
+<div id="menu">
+  <div class="panel">
+    <div class="logo">🐾</div>
+    <h1>HOPEPAW</h1>
+    <div class="sub">KNOWLEDGE JOURNEY</div>
+    <p class="desc">
+      Walk with HopePaw through a living world of knowledge.
+      Answer correctly, keep moving, collect paws and chase your high score.
+    </p>
+    <button class="btn" onclick="startGame()">START JOURNEY</button>
+    <button class="btn secondary" onclick="showHow()">HOW TO PLAY</button>
+    <div class="tip">Your progress and high score are saved on this device.</div>
+  </div>
+</div>
+
+<div id="gameover">
+  <div class="panel">
+    <div class="logo">🐶</div>
+    <h1>JOURNEY ENDED</h1>
+    <div class="result">
+      Score<br><strong id="finalScore">0</strong><br>
+      Best: <b id="finalBest">0</b><br>
+      Questions answered: <b id="finalQuestions">0</b>
+    </div>
+    <button class="btn" onclick="startGame()">RUN AGAIN</button>
+    <button class="btn secondary" onclick="backMenu()">MENU</button>
+  </div>
+</div>
+</div>
+
+<script>
+const canvas=document.getElementById("canvas"),ctx=canvas.getContext("2d");
+let W=520,H=900,dpr=1;
+function resize(){
+  const r=document.getElementById("game").getBoundingClientRect();
+  W=r.width; H=r.height; dpr=Math.min(devicePixelRatio||1,2);
+  canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.width=W+"px";canvas.style.height=H+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+addEventListener("resize",resize);resize();
+
+const mascot="hopepaw.png";
+let img=new Image();img.src=mascot;
+let imgReady=false;img.onload=()=>imgReady=true;
+
+const questions=[
+["Geography","Which country is the largest by land area?","Russia",["Canada","China","United States"]],
+["Geography","What is the capital of Japan?","Tokyo",["Kyoto","Osaka","Seoul"]],
+["Geography","Which ocean is the largest?","Pacific Ocean",["Atlantic Ocean","Indian Ocean","Arctic Ocean"]],
+["Science","Which planet is known as the Red Planet?","Mars",["Venus","Earth","Mercury"]],
+["Science","What gas do plants absorb from the atmosphere?","Carbon dioxide",["Oxygen","Nitrogen","Helium"]],
+["Science","What is H2O commonly called?","Water",["Hydrogen","Oxygen","Salt"]],
+["Space","Which star is closest to Earth?","The Sun",["Sirius","Polaris","Alpha Centauri"]],
+["Space","How many planets are in our Solar System?","8",["7","9","10"]],
+["History","The ancient pyramids of Giza are in which country?","Egypt",["Greece","Mexico","Turkey"]],
+["History","Who was the first person to walk on the Moon?","Neil Armstrong",["Yuri Gagarin","Buzz Aldrin","John Glenn"]],
+["Animals","Which is the largest land animal?","African elephant",["Giraffe","Hippo","Rhino"]],
+["Animals","What is the fastest land animal?","Cheetah",["Lion","Horse","Leopard"]],
+["Animals","Which mammal can truly fly?","Bat",["Flying squirrel","Penguin","Ostrich"]],
+["Culture","Which language has the most native speakers?","Mandarin Chinese",["English","Spanish","Arabic"]],
+["Technology","What does CPU stand for?","Central Processing Unit",["Computer Personal Unit","Central Program Utility","Core Processing User"]],
+["Technology","Which company created the Android operating system?","Google",["Apple","Microsoft","Sony"]],
+["Sports","How many players are on a soccer team on the field?","11",["9","10","12"]],
+["Sports","How many rings are on the Olympic flag?","5",["4","6","7"]],
+["World","What is the currency of Japan?","Yen",["Won","Yuan","Ringgit"]],
+["World","Which continent has the most countries?","Africa",["Asia","Europe","South America"]],
+["Geography","Which country is shaped like a boot?","Italy",["Greece","Portugal","Chile"]],
+["Geography","What is the capital of France?","Paris",["Rome","Madrid","Berlin"]],
+["Geography","Mount Everest lies in which mountain range?","Himalayas",["Andes","Alps","Rockies"]],
+["Science","What force keeps us on the ground?","Gravity",["Magnetism","Friction","Pressure"]],
+["Science","Which organ pumps blood around the body?","Heart",["Lung","Liver","Kidney"]],
+["Science","What is the boiling point of water at sea level in Celsius?","100°C",["50°C","90°C","120°C"]],
+["Space","Which planet is famous for its rings?","Saturn",["Jupiter","Neptune","Mars"]],
+["Space","What galaxy contains our Solar System?","Milky Way",["Andromeda","Whirlpool","Sombrero"]],
+["History","The Roman Empire was centered around which city?","Rome",["Athens","Paris","Carthage"]],
+["History","Which civilization built Machu Picchu?","Inca",["Maya","Roman","Egyptian"]],
+["Animals","What is the largest animal ever known?","Blue whale",["Elephant","Giraffe","Whale shark"]],
+["Animals","Which bird is famous for being unable to fly?","Penguin",["Eagle","Falcon","Swallow"]],
+["Culture","Which country is famous for the Taj Mahal?","India",["Pakistan","Nepal","Bangladesh"]],
+["Culture","Which instrument has black and white keys?","Piano",["Violin","Trumpet","Flute"]],
+["Technology","What does HTML mainly structure?","Web pages",["Computer hardware","Databases only","Phone batteries"]],
+["Technology","Which device is used to measure temperature?","Thermometer",["Barometer","Compass","Altimeter"]],
+["Sports","In basketball, how many points is a free throw worth?","1",["2","3","4"]],
+["Sports","Which sport uses a racket and shuttlecock?","Badminton",["Tennis","Hockey","Cricket"]],
+["World","What is the capital of Australia?","Canberra",["Sydney","Melbourne","Perth"]],
+["World","Which country is famous for the Great Wall?","China",["Japan","India","Mongolia"]],
+["Geography","Which river is traditionally regarded as the longest in the world?","Nile",["Amazon","Yangtze","Mississippi"]],
+["Geography","What is the capital of Indonesia?","Jakarta",["Bandung","Surabaya","Medan"]],
+["Science","What is the chemical symbol for gold?","Au",["Ag","Gd","Go"]],
+["Science","How many bones are in the typical adult human body?","206",["186","216","226"]],
+["Space","What is the name of Earth's natural satellite?","Moon",["Titan","Europa","Phobos"]],
+["Space","Which planet is closest to the Sun?","Mercury",["Venus","Earth","Mars"]],
+["History","Who wrote the Declaration of Independence of the United States?","Thomas Jefferson",["George Washington","Benjamin Franklin","Abraham Lincoln"]],
+["History","Which ancient city was buried by Mount Vesuvius?","Pompeii",["Sparta","Babylon","Troy"]],
+["Animals","What do bees collect from flowers?","Nectar",["Sand","Salt","Bark"]],
+["Animals","Which animal is known for changing its skin color for camouflage?","Chameleon",["Zebra","Panda","Kangaroo"]],
+["Culture","Sushi originated in which country?","Japan",["China","Korea","Thailand"]],
+["Culture","Which city is famous for the Eiffel Tower?","Paris",["London","Vienna","Lisbon"]],
+["Technology","What does Wi-Fi allow devices to do?","Connect wirelessly to a network",["Print money","Measure weight","Create electricity"]],
+["Technology","Which is a programming language?","Python",["Chrome","Linux","Wi-Fi"]],
+["Sports","Which country hosted the 2016 Summer Olympics?","Brazil",["China","UK","Greece"]],
+["Sports","How long is a marathon?","42.195 km",["21.1 km","50 km","10 km"]],
+["World","Which country has the maple leaf on its flag?","Canada",["Norway","Finland","Sweden"]],
+["World","Which sea separates Europe and Africa?","Mediterranean Sea",["Red Sea","Baltic Sea","Caribbean Sea"]],
+["Geography","Which desert is the largest hot desert?","Sahara",["Gobi","Kalahari","Atacama"]],
+["Geography","Which country contains most of the Amazon rainforest?","Brazil",["Peru","Colombia","Bolivia"]],
+["Science","What vitamin is produced in skin through sunlight exposure?","Vitamin D",["Vitamin A","Vitamin C","Vitamin K"]],
+["Science","Which blood cells help fight infection?","White blood cells",["Red blood cells","Platelets","Plasma"]],
+["Space","What is a light-year a measure of?","Distance",["Time","Brightness","Mass"]],
+["Space","Which planet is the largest in our Solar System?","Jupiter",["Saturn","Neptune","Earth"]],
+["History","The Renaissance began in which country?","Italy",["France","England","Germany"]],
+["History","Which famous ship sank in 1912?","Titanic",["Mayflower","Endeavour","Beagle"]],
+["Animals","How many legs does a spider have?","8",["6","10","12"]],
+["Animals","Which animal is the largest living cat species?","Tiger",["Lion","Jaguar","Leopard"]],
+["Culture","Which country is associated with flamenco dancing?","Spain",["Italy","Mexico","Brazil"]],
+["Culture","What is the traditional Japanese garment called?","Kimono",["Hanbok","Sari","Dirndl"]],
+["Technology","What does GPS help determine?","Location",["Blood type","Temperature only","Sound volume"]],
+["Technology","Which company developed the Windows operating system?","Microsoft",["IBM","Nokia","Nintendo"]],
+["Sports","Which sport is played at Wimbledon?","Tennis",["Golf","Rugby","Baseball"]],
+["Sports","How many bases are there in baseball?","4",["3","5","6"]],
+["World","What is the capital of South Korea?","Seoul",["Busan","Tokyo","Taipei"]],
+["World","Which country is known as the Land of the Rising Sun?","Japan",["China","Thailand","Vietnam"]],
+["Geography","Which is the smallest continent by land area?","Australia",["Europe","Antarctica","South America"]],
+["Geography","Which ocean lies between Africa and Australia?","Indian Ocean",["Pacific Ocean","Atlantic Ocean","Arctic Ocean"]],
+["Science","What is the hardest natural substance?","Diamond",["Iron","Quartz","Granite"]],
+["Science","Which particle has a negative electric charge?","Electron",["Proton","Neutron","Photon"]],
+["Space","What is the hottest planet in our Solar System?","Venus",["Mercury","Mars","Jupiter"]],
+["Space","What does a telescope help us observe?","Distant objects in space",["Only weather","Only oceans","Earth's core"]],
+["History","Who was known as the Maid of Orléans?","Joan of Arc",["Cleopatra","Marie Curie","Queen Victoria"]],
+["History","Which wall divided Berlin during the Cold War?","Berlin Wall",["Hadrian's Wall","Great Wall","Western Wall"]],
+["Animals","Which animal is famous for its black-and-white stripes?","Zebra",["Tiger","Panda","Skunk"]],
+["Animals","What is a baby frog called?","Tadpole",["Cub","Calf","Pup"]],
+["Culture","Which country is the birthplace of pizza?","Italy",["France","Greece","Spain"]],
+["Culture","Which festival is known as the Festival of Lights in India?","Diwali",["Holi","Eid","Navratri"]],
+["Technology","What does USB commonly connect?","Electronic devices",["Mountains","Roads","Plants"]],
+["Technology","What is a browser used for?","Accessing websites",["Cooking food","Measuring speed","Charging batteries"]],
+["Sports","Which sport uses a puck?","Ice hockey",["Volleyball","Tennis","Cricket"]],
+["Sports","What color card means a player is sent off in soccer?","Red",["Blue","Green","Yellow"]],
+["World","Which country has the city of Marrakech?","Morocco",["Egypt","Algeria","Tunisia"]],
+["World","What is the capital of Italy?","Rome",["Milan","Venice","Naples"]],
+["Geography","Which country has the most islands in the world?","Sweden",["Indonesia","Philippines","Japan"]],
+["Geography","Which line divides Earth into Northern and Southern Hemispheres?","Equator",["Prime Meridian","Tropic of Cancer","Arctic Circle"]],
+["Science","What is the main gas in Earth's atmosphere?","Nitrogen",["Oxygen","Carbon dioxide","Hydrogen"]],
+["Science","What is the center of an atom called?","Nucleus",["Cell","Orbit","Molecule"]],
+["Space","What causes day and night?","Earth's rotation",["Earth's orbit only","Moon's rotation","Solar flares"]],
+["Space","What is the name of the first artificial satellite?","Sputnik 1",["Apollo 1","Voyager 1","Hubble"]],
+["History","Which ancient civilization developed democracy in Athens?","Ancient Greeks",["Romans","Vikings","Persians"]],
+["History","Who was the first emperor of Rome?","Augustus",["Julius Caesar","Nero","Constantine"]],
+["Animals","Which animal has a long trunk?","Elephant",["Walrus","Moose","Camel"]],
+["Animals","What is a group of lions called?","Pride",["Pack","Herd","Flock"]],
+["Culture","Which language is primarily spoken in Brazil?","Portuguese",["Spanish","French","English"]],
+["Culture","Which city is famous for Big Ben?","London",["Dublin","Paris","Edinburgh"]],
+["Technology","What is cloud computing mainly about?","Using remote internet-based computing resources",["Predicting rain","Flying planes","Growing crops"]],
+["Technology","What does AI stand for?","Artificial Intelligence",["Automatic Internet","Advanced Input","Applied Information"]],
+["Sports","Which sport is Michael Jordan famous for?","Basketball",["Soccer","Tennis","Golf"]],
+["Sports","How many players are on court for one volleyball team?","6",["5","7","8"]],
+["World","Which country has the city of Istanbul?","Turkey",["Greece","Georgia","Bulgaria"]],
+["World","Which continent is the Sahara Desert located in?","Africa",["Asia","Australia","Europe"]],
+["Geography","What is the deepest ocean trench?","Mariana Trench",["Java Trench","Tonga Trench","Puerto Rico Trench"]],
+["Geography","Which country is home to the city of Cairo?","Egypt",["Jordan","Lebanon","Sudan"]],
+["Science","Which metal is liquid at room temperature?","Mercury",["Iron","Copper","Aluminum"]],
+["Science","What is the process plants use to make food using sunlight?","Photosynthesis",["Respiration","Digestion","Fermentation"]],
+["Space","What is a black hole?","An object with gravity so strong that light cannot escape",["A dark planet","A cold star","A space cloud"]],
+["Space","Which spacecraft took the first humans to the Moon?","Apollo 11",["Apollo 8","Voyager 1","Gemini 4"]],
+["History","Which empire used the Colosseum for public spectacles?","Roman Empire",["Mongol Empire","Ottoman Empire","Aztec Empire"]],
+["History","Which famous nurse is associated with the Crimean War?","Florence Nightingale",["Amelia Earhart","Ada Lovelace","Rosa Parks"]],
+["Animals","Which mammal lays eggs?","Platypus",["Dolphin","Koala","Whale"]],
+["Animals","What is the tallest living land animal?","Giraffe",["Elephant","Moose","Camel"]],
+["Culture","Which country is famous for the ancient city of Petra?","Jordan",["Israel","Egypt","Syria"]],
+["Culture","What is origami?","The art of paper folding",["A dance","A martial art","A musical style"]],
+["Technology","What does RAM provide to a computer?","Temporary working memory",["Permanent storage only","Internet access","Power generation"]],
+["Technology","Which number system do computers fundamentally use?","Binary",["Decimal","Roman","Hexadecimal only"]],
+["Sports","Which country is famous for sumo wrestling?","Japan",["China","Mongolia","Korea"]],
+["Sports","How many points is a touchdown worth in American football before the extra point?","6",["3","7","8"]],
+["World","Which country is home to the city of Nairobi?","Kenya",["Ghana","Nigeria","Ethiopia"]],
+["World","Which currency is used by many countries in the European Union?","Euro",["Pound","Dollar","Franc"]],
+["Geography","Which mountain is the highest in Africa?","Mount Kilimanjaro",["Mount Kenya","Atlas Peak","Mount Elgon"]],
+["Geography","Which country has the most people in the world?","India",["China","United States","Indonesia"]],
+["Science","Which organ is mainly responsible for breathing?","Lungs",["Heart","Stomach","Brain"]],
+["Science","What is the pH of pure water at room temperature approximately?","7",["1","5","14"]],
+["Space","Which planet rotates on its side?","Uranus",["Mars","Venus","Earth"]],
+["Space","What is a comet mainly made of?","Ice, dust and rock",["Only metal","Only gas","Only water"]],
+["History","Which civilization built the Colosseum?","Romans",["Greeks","Maya","Vikings"]],
+["History","Who painted the Mona Lisa?","Leonardo da Vinci",["Michelangelo","Van Gogh","Picasso"]],
+["Animals","Which animal is known for its pouch?","Kangaroo",["Penguin","Tiger","Gorilla"]],
+["Animals","Which animal can regenerate lost limbs?","Axolotl",["Horse","Elephant","Eagle"]],
+["Culture","Which country is famous for the Carnival of Rio?","Brazil",["Argentina","Portugal","Spain"]],
+["Culture","What is the main ingredient in traditional hummus?","Chickpeas",["Rice","Potatoes","Corn"]],
+["Technology","What does a QR code store?","Encoded information",["Electricity","Sound waves only","Heat"]],
+["Technology","What is an operating system?","Software that manages a computer's resources",["A web cable","A battery","A monitor"]],
+["Sports","Which sport is associated with the Tour de France?","Cycling",["Running","Swimming","Skiing"]],
+["Sports","Which country invented modern table tennis?","England",["China","Japan","Brazil"]],
+["World","Which country has the city of Reykjavik?","Iceland",["Norway","Finland","Ireland"]],
+["World","Which country is famous for the ancient city of Angkor?","Cambodia",["Vietnam","Laos","Thailand"]],
+["Geography","Which river flows through Egypt?","Nile",["Danube","Thames","Seine"]],
+["Geography","Which country is famous for fjords and is in Scandinavia?","Norway",["Belgium","Austria","Hungary"]],
+["Science","What is the smallest unit of an element that retains its properties?","Atom",["Cell","Tissue","Organ"]],
+["Science","Which sense organ detects light?","Eye",["Ear","Nose","Skin"]],
+["Space","What is the closest planet to Earth on average over time?","Mercury",["Venus","Mars","Jupiter"]],
+["Space","What do astronauts wear outside a spacecraft?","Spacesuit",["Raincoat","Diving suit","Winter jacket"]],
+["History","Which country gifted the Statue of Liberty to the United States?","France",["Canada","Spain","Italy"]],
+["History","Which ancient people are associated with the city of Troy?","Ancient Greeks and Anatolians",["Vikings","Romans only","Aztecs"]],
+["Animals","What is a group of wolves called?","Pack",["Pride","Colony","School"]],
+["Animals","Which animal is known for building dams?","Beaver",["Otter","Fox","Badger"]],
+["Culture","Which country is famous for the Maasai people?","Kenya and Tanzania",["Egypt and Libya","India and Nepal","Brazil and Peru"]],
+["Culture","Which city is known as the City of Canals?","Venice",["Madrid","Prague","Berlin"]],
+["Technology","What is encryption used for?","Protecting information by encoding it",["Increasing screen brightness","Cooling a CPU","Charging a phone"]],
+["Technology","What does a search engine help you find?","Information on the web",["Electricity","Water","Fuel"]],
+["Sports","Which sport has a goalkeeper and a goal?","Soccer",["Golf","Boxing","Swimming"]],
+["Sports","What is the maximum score with one dart in standard darts?","60",["50","100","120"]]
+];
+
+let best=Number(localStorage.getItem("HOPEPAW_KNOWLEDGE_BEST")||0);
+let score=0,lives=3,streak=0,answered=0,active=false,questionIndex=0;
+let deck=[],current=null,worldOffset=0,last=performance.now(),spawnTimer=0,particles=[];
+let obstacles=[],paws=[],clouds=[],trees=[];
+const player={x:.5,y:.73};
+
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+  return a;
+}
+function buildDeck(){deck=shuffle([...Array(questions.length).keys()]);questionIndex=0}
+function nextQuestion(){
+  if(questionIndex>=deck.length)buildDeck();
+  current=questions[deck[questionIndex++]];
+  const choices=shuffle([current[2],...current[3]]);
+  document.getElementById("category").textContent=current[0];
+  document.getElementById("question").textContent=current[1];
+  const box=document.getElementById("answers");box.innerHTML="";
+  choices.forEach(c=>{
+    const b=document.createElement("button");b.className="answer";b.textContent=c;
+    b.onclick=()=>answer(c,b);box.appendChild(b);
+  });
+  document.getElementById("bar").style.width=(Math.min(100,(answered%10)/10*100))+"%";
+}
+function answer(choice,btn){
+  if(!active)return;
+  [...document.querySelectorAll(".answer")].forEach(b=>b.disabled=true);
+  if(choice===current[2]){
+    btn.classList.add("correct");streak++;
+    const gain=10+Math.min(30,streak*2);score+=gain;
+    player.y=Math.max(.42,player.y-.055);
+    paws.push({x:W*.5+Math.random()*100-50,y:H*.62,r:9,t:0});
+    toast("✓ CORRECT  +"+gain+"  HOPEPAW MOVES FORWARD");
+    burst(W*.5,H*.62);
+  }else{
+    btn.classList.add("wrong");streak=0;lives--;
+    player.y=Math.min(.78,player.y+.025);
+    toast("✕ NOT QUITE  •  -1 LIFE");
+    flash();
+  }
+  answered++;
+  updateHud();
+  setTimeout(()=>{
+    if(lives<=0){endGame();return}
+    nextQuestion();
+  },650);
+}
+function startGame(){
+  document.getElementById("menu").style.display="none";
+  document.getElementById("gameover").style.display="none";
+  document.getElementById("questionBox").style.display="block";
+  score=0;lives=3;streak=0;answered=0;active=true;
+  player.y=.73;worldOffset=0;obstacles=[];paws=[];particles=[];
+  buildDeck();updateHud();nextQuestion();last=performance.now();requestAnimationFrame(loop);
+}
+function endGame(){
+  active=false;document.getElementById("questionBox").style.display="none";
+  if(score>best){best=score;localStorage.setItem("HOPEPAW_KNOWLEDGE_BEST",best)}
+  document.getElementById("finalScore").textContent=score;
+  document.getElementById("finalBest").textContent=best;
+  document.getElementById("finalQuestions").textContent=answered;
+  document.getElementById("gameover").style.display="flex";updateHud();
+}
+function backMenu(){
+  document.getElementById("gameover").style.display="none";
+  document.getElementById("menu").style.display="flex";
+}
+function showHow(){toast("Answer correctly to move forward • Wrong answers cost a life")}
+function updateHud(){
+  document.getElementById("score").textContent=score;
+  document.getElementById("best").textContent=best;
+  document.getElementById("lives").textContent="❤️".repeat(lives)||"—";
+  document.getElementById("streak").textContent=streak;
+}
+let toastTimer;
+function toast(t){
+  const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove("show"),1000);
+}
+function flash(){
+  const e=document.getElementById("flash");e.style.opacity=".2";setTimeout(()=>e.style.opacity="0",100);
+}
+function burst(x,y){
+  for(let i=0;i<12;i++)particles.push({x,y,vx:(Math.random()-.5)*3,vy:-Math.random()*3-1,t:0});
+}
+function initWorld(){
+  clouds=Array.from({length:9},(_,i)=>({x:Math.random()*W,y:70+Math.random()*H*.45,s:35+Math.random()*45,v:.1+Math.random()*.25}));
+  trees=Array.from({length:16},(_,i)=>({x:Math.random()*W,y:.25+Math.random()*.58,s:.7+Math.random()*.7,side:Math.random()<.5?-1:1}));
+}
+initWorld();
+
+function drawBackground(dt){
+  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,"#74cbed");g.addColorStop(.5,"#b7e7f2");g.addColorStop(1,"#8fd17d");ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  clouds.forEach(c=>{c.x-=c.v;if(c.x<-100)c.x=W+100;drawCloud(c.x,c.y,c.s)});
+  // distant hills
+  ctx.fillStyle="#76b96b";ctx.beginPath();ctx.moveTo(0,H*.55);for(let x=0;x<=W;x+=60)ctx.quadraticCurveTo(x+30,H*.46+(x%120),x+60,H*.55);ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.fill();
+  trees.forEach(t=>{let y=t.y*H+Math.sin(worldOffset*.01+t.x)*2;drawTree(t.x,y,t.s)});
+}
+function drawCloud(x,y,s){
+  ctx.fillStyle="rgba(255,255,255,.75)";ctx.beginPath();
+  ctx.arc(x,y,s*.35,0,Math.PI*2);ctx.arc(x+s*.35,y-s*.1,s*.48,0,Math.PI*2);ctx.arc(x+s*.75,y,s*.32,0,Math.PI*2);ctx.fill();
+}
+function drawTree(x,y,s){
+  ctx.fillStyle="#7b5135";ctx.fillRect(x-5*s,y,10*s,34*s);
+  ctx.fillStyle="#1b9d57";ctx.beginPath();ctx.arc(x,y,25*s,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle="#29c56a";ctx.beginPath();ctx.arc(x-15*s,y-12*s,17*s,0,Math.PI*2);ctx.arc(x+14*s,y-13*s,18*s,0,Math.PI*2);ctx.fill();
+}
+function drawRoad(){
+  const roadW=Math.min(230,W*.58),x=W/2-roadW/2;
+  ctx.fillStyle="#e4c486";ctx.fillRect(x,0,roadW,H);
+  ctx.fillStyle="#d2ae6f";ctx.fillRect(x,0,5,H);ctx.fillRect(x+roadW-5,0,5,H);
+  ctx.strokeStyle="rgba(255,255,255,.55)";ctx.lineWidth=4;ctx.setLineDash([30,25]);ctx.lineDashOffset=worldOffset;ctx.beginPath();ctx.moveTo(W/2,-20);ctx.lineTo(W/2,H+20);ctx.stroke();ctx.setLineDash([]);
+}
+function drawSign(){
+  const y=H*.37;
+  ctx.fillStyle="#fff";ctx.fillRect(W/2-65,y,130,43);
+  ctx.fillStyle="#143a5b";ctx.font="bold 10px Arial";ctx.textAlign="center";ctx.fillText("💙 HOPE AHEAD",W/2,y+26);
+  ctx.fillStyle="#4b5563";ctx.fillRect(W/2-53,y+43,4,28);ctx.fillRect(W/2+49,y+43,4,28);
+}
+function drawMascot(){
+  const size=Math.min(105,W*.23),x=W/2,y=H*player.y;
+  if(imgReady){
+    ctx.save();ctx.shadowColor="rgba(0,0,0,.25)";ctx.shadowBlur=12;
+    ctx.drawImage(img,x-size/2,y-size*.72,size,size);ctx.restore();
+  }else{
+    ctx.font=size*.55+"px Arial";ctx.textAlign="center";ctx.fillText("🐶",x,y);
+  }
+}
+function drawPaws(dt){
+  paws.forEach(p=>{p.t+=dt;p.y-=dt*.025;ctx.globalAlpha=Math.max(0,1-p.t/900);ctx.font="20px Arial";ctx.textAlign="center";ctx.fillText("🐾",p.x,p.y)});ctx.globalAlpha=1;
+  paws=paws.filter(p=>p.t<900);
+}
+function drawParticles(dt){
+  particles.forEach(p=>{p.t+=dt;p.x+=p.vx;p.y+=p.vy;p.vy+=.06;ctx.globalAlpha=Math.max(0,1-p.t/700);ctx.fillStyle="#fff";ctx.fillRect(p.x,p.y,4,4)});ctx.globalAlpha=1;particles=particles.filter(p=>p.t<700);
+}
+function loop(now){
+  if(!active)return;
+  const dt=Math.min(40,now-last);last=now;worldOffset+=dt*.08;
+  drawBackground(dt);drawRoad();drawSign();drawPaws(dt);drawParticles(dt);drawMascot();
+  requestAnimationFrame(loop);
+}
+</script>
+</body>
+</html>
