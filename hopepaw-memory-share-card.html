@@ -56,15 +56,14 @@ body{
 .game-screen{min-height:570px;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .start-screen{text-align:center;max-width:650px}
 
-/* FIXED MASCOT */
 .big-paw{
   width:150px;height:150px;max-width:42vw;max-height:42vw;margin:0 auto 20px;
   border-radius:50%;display:flex;align-items:center;justify-content:center;
   background:radial-gradient(circle,rgba(96,165,250,.28),rgba(37,99,235,.05));
-  border:1px solid rgba(96,165,250,.3);box-shadow:0 0 60px rgba(37,99,235,.18);
+  border:2px solid rgba(96,165,250,.4);box-shadow:0 0 60px rgba(37,99,235,.25);
   overflow:hidden;animation:pawFloat 3s ease-in-out infinite
 }
-.big-paw img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;border-radius:50%}
+.big-paw img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
 @keyframes pawFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
 .start-screen h2{font-size:clamp(30px,6vw,52px);margin:0 0 12px}
@@ -81,29 +80,26 @@ body{
 .phase-title{font-size:13px;color:var(--light);text-transform:uppercase;letter-spacing:2px;font-weight:800;margin-bottom:7px}
 .phase-main{font-size:clamp(25px,5vw,40px);font-weight:900;margin:0 0 6px;text-align:center}
 .phase-sub{color:var(--muted);text-align:center;margin:0 0 20px;font-size:13px}
-.image-grid,.answer-grid{width:100%;max-width:850px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:10px auto 22px}
+.image-grid,.answer-grid{width:100%;max-width:850px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:10px auto 22px}
 
-/* CIRCULAR CARDS STYLING */
+/* --- KARTU DAN GAMBAR BEN TUK LINGKARAN --- */
 .memory-card{
-  position:relative;aspect-ratio:1;min-height:100px;border-radius:50%;
-  border:2px solid rgba(96,165,250,.3);
-  background:radial-gradient(circle,rgba(30,41,59,.9),rgba(15,23,42,.95));
-  overflow:hidden;animation:appear .35s ease both
+  position:relative;aspect-ratio:1;min-height:90px;border-radius:50%;
+  border:2px solid rgba(96,165,250,.3);background:linear-gradient(145deg,rgba(30,41,59,.9),rgba(15,23,42,.95));
+  overflow:hidden;animation:appear .35s ease both;box-shadow:0 6px 16px rgba(0,0,0,.3);
 }
-.memory-card img,.answer-card img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
-.custom-image{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(37,99,235,.25),rgba(2,6,23,.8));padding:6px;border-radius:50%}
-.custom-image img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-@keyframes appear{from{opacity:0;transform:scale(.7) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
-
 .answer-card{
-  aspect-ratio:1;border-radius:50%;
-  border:2px solid rgba(96,165,250,.25);
+  aspect-ratio:1;border-radius:50%;border:2px solid rgba(96,165,250,.25);
   background:rgba(15,23,42,.9);cursor:pointer;display:flex;align-items:center;justify-content:center;
-  overflow:hidden;transition:.15s;position:relative;padding:0
+  overflow:hidden;transition:all .2s ease;position:relative;padding:0;box-shadow:0 6px 16px rgba(0,0,0,.3);
 }
-.answer-card:hover{transform:translateY(-4px) scale(1.03);border-color:rgba(96,165,250,.8);background:rgba(30,64,175,.3)}
-.answer-card:active{transform:scale(.95)}
+.answer-card:hover{transform:scale(1.05);border-color:rgba(96,165,250,.8);box-shadow:0 0 20px rgba(56,189,248,.3)}
+.answer-card:active{transform:scale(.92)}
 
+.card-image-box{width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden;background:radial-gradient(circle,rgba(37,99,235,.2),rgba(2,6,23,.8));padding:8px}
+.card-image-box img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+@keyframes appear{from{opacity:0;transform:scale(.7) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .feedback{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;font-size:70px;font-weight:900;opacity:0}
 .feedback.show{animation:feedback .65s ease}.feedback.correct{color:var(--green)}.feedback.wrong{color:var(--red)}
 @keyframes feedback{0%{opacity:0;transform:scale(.5)}30%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(1.5)}}
@@ -112,8 +108,8 @@ body{
 @keyframes comboPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-80%) scale(1)}}
 
 .result{text-align:center;width:100%;max-width:650px}
-.result-badge{width:120px;height:120px;margin:0 auto 20px;display:flex;justify-content:center;align-items:center;border-radius:50%;background:rgba(37,99,235,.12);border:1px solid rgba(96,165,250,.25);overflow:hidden}
-.result-badge img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.result-badge{width:120px;height:120px;margin:0 auto 20px;display:flex;justify-content:center;align-items:center;border-radius:50%;background:rgba(37,99,235,.12);border:2px solid rgba(96,165,250,.35);overflow:hidden}
+.result-badge img{width:100%;height:100%;object-fit:cover}
 .result h2{font-size:clamp(30px,6vw,50px);margin:0 0 5px}.result-title{color:var(--light);font-weight:800;margin-bottom:25px}
 .final-score{font-size:65px;font-weight:900;background:linear-gradient(90deg,#60a5fa,#38bdf8);-webkit-background-clip:text;color:transparent;margin-bottom:20px}
 .result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:25px}
@@ -126,8 +122,7 @@ body{
   .stats{gap:6px}.stat{padding:9px 5px}.stat-value{font-size:17px}
   .game-card,.game-screen{min-height:600px}.game-screen{padding:18px 12px}
   .rules{grid-template-columns:1fr;gap:7px}.rule{padding:10px}
-  .image-grid,.answer-grid{gap:7px}.memory-card{min-height:70px;border-radius:50%}.answer-card{border-radius:50%}
-  .final-score{font-size:52px}
+  .image-grid,.answer-grid{gap:8px}.memory-card{min-height:70px}.final-score{font-size:52px}
 }
 @media(max-width:430px){
   .stats{grid-template-columns:repeat(2,1fr)}.image-grid,.answer-grid{grid-template-columns:repeat(3,1fr)}
@@ -137,6 +132,8 @@ body{
 </head>
 
 <body>
+<audio id="bgMusic" src="hopepaw-music.mp3" loop preload="auto"></audio>
+
 <div class="background"><div class="orb one"></div><div class="orb two"></div><div class="orb three"></div></div>
 
 <div class="app">
@@ -217,18 +214,19 @@ body{
 
 <script>
 const IMAGE_ASSETS=[
- {id:"pepee",src:"pepee.png"},
- {id:"shiba",src:"shiba.png"},
- {id:"doge",src:"doge.png"},
- {id:"pump",src:"pump.png"},
- {id:"trump",src:"trump.png"},
- {id:"enseem",src:"enseem.png"},
- {id:"elon",src:"elon.png"},
- {id:"pengu",src:"pengu.png"},
- {id:"cz",src:"cz.png"},
- {id:"solana",src:"solana.png"},
- {id:"btc",src:"btc.png"},
- {id:"bnb",src:"bnb.png"}
+ {id:"pepee", src:"pepee.png"},
+ {id:"shiba", src:"shiba.png"},
+ {id:"doge", src:"doge.png"},
+ {id:"pump", src:"pump.png"},
+ {id:"trump", src:"trump.png"},
+ {id:"enseem", src:"enseem.png"},
+ {id:"elon", src:"elon.png"},
+ {id:"alon", src:"alon.png"},
+ {id:"pengu", src:"pengu.png"},
+ {id:"cz", src:"cz.png"},
+ {id:"solana", src:"solana.png"},
+ {id:"btc", src:"btc.png"},
+ {id:"bnb", src:"bnb.png"}
 ];
 
 let game={
@@ -239,7 +237,13 @@ let game={
 
 const $=id=>document.getElementById(id);
 const startScreen=$("startScreen"),memoryScreen=$("memoryScreen"),answerScreen=$("answerScreen"),resultScreen=$("resultScreen");
-const memoryGrid=$("memoryGrid"),answerGrid=$("answerGrid");
+const memoryGrid=$("memoryGrid"),answerGrid=$("answerGrid"),bgMusic=$("bgMusic");
+
+function playMusic(){
+ if(game.sound){
+  bgMusic.play().catch(e=>console.log("Autoplay blocked by browser."));
+ }
+}
 
 function shuffle(a){
  const x=[...a];
@@ -247,7 +251,7 @@ function shuffle(a){
  return x;
 }
 function getMemoryCount(){return Math.min(6,3+Math.floor((game.level-1)/2))}
-function getAnswerCount(){return Math.min(12,getMemoryCount()+3)}
+function getAnswerCount(){return Math.min(10,getMemoryCount()+3)}
 function getMemoryTime(){return Math.max(1800,5600-(game.level-1)*180)}
 
 function updateUI(){
@@ -263,7 +267,7 @@ function showScreen(screen){
 }
 function createVisual(item){
  const d=document.createElement("div");
- d.className="custom-image";
+ d.className="card-image-box";
  const img=document.createElement("img");
  img.src=item.src;
  img.alt=item.id;
@@ -271,6 +275,7 @@ function createVisual(item){
  return d;
 }
 function startGame(){
+ playMusic();
  cancelAnimationFrame(game.timer);clearTimeout(game.phaseTimer);
  game.running=true;game.level=1;game.score=0;game.combo=0;game.correct=0;game.lives=3;game.selected=new Set();
  updateUI();$("progressLabel").textContent="Level 1";$("progressFill").style.width="0%";playSound("start");nextLevel();
@@ -396,6 +401,7 @@ async function shareScore() {
     ctx.fillStyle = "rgba(15,23,42,.88)";
     roundRect(ctx, 70, 70, 1060, 1360, 42);
     ctx.fill();
+
     ctx.strokeStyle = "rgba(96,165,250,.35)";
     ctx.lineWidth = 3;
     roundRect(ctx, 70, 70, 1060, 1360, 42);
@@ -476,13 +482,13 @@ async function shareScore() {
             link.href = URL.createObjectURL(blob);
             link.click();
             URL.revokeObjectURL(link.href);
+
             alert("Score card HopePaw sudah dibuat. Upload gambar tersebut ke X untuk membagikan hasilmu.");
         },
         "image/png"
     );
 }
 
-/* Rounded rectangle helper */
 function roundRect(ctx, x, y, width, height, radius) {
     ctx.beginPath();
     ctx.moveTo(x + radius, y);
@@ -517,7 +523,15 @@ function playSound(type){
  };
  (seq[type]||[]).forEach(x=>setTimeout(()=>beep(x[0],x[1],type==="wrong"?"sawtooth":"sine"),x[2]));
 }
-function toggleSound(){game.sound=!game.sound;$("soundBtn").textContent=game.sound?"🔊":"🔇"}
+function toggleSound(){
+ game.sound=!game.sound;
+ $("soundBtn").textContent=game.sound?"🔊":"🔇";
+ if(game.sound){
+  bgMusic.play().catch(e=>console.log("Audio play error",e));
+ }else{
+  bgMusic.pause();
+ }
+}
 updateUI();
 </script>
 </body>
