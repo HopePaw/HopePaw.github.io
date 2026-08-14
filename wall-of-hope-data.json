@@ -1,0 +1,72 @@
+[
+  {
+    "id": "001",
+    "theme": "Courage",
+    "quote": "It always seems impossible until it's done.",
+    "author": "Nelson Mandela",
+    "image": "assets/quotes/hope-001.webp"
+  },
+  {
+    "id": "002",
+    "theme": "Patience",
+    "quote": "Great things take time.",
+    "author": "Unknown",
+    "image": "assets/quotes/hope-002.webp"
+  },
+  {
+    "id": "003",
+    "theme": "Hope",
+    "quote": "Hope is being able to see that there is light despite all of the darkness.",
+    "author": "Desmond Tutu",
+    "image": "assets/quotes/hope-003.webp"
+  },
+  {
+    "id": "004",
+    "theme": "Vision",
+    "quote": "The future belongs to those who believe in the beauty of their dreams.",
+    "author": "Eleanor Roosevelt",
+    "image": "assets/quotes/hope-004.webp"
+  },
+  {
+    "id": "005",
+    "theme": "Resilience",
+    "quote": "Fall seven times, stand up eight.",
+    "author": "Japanese Proverb",
+    "image": "assets/quotes/hope-005.webp"
+  },
+  {
+    "id": "006",
+    "theme": "Kindness",
+    "quote": "No act of kindness, no matter how small, is ever wasted.",
+    "author": "Aesop",
+    "image": "assets/quotes/hope-006.webp"
+  },
+  {
+    "id": "007",
+    "theme": "Process",
+    "quote": "Rivers know this: there is no hurry. We shall get there some day.",
+    "author": "A.A. Milne",
+    "image": "assets/quotes/hope-007.webp"
+  },
+  {
+    "id": "008",
+    "theme": "Community",
+    "quote": "If you want to go far, go together.",
+    "author": "African Proverb",
+    "image": "assets/quotes/hope-008.webp"
+  },
+  {
+    "id": "009",
+    "theme": "Mindset",
+    "quote": "Happiness is not by chance, but by choice.",
+    "author": "Jim Rohn",
+    "image": "assets/quotes/hope-009.webp"
+  },
+  {
+    "id": "010",
+    "theme": "Focus",
+    "quote": "Do what you can, with what you have, where you are.",
+    "author": "Theodore Roosevelt",
+    "image": "assets/quotes/hope-010.webp"
+  }
+]
