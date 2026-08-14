@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HopePaw Quotes — Words to Inspire</title>
+  <style>
+    :root {
+      --bg-color: #0b132b;
+      --card-bg: #1c2541;
+      --accent-color: #48cae4;
+      --text-main: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      color: var(--accent-color);
+    }
+
+    header p {
+      margin-top: 8px;
+      color: #a5b4fc;
+      font-size: 1rem;
+    }
+
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      width: 90%;
+      max-width: 1100px;
+      padding: 20px 0 60px;
+    }
+
+    .quote-card {
+      position: relative;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .quote-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(72, 202, 228, 0.3);
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      padding-top: 100%; /* Aspect ratio 1:1 persegi */
+    }
+
+    .image-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.8) 100%);
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .theme-badge {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .quote-text-box {
+      margin-top: auto;
+    }
+
+    .quote-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+    }
+
+    .quote-author {
+      font-size: 0.85rem;
+      color: #e0e1dd;
+      font-style: italic;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>HopePaw Quotes 🐾💙</h1>
+    <p>Words to inspire. Remind. Heal. Hope.</p>
+  </header>
+
+  <main class="quotes-grid" id="quotesContainer">
+    <!-- Kartu Quotes akan dimuat otomatis di sini -->
+  </main>
+
+  <script>
+    // Mengambil data dari wall-of-hope-data.json
+    fetch('wall-of-hope-data.json')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('quotesContainer');
+        data.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'quote-card';
+          card.innerHTML = `
+            <div class="image-container">
+              <img src="${item.image}" alt="${item.theme}" loading="lazy" />
+              <div class="overlay-content">
+                <span class="theme-badge">#${item.id} ${item.theme}</span>
+                <div class="quote-text-box">
+                  <div class="quote-text">“${item.quote}”</div>
+                  <div class="quote-author">— ${item.author}</div>
+                </div>
+              </div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch(error => console.error('Gagal memuat data quote:', error));
+  </script>
+
+</body>
+</html>
