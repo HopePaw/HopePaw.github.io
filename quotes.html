@@ -14,7 +14,6 @@
       --blue-light: #60a5fa;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --twitter-blue: #1d9bf0;
       --border-color: rgba(96, 165, 250, 0.22);
     }
 
@@ -165,10 +164,10 @@
     }
 
     .quote-text {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 700;
       line-height: 1.4;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       color: #ffffff;
       text-shadow: 0 2px 6px rgba(0,0,0,0.9);
     }
@@ -178,44 +177,6 @@
       color: var(--text-muted);
       font-style: italic;
       text-shadow: 0 1px 3px rgba(0,0,0,0.9);
-      margin-bottom: 14px;
-    }
-
-    .share-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: rgba(29, 155, 240, 0.2);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      color: #ffffff;
-      border: 1px solid rgba(29, 155, 240, 0.5);
-      padding: 9px 18px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      width: fit-content;
-    }
-
-    .share-btn:hover {
-      background-color: var(--twitter-blue);
-      border-color: var(--twitter-blue);
-      box-shadow: 0 0 15px rgba(29, 155, 240, 0.6);
-      transform: translateY(-2px);
-    }
-
-    .share-btn:active {
-      transform: scale(0.96);
-    }
-
-    .share-btn svg {
-      width: 14px;
-      height: 14px;
-      fill: currentColor;
     }
 
     footer {
@@ -255,15 +216,6 @@
   </div>
 
   <script>
-    function shareToX(quote, author) {
-      const websiteUrl = window.location.href;
-      const text = `"${quote}" — ${author}\n\nInspired by HopePaw Quotes 🐾💙\n`;
-      const hashtags = "HopePaw,Quotes,HopePawMemory";
-      
-      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(websiteUrl)}&hashtags=${hashtags}`;
-      window.open(twitterUrl, '_blank', 'width=600,height=400');
-    }
-
     fetch('wall-of-hope-data.json')
       .then(response => {
         if (!response.ok) throw new Error("Gagal mengambil data JSON");
@@ -276,9 +228,6 @@
         data.forEach(item => {
           const card = document.createElement('div');
           card.className = 'quote-card';
-          
-          const safeQuote = item.quote.replace(/'/g, "\\'").replace(/"/g, "&quot;");
-          const safeAuthor = item.author.replace(/'/g, "\\'").replace(/"/g, "&quot;");
 
           card.innerHTML = `
             <div class="image-container">
@@ -288,12 +237,6 @@
                 <div class="quote-text-box">
                   <div class="quote-text">“${item.quote}”</div>
                   <div class="quote-author">— ${item.author}</div>
-                  <button onclick="shareToX('${safeQuote}', '${safeAuthor}')" class="share-btn" type="button">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                    Share to X
-                  </button>
                 </div>
               </div>
             </div>
