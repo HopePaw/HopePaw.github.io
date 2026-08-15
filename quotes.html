@@ -10,6 +10,7 @@
       --card-bg: #1c2541;
       --accent-color: #48cae4;
       --text-main: #ffffff;
+      --twitter-blue: #1d9bf0;
     }
 
     body {
@@ -67,7 +68,7 @@
     .image-container {
       position: relative;
       width: 100%;
-      padding-top: 100%; /* Aspect ratio 1:1 persegi */
+      padding-top: 100%; /* Aspect ratio 1:1 */
     }
 
     .image-container img {
@@ -85,7 +86,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.8) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.85) 100%);
       padding: 20px;
       box-sizing: border-box;
       display: flex;
@@ -123,6 +124,40 @@
       color: #e0e1dd;
       font-style: italic;
       text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+      margin-bottom: 12px;
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(29, 155, 240, 0.2);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: #ffffff;
+      border: 1px solid rgba(29, 155, 240, 0.5);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      width: fit-content;
+    }
+
+    .share-btn:hover {
+      background-color: var(--twitter-blue);
+      border-color: var(--twitter-blue);
+      box-shadow: 0 0 12px rgba(29, 155, 240, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .share-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
     }
   </style>
 </head>
@@ -134,11 +169,21 @@
   </header>
 
   <main class="quotes-grid" id="quotesContainer">
-    <!-- Kartu Quotes akan dimuat otomatis di sini -->
+    <!-- Kartu Quotes dimuat otomatis via JS -->
   </main>
 
   <script>
-    // Mengambil data dari wall-of-hope-data.json
+    // Fungsi untuk membuka jendela Tweet otomatis
+    function shareToX(quote, author) {
+      const websiteUrl = window.location.href;
+      const text = `"${quote}" — ${author}\n\nInspired by HopePaw Quotes 🐾💙\n`;
+      const hashtags = "HopePaw,Quotes,Crypto";
+      
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(websiteUrl)}&hashtags=${hashtags}`;
+      window.open(twitterUrl, '_blank', 'width=600,height=400');
+    }
+
+    // Mengambil data dari JSON
     fetch('wall-of-hope-data.json')
       .then(response => response.json())
       .then(data => {
@@ -146,6 +191,11 @@
         data.forEach(item => {
           const card = document.createElement('div');
           card.className = 'quote-card';
+          
+          // Escape karakter petik tunggal agar JS tidak error
+          const safeQuote = item.quote.replace(/'/g, "\\'");
+          const safeAuthor = item.author.replace(/'/g, "\\'");
+
           card.innerHTML = `
             <div class="image-container">
               <img src="${item.image}" alt="${item.theme}" loading="lazy" />
@@ -154,6 +204,12 @@
                 <div class="quote-text-box">
                   <div class="quote-text">“${item.quote}”</div>
                   <div class="quote-author">— ${item.author}</div>
+                  <button onclick="shareToX('${safeQuote}', '${safeAuthor}')" class="share-btn">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                    Share to X
+                  </button>
                 </div>
               </div>
             </div>
@@ -161,7 +217,7 @@
           container.appendChild(card);
         });
       })
-      .catch(error => console.error('Gagal memuat data quote:', error));
+      .catch(error => console.error('Error loading data:', error));
   </script>
 
 </body>
