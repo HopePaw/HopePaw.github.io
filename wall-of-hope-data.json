@@ -68,5 +68,75 @@
     "quote": "Do what you can, with what you have, where you are.",
     "author": "Theodore Roosevelt",
     "image": "assets/quotes/hope-010.webp"
+  },
+  {
+    "id": "011",
+    "theme": "Determination",
+    "quote": "The hands of a clock never turn backward. Stand tall, face forward, and step bravely into tomorrow.",
+    "author": "Napoleon Bonaparte",
+    "image": "assets/quotes/hope-011.webp"
+  },
+  {
+    "id": "012",
+    "theme": "Growth",
+    "quote": "The oak fought the wind and was broken, the willow bent when it must and survived.",
+    "author": "Robert Jordan",
+    "image": "assets/quotes/hope-012.webp"
+  },
+  {
+    "id": "013",
+    "theme": "Peace",
+    "quote": "Peace begins with a smile.",
+    "author": "Mother Teresa",
+    "image": "assets/quotes/hope-013.webp"
+  },
+  {
+    "id": "014",
+    "theme": "Strength",
+    "quote": "You never know how strong you are until being strong is the only choice you have.",
+    "author": "Bob Marley",
+    "image": "assets/quotes/hope-014.webp"
+  },
+  {
+    "id": "015",
+    "theme": "Wisdom",
+    "quote": "Turn your wounds into wisdom.",
+    "author": "Oprah Winfrey",
+    "image": "assets/quotes/hope-015.webp"
+  },
+  {
+    "id": "016",
+    "theme": "Gratitude",
+    "quote": "Gratitude turns what we have into enough.",
+    "author": "Aesop",
+    "image": "assets/quotes/hope-016.webp"
+  },
+  {
+    "id": "017",
+    "theme": "Faith",
+    "quote": "Faith is taking the first step even when you don't see the whole staircase.",
+    "author": "Martin Luther King Jr.",
+    "image": "assets/quotes/hope-017.webp"
+  },
+  {
+    "id": "018",
+    "theme": "Kindness",
+    "quote": "Be kind whenever possible. It is always possible.",
+    "author": "Dalai Lama",
+    "image": "assets/quotes/hope-018.webp"
+  },
+  {
+    "id": "019",
+    "theme": "Hope",
+    "quote": "Once you choose hope, anything's possible.",
+    "author": "Christopher Reeve",
+    "image": "assets/quotes/hope-019.webp"
+  },
+  {
+    "id": "020",
+    "theme": "Action",
+    "quote": "The secret of getting ahead is getting started.",
+    "author": "Mark Twain",
+    "image": "assets/quotes/hope-020.webp"
   }
 ]
