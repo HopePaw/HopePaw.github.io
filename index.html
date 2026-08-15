@@ -258,6 +258,10 @@
                 Game 🎮
             </a>
 
+            <a href="quotes.html" class="hover:text-white transition text-blue-400 font-medium">
+                Quotes 📜
+            </a>
+
             <a href="#values" class="hover:text-white transition">
                 Values
             </a>
@@ -368,6 +372,14 @@
             </a>
 
             <a
+                href="quotes.html"
+                @click="mobileMenu=false"
+                class="block py-3 text-blue-400 font-semibold"
+            >
+                Quotes 📜
+            </a>
+
+            <a
                 href="#values"
                 @click="mobileMenu=false"
                 class="block py-3 text-gray-300"
@@ -449,7 +461,7 @@
                         class="w-2 h-2 rounded-full bg-green-400 animate-pulse"
                     ></span>
 
-                    Building in Public — Day 18
+                    Building in Public — Day 19
 
                 </div>
 
@@ -522,16 +534,16 @@
 
 
                     <a
-                        href="whitepaper.html"
+                        href="quotes.html"
                         class="border border-blue-500/30
                                hover:border-blue-400
                                hover:bg-blue-500/10
                                px-6 py-3.5
                                rounded-xl
                                font-semibold
-                               transition"
+                               transition text-blue-300 flex items-center gap-2"
                     >
-                        Read Whitepaper
+                        Explore Quotes 📜
                     </a>
 
                 </div>
@@ -627,7 +639,7 @@
 
         <div class="text-center py-5">
             <div class="text-3xl font-extrabold text-blue-400">
-                18
+                19
             </div>
             <div class="text-xs text-gray-500 mt-1">
                 Days Building
@@ -647,10 +659,10 @@
 
         <div class="text-center py-5">
             <div class="text-3xl font-extrabold text-blue-400">
-                ∞
+                20
             </div>
             <div class="text-xs text-gray-500 mt-1">
-                Hope
+                Quotes Collection
             </div>
         </div>
 
@@ -671,56 +683,101 @@
 
 
 <!-- ========================================= -->
-<!-- MINI GAME CARD CTA -->
+<!-- ECOSYSTEM FEATURES (GAME & QUOTES) -->
 <!-- ========================================= -->
 
 <section
-    id="game"
-    class="max-w-4xl mx-auto px-5 md:px-6 py-12 scroll-mt-20"
+    id="features"
+    class="max-w-5xl mx-auto px-5 md:px-6 py-12 scroll-mt-20"
 >
 
-    <div
-        class="flex flex-col md:flex-row
-               items-center
-               justify-between
-               gap-6
-               border border-blue-500/20
-               rounded-3xl
-               p-8 md:p-10
-               bg-blue-500/[0.03]
-               shadow-xl shadow-blue-600/5"
-    >
+    <div class="grid md:grid-cols-2 gap-6">
 
-        <div>
+        <!-- GAME CARD -->
+        <div
+            class="flex flex-col justify-between
+                   border border-blue-500/20
+                   rounded-3xl
+                   p-8
+                   bg-blue-500/[0.03]
+                   shadow-xl shadow-blue-600/5"
+        >
 
-            <div class="text-xs text-blue-400 font-bold uppercase tracking-widest flex items-center gap-2">
-                <span>Interactive Experience</span> 🎮
+            <div>
+
+                <div class="text-xs text-blue-400 font-bold uppercase tracking-widest flex items-center gap-2">
+                    <span>Interactive Experience</span> 🎮
+                </div>
+
+                <h3 class="text-2xl font-extrabold mt-2">
+                    HopePaw Memory Game
+                </h3>
+
+                <p class="text-sm text-gray-400 mt-2 leading-relaxed">
+                    Test your memory skills while exploring the HopePaw ecosystem! Find matching card pairs and share your top score.
+                </p>
+
             </div>
 
-            <h3 class="text-2xl md:text-3xl font-extrabold mt-2">
-                HopePaw Memory Game
-            </h3>
 
-            <p class="text-sm text-gray-400 mt-2 max-w-lg leading-relaxed">
-                Test your memory skills while exploring the HopePaw ecosystem! Find matching card pairs and share your top score.
-            </p>
+            <a
+                href="hopepaw-memory-share-card.html"
+                class="mt-6 inline-flex justify-center items-center gap-2
+                       bg-blue-600
+                       hover:bg-blue-500
+                       px-6 py-3.5
+                       rounded-xl
+                       font-semibold
+                       shadow-lg shadow-blue-600/20
+                       transition"
+            >
+                Play Game Now 🎮
+            </a>
 
         </div>
 
-
-        <a
-            href="hopepaw-memory-share-card.html"
-            class="whitespace-nowrap
-                   bg-blue-600
-                   hover:bg-blue-500
-                   px-7 py-3.5
-                   rounded-xl
-                   font-semibold
-                   shadow-lg shadow-blue-600/20
-                   transition flex items-center gap-2"
+        <!-- QUOTES CARD -->
+        <div
+            class="flex flex-col justify-between
+                   border border-blue-500/20
+                   rounded-3xl
+                   p-8
+                   bg-blue-500/[0.03]
+                   shadow-xl shadow-blue-600/5"
         >
-            Play Game Now 🎮
-        </a>
+
+            <div>
+
+                <div class="text-xs text-blue-400 font-bold uppercase tracking-widest flex items-center gap-2">
+                    <span>Inspiration Gallery</span> 📜
+                </div>
+
+                <h3 class="text-2xl font-extrabold mt-2">
+                    HopePaw Quotes 🐾
+                </h3>
+
+                <p class="text-sm text-gray-400 mt-2 leading-relaxed">
+                    Explore 20 curated cards of wisdom, resilience, and hope from historical thinkers, featuring HopePaw artwork.
+                </p>
+
+            </div>
+
+
+            <a
+                href="quotes.html"
+                class="mt-6 inline-flex justify-center items-center gap-2
+                       border border-blue-500/30
+                       hover:bg-blue-500/10
+                       hover:border-blue-400
+                       px-6 py-3.5
+                       rounded-xl
+                       font-semibold
+                       transition text-blue-300"
+            >
+                Explore Quotes 📜
+            </a>
+
+        </div>
 
     </div>
 
@@ -1112,7 +1169,7 @@
         >
             Latest milestone:
             <span class="text-blue-400 font-semibold">
-                Day 16
+                Day 19
             </span>
         </div>
 
@@ -1135,7 +1192,7 @@
         <div class="space-y-8">
 
 
-            <!-- DAY 16 -->
+            <!-- DAY 19 -->
 
             <div class="relative pl-9">
 
@@ -1165,13 +1222,13 @@
                                uppercase
                                tracking-wider"
                     >
-                        Day 16
+                        Day 19
                     </div>
 
                     <h3
                         class="font-bold text-lg mt-2"
                     >
-                        Interactive Mini-Game Launched
+                        HopePaw Quotes Ecosystem Launched 📜
                     </h3>
 
                     <p
@@ -1180,6 +1237,43 @@
                                leading-relaxed
                                mt-2"
                     >
+                        Designed and deployed a full gallery of 20 inspiring 3D quote cards featuring HopePaw to spread hope, strength, and courage across the community.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- DAY 16 -->
+
+            <div class="relative pl-9">
+
+                <div
+                    class="absolute left-0 top-1
+                           w-[23px] h-[23px]
+                           rounded-full
+                           bg-blue-500/40
+                           border-4
+                           border-[#030712]"
+                ></div>
+
+
+                <div
+                    class="border border-white/5
+                           rounded-2xl
+                           p-6"
+                >
+
+                    <div class="text-xs text-blue-400 font-bold">
+                        DAY 16
+                    </div>
+
+                    <h3 class="font-bold mt-2">
+                        Interactive Mini-Game Launched
+                    </h3>
+
+                    <p class="text-sm text-gray-500 mt-2">
                         Created and integrated the HopePaw Memory Game directly into the ecosystem to bring fun, engagement, and interactive learning to the community.
                     </p>
 
@@ -1196,7 +1290,7 @@
                     class="absolute left-0 top-1
                            w-[23px] h-[23px]
                            rounded-full
-                           bg-blue-500/40
+                           bg-blue-500/30
                            border-4
                            border-[#030712]"
                 ></div>
@@ -1233,7 +1327,7 @@
                     class="absolute left-0 top-1
                            w-[23px] h-[23px]
                            rounded-full
-                           bg-blue-500/30
+                           bg-blue-500/20
                            border-4
                            border-[#030712]"
                 ></div>
@@ -1255,43 +1349,6 @@
 
                     <p class="text-sm text-gray-500 mt-2">
                         The project's first formal documentation was added.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- DAY 10 -->
-
-            <div class="relative pl-9">
-
-                <div
-                    class="absolute left-0 top-1
-                           w-[23px] h-[23px]
-                           rounded-full
-                           bg-blue-500/20
-                           border-4
-                           border-[#030712]"
-                ></div>
-
-
-                <div
-                    class="border border-white/5
-                           rounded-2xl
-                           p-6"
-                >
-
-                    <div class="text-xs text-blue-400 font-bold">
-                        DAY 10
-                    </div>
-
-                    <h3 class="font-bold mt-2">
-                        Website & Roadmap
-                    </h3>
-
-                    <p class="text-sm text-gray-500 mt-2">
-                        HopePaw's public website and roadmap continued to take shape.
                     </p>
 
                 </div>
@@ -1436,21 +1493,21 @@
                 <div class="space-y-4 text-sm text-gray-400">
 
                     <div class="flex justify-between">
-                        <span>Website</span>
+                        <span>Website & Brand</span>
                         <span class="text-green-400">
                             ✓
                         </span>
                     </div>
 
                     <div class="flex justify-between">
-                        <span>Brand Identity</span>
+                        <span>Memory Mini-Game</span>
                         <span class="text-green-400">
                             ✓
                         </span>
                     </div>
 
                     <div class="flex justify-between">
-                        <span>HopePaw Mascot</span>
+                        <span>HopePaw Quotes Gallery</span>
                         <span class="text-green-400">
                             ✓
                         </span>
@@ -2069,6 +2126,13 @@
                     </a>
 
                     <a
+                        href="quotes.html"
+                        class="block hover:text-white"
+                    >
+                        HopePaw Quotes
+                    </a>
+
+                    <a
                         href="#timeline"
                         class="block hover:text-white"
                     >
@@ -2125,7 +2189,7 @@
             </span>
 
             <span>
-                HopePaw Website v1.2 • August 2026
+                HopePaw Website v1.3 • August 2026
             </span>
 
         </div>
