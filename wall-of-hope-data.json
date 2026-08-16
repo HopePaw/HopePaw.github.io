@@ -138,5 +138,75 @@
     "quote": "The secret of getting ahead is getting started.",
     "author": "Mark Twain",
     "image": "assets/quotes/hope-020.webp"
+  },
+  {
+    "id": "021",
+    "theme": "Courage",
+    "quote": "Courage is not the absence of fear, but the triumph over it.",
+    "author": "Nelson Mandela",
+    "image": "assets/quotes/hope-021.webp"
+  },
+  {
+    "id": "022",
+    "theme": "Belief",
+    "quote": "Believe you can and you're halfway there.",
+    "author": "Theodore Roosevelt",
+    "image": "assets/quotes/hope-022.webp"
+  },
+  {
+    "id": "023",
+    "theme": "Patience",
+    "quote": "Patience is not simply the ability to wait, it is how we behave while we're waiting.",
+    "author": "Joyce Meyer",
+    "image": "assets/quotes/hope-023.webp"
+  },
+  {
+    "id": "024",
+    "theme": "Purpose",
+    "quote": "The two most important days in your life are the day you are born and the day you find out why.",
+    "author": "Mark Twain",
+    "image": "assets/quotes/hope-024.webp"
+  },
+  {
+    "id": "025",
+    "theme": "Light",
+    "quote": "Nothing can dim the light which shines from within.",
+    "author": "Maya Angelou",
+    "image": "assets/quotes/hope-025.webp"
+  },
+  {
+    "id": "026",
+    "theme": "Strength",
+    "quote": "Out of suffering have emerged the strongest souls; the most massive characters are seared with scars.",
+    "author": "Kahlil Gibran",
+    "image": "assets/quotes/hope-026.webp"
+  },
+  {
+    "id": "027",
+    "theme": "Dreams",
+    "quote": "All our dreams can come true, if we have the courage to pursue them.",
+    "author": "Walt Disney",
+    "image": "assets/quotes/hope-027.webp"
+  },
+  {
+    "id": "028",
+    "theme": "Grace",
+    "quote": "In a world where you can be anything, be kind.",
+    "author": "Jennifer Dukes Lee",
+    "image": "assets/quotes/hope-028.webp"
+  },
+  {
+    "id": "029",
+    "theme": "Persistence",
+    "quote": "Strive not to be a success, but rather to be of value.",
+    "author": "Albert Einstein",
+    "image": "assets/quotes/hope-029.webp"
+  },
+  {
+    "id": "030",
+    "theme": "Hope",
+    "quote": "Keep your face always toward the sunshine—and shadows will fall behind you.",
+    "author": "Walt Whitman",
+    "image": "assets/quotes/hope-030.webp"
   }
 ]
