@@ -16,7 +16,7 @@
     <!-- SEO -->
     <meta
         name="description"
-        content="HopePaw — A Meme With A Mission. Building hope through community, transparency, and purpose."
+        content="HopePaw — A Meme With A Mission. $HOPEPAW is now live on Solana."
     >
 
     <meta name="theme-color" content="#030712">
@@ -180,7 +180,13 @@
         activeTab: 'vision',
         openFaq: null,
         mobileMenu: false,
-        showTopBtn: false
+        showTopBtn: false,
+        copied: false,
+        copyCA() {
+            navigator.clipboard.writeText('7eSwRbsquHEN8x1x25c8R1aQY8VieQpcbEkTD2rLpump');
+            this.copied = true;
+            setTimeout(() => this.copied = false, 2000);
+        }
     }"
     @scroll.window="showTopBtn = window.scrollY > 400"
 >
@@ -200,7 +206,7 @@
 
 
 <!-- ========================================= -->
-<!-- NAVBAR -->
+<!-- NAVBAR (STEP 8: ADDED $HOPEPAW LINK) -->
 <!-- ========================================= -->
 
 <nav
@@ -260,6 +266,10 @@
 
             <a href="quotes.html" class="hover:text-white transition text-blue-400 font-medium">
                 Quotes 📜
+            </a>
+
+            <a href="#token" class="text-green-400 font-semibold hover:text-green-300 transition flex items-center gap-1">
+                $HOPEPAW 🟢
             </a>
 
             <a href="#values" class="hover:text-white transition">
@@ -380,6 +390,14 @@
             </a>
 
             <a
+                href="#token"
+                @click="mobileMenu=false"
+                class="block py-3 text-green-400 font-semibold"
+            >
+                $HOPEPAW 🟢
+            </a>
+
+            <a
                 href="#values"
                 @click="mobileMenu=false"
                 class="block py-3 text-gray-300"
@@ -428,7 +446,7 @@
 
 
 <!-- ========================================= -->
-<!-- HERO -->
+<!-- HERO (STEP 1: UPDATED FOR LIVE TOKEN) -->
 <!-- ========================================= -->
 
 <section
@@ -448,12 +466,12 @@
 
                 <div
                     class="inline-flex items-center gap-2
-                           border border-blue-500/20
-                           bg-blue-500/5
+                           border border-green-500/30
+                           bg-green-500/10
                            px-3.5 py-2
                            rounded-full
                            text-xs font-semibold
-                           text-blue-300
+                           text-green-400
                            mb-6"
                 >
 
@@ -461,7 +479,7 @@
                         class="w-2 h-2 rounded-full bg-green-400 animate-pulse"
                     ></span>
 
-                    Building in Public — Day 21
+                    🟢 $HOPEPAW IS LIVE — Building in Public
 
                 </div>
 
@@ -493,8 +511,7 @@
                            leading-relaxed
                            max-w-xl"
                 >
-                    Building hope through community,
-                    transparency, and purpose.
+                    $HOPEPAW is now live on Solana.
                 </p>
 
 
@@ -518,7 +535,7 @@
                 >
 
                     <a
-                        href="https://x.com/HopePawHQ"
+                        href="https://pump.fun/coin/7eSwRbsquHEN8x1x25c8R1aQY8VieQpcbEkTD2rLpump"
                         target="_blank"
                         rel="noopener"
                         class="bg-blue-600
@@ -527,9 +544,9 @@
                                rounded-xl
                                font-semibold
                                shadow-lg shadow-blue-600/20
-                               transition"
+                               transition flex items-center gap-2"
                     >
-                        Follow HopePaw
+                        View $HOPEPAW →
                     </a>
 
 
@@ -626,7 +643,93 @@
 
 
 <!-- ========================================= -->
-<!-- QUICK STATS -->
+<!-- STEP 2: SPECIAL $HOPEPAW IS LIVE SECTION -->
+<!-- ========================================= -->
+
+<section
+    id="token"
+    class="max-w-5xl mx-auto px-5 md:px-6 py-12 scroll-mt-20"
+>
+    <div
+        class="border border-blue-500/30
+               bg-blue-500/[0.03]
+               rounded-3xl
+               p-8 md:p-10
+               shadow-xl shadow-blue-600/5"
+    >
+        <div class="max-w-3xl">
+            <span
+                class="text-xs font-bold uppercase tracking-widest text-green-400 bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20"
+            >
+                Token Launched
+            </span>
+
+            <h2 class="text-3xl md:text-4xl font-extrabold mt-4">
+                $HOPEPAW is Live 🟢
+            </h2>
+
+            <p class="text-gray-300 leading-relaxed mt-4">
+                HopePaw has officially launched on Solana. $HOPEPAW is the token powering the next chapter of the HopePaw journey.
+            </p>
+
+            <p class="text-xs text-yellow-400/90 leading-relaxed mt-2 font-medium">
+                ⚠️ Always verify the contract address before interacting with the token.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-4 mt-8">
+            <div class="border border-white/5 bg-black/30 rounded-2xl p-4">
+                <div class="text-xs text-gray-500">Token</div>
+                <div class="font-extrabold text-lg mt-1 text-blue-400">$HOPEPAW</div>
+            </div>
+
+            <div class="border border-white/5 bg-black/30 rounded-2xl p-4">
+                <div class="text-xs text-gray-500">Network</div>
+                <div class="font-extrabold text-lg mt-1">Solana</div>
+            </div>
+
+            <div class="border border-white/5 bg-black/30 rounded-2xl p-4">
+                <div class="text-xs text-gray-500">Status</div>
+                <div class="font-extrabold text-lg mt-1 text-green-400">🟢 Live</div>
+            </div>
+
+            <div class="border border-white/5 bg-black/30 rounded-2xl p-4 md:col-span-1">
+                <div class="text-xs text-gray-500">Platform</div>
+                <div class="font-extrabold text-lg mt-1">Pump.fun</div>
+            </div>
+        </div>
+
+        <div class="border border-white/5 bg-black/30 rounded-2xl p-5 mt-4">
+            <div class="text-xs text-gray-500 mb-1">Contract Address</div>
+            <div class="font-mono text-xs md:text-sm text-blue-300 break-all select-all">
+                7eSwRbsquHEN8x1x25c8R1aQY8VieQpcbEkTD2rLpump
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-4 mt-6">
+            <a
+                href="https://pump.fun/coin/7eSwRbsquHEN8x1x25c8R1aQY8VieQpcbEkTD2rLpump"
+                target="_blank"
+                rel="noopener"
+                class="bg-blue-600 hover:bg-blue-500 px-6 py-3.5 rounded-xl font-semibold transition shadow-lg shadow-blue-600/20"
+            >
+                View on Pump.fun →
+            </a>
+
+            <button
+                @click="copyCA()"
+                class="border border-blue-500/30 hover:border-blue-400 hover:bg-blue-500/10 px-6 py-3.5 rounded-xl font-semibold transition text-blue-300"
+            >
+                <span x-text="copied ? 'Copied! 🐾' : 'Copy Contract Address'"></span>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- ========================================= -->
+<!-- QUICK STATS (STEP 3: UPDATED) -->
 <!-- ========================================= -->
 
 <section
@@ -637,9 +740,9 @@
         class="grid grid-cols-2 md:grid-cols-4 gap-3"
     >
 
-        <div class="text-center py-5">
+        <div class="text-center py-5 border border-white/5 rounded-2xl bg-white/[0.01]">
             <div class="text-3xl font-extrabold text-blue-400">
-                21
+                21+
             </div>
             <div class="text-xs text-gray-500 mt-1">
                 Days Building
@@ -647,7 +750,7 @@
         </div>
 
 
-        <div class="text-center py-5">
+        <div class="text-center py-5 border border-white/5 rounded-2xl bg-white/[0.01]">
             <div class="text-3xl font-extrabold text-blue-400">
                 1
             </div>
@@ -657,22 +760,22 @@
         </div>
 
 
-        <div class="text-center py-5">
+        <div class="text-center py-5 border border-white/5 rounded-2xl bg-white/[0.01]">
             <div class="text-3xl font-extrabold text-blue-400">
                 40+
             </div>
             <div class="text-xs text-gray-500 mt-1">
-                Quotes Collection
+                HopePaw Quotes
             </div>
         </div>
 
 
-        <div class="text-center py-5">
-            <div class="text-3xl font-extrabold text-blue-400">
-                100%
+        <div class="text-center py-5 border border-green-500/30 rounded-2xl bg-green-500/5">
+            <div class="text-3xl font-extrabold text-green-400 animate-pulse">
+                LIVE
             </div>
-            <div class="text-xs text-gray-500 mt-1">
-                Building in Public
+            <div class="text-xs text-gray-400 mt-1 font-semibold">
+                $HOPEPAW
             </div>
         </div>
 
@@ -1129,7 +1232,7 @@
 
 
 <!-- ========================================= -->
-<!-- BUILDING IN PUBLIC -->
+<!-- BUILDING IN PUBLIC (STEP 4: UPDATED DAY 21) -->
 <!-- ========================================= -->
 
 <section
@@ -1168,8 +1271,8 @@
             class="text-sm text-gray-500"
         >
             Latest milestone:
-            <span class="text-blue-400 font-semibold">
-                Day 19
+            <span class="text-green-400 font-semibold">
+                Day 21
             </span>
         </div>
 
@@ -1190,6 +1293,59 @@
 
 
         <div class="space-y-8">
+
+
+            <!-- DAY 21 (ADDED LAUNCH MILESTONE) -->
+
+            <div class="relative pl-9">
+
+                <div
+                    class="absolute left-0 top-1
+                           w-[23px] h-[23px]
+                           rounded-full
+                           bg-green-500
+                           border-4
+                           border-[#030712]
+                           shadow-lg
+                           shadow-green-500/40"
+                ></div>
+
+
+                <div
+                    class="border border-green-500/30
+                           bg-green-500/5
+                           rounded-2xl
+                           p-6"
+                >
+
+                    <div
+                        class="text-xs
+                               font-bold
+                               text-green-400
+                               uppercase
+                               tracking-wider"
+                    >
+                        Day 21
+                    </div>
+
+                    <h3
+                        class="font-bold text-lg mt-2 text-white"
+                    >
+                        $HOPEPAW Token Launched 🚀
+                    </h3>
+
+                    <p
+                        class="text-gray-300
+                               text-sm
+                               leading-relaxed
+                               mt-2"
+                    >
+                        HopePaw officially launched $HOPEPAW on Solana, marking a new chapter in the project's journey.
+                    </p>
+
+                </div>
+
+            </div>
 
 
             <!-- DAY 19 -->
@@ -1237,7 +1393,7 @@
                                leading-relaxed
                                mt-2"
                     >
-                        Designed and deployed a full gallery of 20 inspiring 3D quote cards featuring HopePaw to spread hope, strength, and courage across the community.
+                        Designed and deployed a full gallery of 40+ inspiring quote cards featuring HopePaw to spread hope, strength, and courage across the community.
                     </p>
 
                 </div>
@@ -1402,7 +1558,7 @@
 
 
 <!-- ========================================= -->
-<!-- ROADMAP -->
+<!-- ROADMAP (STEP 5: UPDATED) -->
 <!-- ========================================= -->
 
 <section
@@ -1448,7 +1604,7 @@
 
 
         <div
-            class="grid md:grid-cols-2 gap-5"
+            class="grid md:grid-cols-3 gap-5"
         >
 
             <!-- PHASE 1 -->
@@ -1484,7 +1640,7 @@
                                px-3 py-1.5
                                rounded-full"
                     >
-                        Completed
+                        Completed ✓
                     </span>
 
                 </div>
@@ -1546,7 +1702,7 @@
                         </div>
 
                         <h3 class="font-bold text-xl mt-1">
-                            Growth
+                            Launch & Community
                         </h3>
 
                     </div>
@@ -1567,6 +1723,13 @@
                 <div class="space-y-4 text-sm text-gray-400">
 
                     <div class="flex justify-between">
+                        <span>$HOPEPAW Token Launch</span>
+                        <span class="text-green-400">
+                            ✓
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between">
                         <span>Community Growth</span>
                         <span class="text-blue-400">
                             Building
@@ -1581,17 +1744,72 @@
                     </div>
 
                     <div class="flex justify-between">
-                        <span>Token Launch Preparation</span>
-                        <span class="text-gray-500">
-                            Later
+                        <span>Transparent Development</span>
+                        <span class="text-blue-400">
+                            Building
                         </span>
                     </div>
 
-                    <div class="flex justify-between">
-                        <span>Future Initiatives</span>
-                        <span class="text-gray-500">
-                            TBA
-                        </span>
+                </div>
+
+            </div>
+
+
+            <!-- PHASE 3 -->
+
+            <div
+                class="border border-purple-500/20
+                       bg-purple-500/[0.03]
+                       rounded-2xl
+                       p-7"
+            >
+
+                <div
+                    class="flex justify-between
+                           items-center mb-6"
+                >
+
+                    <div>
+
+                        <div class="text-xs text-purple-400 font-bold">
+                            PHASE 3
+                        </div>
+
+                        <h3 class="font-bold text-xl mt-1">
+                            Real-World Impact
+                        </h3>
+
+                    </div>
+
+                    <span
+                        class="text-xs
+                               text-purple-400
+                               bg-purple-500/10
+                               px-3 py-1.5
+                               rounded-full"
+                    >
+                        Future
+                    </span>
+
+                </div>
+
+
+                <div class="space-y-4 text-sm text-gray-400">
+
+                    <div>
+                        <span>Community-driven initiatives</span>
+                    </div>
+
+                    <div>
+                        <span>Children's education support</span>
+                    </div>
+
+                    <div>
+                        <span>Humanitarian initiatives</span>
+                    </div>
+
+                    <div>
+                        <span>Future ecosystem development</span>
                     </div>
 
                 </div>
@@ -1607,7 +1825,7 @@
 
 
 <!-- ========================================= -->
-<!-- TOKENOMICS -->
+<!-- STEP 6: REPLACED OLD TOKENOMICS WITH TOKEN INFORMATION -->
 <!-- ========================================= -->
 
 <section
@@ -1645,7 +1863,7 @@
                    tracking-widest
                    text-blue-400"
         >
-            Tokenomics
+            Token Information
         </span>
 
 
@@ -1655,69 +1873,76 @@
                    font-extrabold
                    mt-4"
         >
-            Coming when we're ready.
+            Official $HOPEPAW Details
         </h2>
 
 
         <p
             class="relative
-                   text-gray-500
+                   text-gray-400
                    text-sm
                    leading-relaxed
                    max-w-lg
                    mx-auto
                    mt-4"
         >
-            We won't publish token numbers simply to make
-            the project look bigger. Supply, distribution,
-            launch details, and contract information will be
-            published when they are finalized.
+            Trading & liquidity mechanics are determined by the Pump.fun protocol.
         </p>
 
 
         <div
             class="relative
-                   grid grid-cols-2 md:grid-cols-4
+                   grid grid-cols-2 md:grid-cols-3
                    gap-3
                    mt-8"
         >
 
-            <div class="border border-white/5 rounded-xl p-4">
+            <div class="border border-white/5 rounded-xl p-4 bg-black/20">
                 <div class="text-xs text-gray-500">
-                    Supply
+                    Token
                 </div>
-                <div class="font-bold mt-1">
-                    TBA
+                <div class="font-bold text-blue-400 mt-1">
+                    $HOPEPAW
                 </div>
             </div>
 
 
-            <div class="border border-white/5 rounded-xl p-4">
+            <div class="border border-white/5 rounded-xl p-4 bg-black/20">
+                <div class="text-xs text-gray-500">
+                    Network
+                </div>
+                <div class="font-bold mt-1">
+                    Solana
+                </div>
+            </div>
+
+
+            <div class="border border-white/5 rounded-xl p-4 bg-black/20">
+                <div class="text-xs text-gray-500">
+                    Status
+                </div>
+                <div class="font-bold text-green-400 mt-1">
+                    Live
+                </div>
+            </div>
+
+
+            <div class="border border-white/5 rounded-xl p-4 bg-black/20">
+                <div class="text-xs text-gray-500">
+                    Launch Platform
+                </div>
+                <div class="font-bold mt-1">
+                    Pump.fun
+                </div>
+            </div>
+
+
+            <div class="border border-white/5 rounded-xl p-4 bg-black/20 col-span-2 md:col-span-2">
                 <div class="text-xs text-gray-500">
                     Contract
                 </div>
-                <div class="font-bold mt-1">
-                    TBA
-                </div>
-            </div>
-
-
-            <div class="border border-white/5 rounded-xl p-4">
-                <div class="text-xs text-gray-500">
-                    Launch
-                </div>
-                <div class="font-bold mt-1">
-                    TBA
-                </div>
-            </div>
-
-
-            <div class="border border-white/5 rounded-xl p-4">
-                <div class="text-xs text-gray-500">
-                    Distribution
-                </div>
-                <div class="font-bold mt-1">
-                    TBA
+                <div class="font-mono text-xs text-gray-300 mt-1 break-all select-all">
+                    7eSwRbsquHEN8x1x25c8R1aQY8VieQpcbEkTD2rLpump
                 </div>
             </div>
 
@@ -1730,7 +1955,7 @@
 
 
 <!-- ========================================= -->
-<!-- WHITEPAPER -->
+<!-- WHITEPAPER (STEP 8: MAINTAINED WHITEPAPER CTA) -->
 <!-- ========================================= -->
 
 <section
@@ -1785,7 +2010,7 @@
 
 
 <!-- ========================================= -->
-<!-- FAQ -->
+<!-- FAQ (STEP 7: UPDATED FAQ) -->
 <!-- ========================================= -->
 
 <section
@@ -1830,7 +2055,7 @@
             >
 
                 <span>
-                    What is HopePaw?
+                    Is $HOPEPAW live?
                 </span>
 
                 <span
@@ -1850,9 +2075,7 @@
                        text-gray-400
                        leading-relaxed"
             >
-                HopePaw is an independent community project
-                combining meme culture, Web3 experimentation,
-                and a long-term humanitarian mission.
+                Yes. $HOPEPAW is now live on Solana through Pump.fun.
             </div>
 
         </div>
@@ -1873,7 +2096,7 @@
             >
 
                 <span>
-                    Why was HopePaw created?
+                    Where can I find the official contract address?
                 </span>
 
                 <span
@@ -1893,9 +2116,7 @@
                        text-gray-400
                        leading-relaxed"
             >
-                HopePaw was created around the idea that
-                community energy can eventually be connected
-                with something meaningful.
+                The official HopePaw contract address is published on this website and linked to the official token page: <code class="text-blue-300 font-mono select-all">7eSwRbsquHEN8x1x25c8R1aQY8VieQpcbEkTD2rLpump</code>. Always verify the contract address before interacting with the token.
             </div>
 
         </div>
@@ -1916,7 +2137,7 @@
             >
 
                 <span>
-                    When will the token launch?
+                    Where can I trade $HOPEPAW?
                 </span>
 
                 <span
@@ -1936,9 +2157,48 @@
                        text-gray-400
                        leading-relaxed"
             >
-                There is no fixed launch date yet.
-                The priority is building the foundation and
-                community first.
+                $HOPEPAW is currently available through its official Pump.fun page.
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="border border-white/5
+                   rounded-2xl
+                   overflow-hidden"
+        >
+
+            <button
+                @click="openFaq = openFaq===4 ? null : 4"
+                class="w-full p-5
+                       flex justify-between
+                       text-left font-semibold"
+            >
+
+                <span>
+                    What is HopePaw building?
+                </span>
+
+                <span
+                    class="text-blue-400 text-xl"
+                >
+                    +
+                </span>
+
+            </button>
+
+
+            <div
+                x-show="openFaq===4"
+                x-transition
+                class="px-5 pb-5
+                       text-sm
+                       text-gray-400
+                       leading-relaxed"
+            >
+                HopePaw is an independent community project exploring how meme culture and Web3 can be connected with creativity, community, and a long-term humanitarian mission.
             </div>
 
         </div>
@@ -2036,7 +2296,7 @@
 
 
 <!-- ========================================= -->
-<!-- FOOTER -->
+<!-- FOOTER (STEP 8: ADDED TOKEN LINKS) -->
 <!-- ========================================= -->
 
 <footer
@@ -2152,8 +2412,23 @@
                 <div class="space-y-3">
 
                     <div class="text-white font-semibold">
-                        Community
+                        $HOPEPAW Token
                     </div>
+
+                    <a
+                        href="https://pump.fun/coin/7eSwRbsquHEN8x1x25c8R1aQY8VieQpcbEkTD2rLpump"
+                        target="_blank"
+                        class="block hover:text-white text-green-400"
+                    >
+                        Official Token Page 🟢
+                    </a>
+
+                    <a
+                        href="#token"
+                        class="block hover:text-white"
+                    >
+                        Contract Details
+                    </a>
 
                     <a
                         href="https://x.com/HopePawHQ"
@@ -2162,10 +2437,6 @@
                     >
                         X / Twitter
                     </a>
-
-                    <span class="block text-gray-700">
-                        Telegram — Soon
-                    </span>
 
                 </div>
 
@@ -2189,7 +2460,7 @@
             </span>
 
             <span>
-                HopePaw Website v1.3 • August 2026
+                HopePaw Website v2.0 • August 2026
             </span>
 
         </div>
