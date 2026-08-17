@@ -1,282 +1,282 @@
 [
   {
     "id": "001",
-    "theme": "HOPE",
-    "quote": "Hope is being able to see that there is light despite all of the darkness.",
-    "author": "Desmond Tutu",
-    "image": "images/quote-001.webp"
+    "theme": "Courage",
+    "quote": "It always seems impossible until it's done.",
+    "author": "Nelson Mandela",
+    "image": "assets/quotes/hope-001.webp"
   },
   {
     "id": "002",
-    "theme": "COURAGE",
-    "quote": "It always seems impossible until it's done.",
-    "author": "Nelson Mandela",
-    "image": "images/quote-002.webp"
+    "theme": "Patience",
+    "quote": "Great things take time.",
+    "author": "Unknown",
+    "image": "assets/quotes/hope-002.webp"
   },
   {
     "id": "003",
-    "theme": "HEALING",
-    "quote": "The wound is the place where the Light enters you.",
-    "author": "Rumi",
-    "image": "images/quote-003.webp"
+    "theme": "Hope",
+    "quote": "Hope is being able to see that there is light despite all of the darkness.",
+    "author": "Desmond Tutu",
+    "image": "assets/quotes/hope-003.webp"
   },
   {
     "id": "004",
-    "theme": "FUTURE",
-    "quote": "The best way to predict the future is to create it.",
-    "author": "Abraham Lincoln",
-    "image": "images/quote-004.webp"
+    "theme": "Vision",
+    "quote": "The future belongs to those who believe in the beauty of their dreams.",
+    "author": "Eleanor Roosevelt",
+    "image": "assets/quotes/hope-004.webp"
   },
   {
     "id": "005",
-    "theme": "DREAM",
-    "quote": "Hold fast to dreams, for if dreams die, life is a broken-winged bird that cannot fly.",
-    "author": "Langston Hughes",
-    "image": "images/quote-005.webp"
+    "theme": "Resilience",
+    "quote": "Fall seven times, stand up eight.",
+    "author": "Japanese Proverb",
+    "image": "assets/quotes/hope-005.webp"
   },
   {
     "id": "006",
-    "theme": "LIGHT",
-    "quote": "Walk on through the wind, walk on through the rain, though your dreams be tossed and blown.",
-    "author": "Oscar Hammerstein II",
-    "image": "images/quote-006.webp"
+    "theme": "Kindness",
+    "quote": "No act of kindness, no matter how small, is ever wasted.",
+    "author": "Aesop",
+    "image": "assets/quotes/hope-006.webp"
   },
   {
     "id": "007",
-    "theme": "STRENGTH",
-    "quote": "You never know how strong you are until being strong is your only choice.",
-    "author": "Bob Marley",
-    "image": "images/quote-007.webp"
+    "theme": "Process",
+    "quote": "Rivers know this: there is no hurry. We shall get there some day.",
+    "author": "A.A. Milne",
+    "image": "assets/quotes/hope-007.webp"
   },
   {
     "id": "008",
-    "theme": "FAITH",
-    "quote": "Faith is taking the first step even when you don't see the whole staircase.",
-    "author": "Martin Luther King Jr.",
-    "image": "images/quote-008.webp"
+    "theme": "Community",
+    "quote": "If you want to go far, go together.",
+    "author": "African Proverb",
+    "image": "assets/quotes/hope-008.webp"
   },
   {
     "id": "009",
-    "theme": "BEGINNING",
-    "quote": "The secret of getting ahead is getting started.",
-    "author": "Mark Twain",
-    "image": "images/quote-009.webp"
+    "theme": "Mindset",
+    "quote": "Happiness is not by chance, but by choice.",
+    "author": "Jim Rohn",
+    "image": "assets/quotes/hope-009.webp"
   },
   {
     "id": "010",
-    "theme": "PEACE",
-    "quote": "Peace comes from within. Do not seek it without.",
-    "author": "Buddha",
-    "image": "images/quote-010.webp"
+    "theme": "Focus",
+    "quote": "Do what you can, with what you have, where you are.",
+    "author": "Theodore Roosevelt",
+    "image": "assets/quotes/hope-010.webp"
   },
   {
     "id": "011",
-    "theme": "RESILIENCE",
-    "quote": "Rock bottom became the solid foundation on which I rebuilt my life.",
-    "author": "J.K. Rowling",
-    "image": "images/quote-011.webp"
+    "theme": "Determination",
+    "quote": "The hands of a clock never turn backward. Stand tall, face forward, and step bravely into tomorrow.",
+    "author": "Napoleon Bonaparte",
+    "image": "assets/quotes/hope-011.webp"
   },
   {
     "id": "012",
-    "theme": "GROWTH",
-    "quote": "Out of your vulnerabilities will come your strength.",
-    "author": "Sigmund Freud",
-    "image": "images/quote-012.webp"
+    "theme": "Growth",
+    "quote": "The oak fought the wind and was broken, the willow bent when it must and survived.",
+    "author": "Robert Jordan",
+    "image": "assets/quotes/hope-012.webp"
   },
   {
     "id": "013",
-    "theme": "PATIENCE",
-    "quote": "Adopt the pace of nature: her secret is patience.",
-    "author": "Ralph Waldo Emerson",
-    "image": "images/quote-013.webp"
+    "theme": "Peace",
+    "quote": "Peace begins with a smile.",
+    "author": "Mother Teresa",
+    "image": "assets/quotes/hope-013.webp"
   },
   {
     "id": "014",
-    "theme": "KINDNESS",
-    "quote": "No act of kindness, no matter how small, is ever wasted.",
-    "author": "Aesop",
-    "image": "images/quote-014.webp"
+    "theme": "Strength",
+    "quote": "You never know how strong you are until being strong is the only choice you have.",
+    "author": "Bob Marley",
+    "image": "assets/quotes/hope-014.webp"
   },
   {
     "id": "015",
-    "theme": "PURPOSE",
-    "quote": "The purpose of our lives is to be happy.",
-    "author": "Dalai Lama",
-    "image": "images/quote-015.webp"
+    "theme": "Wisdom",
+    "quote": "Turn your wounds into wisdom.",
+    "author": "Oprah Winfrey",
+    "image": "assets/quotes/hope-015.webp"
   },
   {
     "id": "016",
-    "theme": "BELIEF",
-    "quote": "Keep your face always toward the sunshine—and shadows will fall behind you.",
-    "author": "Walt Whitman",
-    "image": "images/quote-016.webp"
+    "theme": "Gratitude",
+    "quote": "Gratitude turns what we have into enough.",
+    "author": "Aesop",
+    "image": "assets/quotes/hope-016.webp"
   },
   {
     "id": "017",
-    "theme": "JOURNEY",
-    "quote": "A journey of a thousand miles begins with a single step.",
-    "author": "Lao Tzu",
-    "image": "images/quote-017.webp"
+    "theme": "Faith",
+    "quote": "Faith is taking the first step even when you don't see the whole staircase.",
+    "author": "Martin Luther King Jr.",
+    "image": "assets/quotes/hope-017.webp"
   },
   {
     "id": "018",
-    "theme": "JOY",
-    "quote": "Joy is not in things; it is in us.",
-    "author": "Richard Wagner",
-    "image": "images/quote-018.webp"
+    "theme": "Kindness",
+    "quote": "Be kind whenever possible. It is always possible.",
+    "author": "Dalai Lama",
+    "image": "assets/quotes/hope-018.webp"
   },
   {
     "id": "019",
-    "theme": "UNITY",
-    "quote": "We are only as strong as we are united, as weak as we are divided.",
-    "author": "J.K. Rowling",
-    "image": "images/quote-019.webp"
+    "theme": "Hope",
+    "quote": "Once you choose hope, anything's possible.",
+    "author": "Christopher Reeve",
+    "image": "assets/quotes/hope-019.webp"
   },
   {
     "id": "020",
-    "theme": "WISDOM",
-    "quote": "Turn your wounds into wisdom.",
-    "author": "Oprah Winfrey",
-    "image": "images/quote-020.webp"
+    "theme": "Action",
+    "quote": "The secret of getting ahead is getting started.",
+    "author": "Mark Twain",
+    "image": "assets/quotes/hope-020.webp"
   },
   {
     "id": "021",
-    "theme": "ACTION",
-    "quote": "Do what you can, with what you have, where you are.",
-    "author": "Theodore Roosevelt",
-    "image": "images/quote-021.webp"
+    "theme": "Courage",
+    "quote": "Courage is not the absence of fear, but the triumph over it.",
+    "author": "Nelson Mandela",
+    "image": "assets/quotes/hope-021.webp"
   },
   {
     "id": "022",
-    "theme": "MINDSET",
-    "quote": "Whether you think you can or you think you can't, you're right.",
-    "author": "Henry Ford",
-    "image": "images/quote-022.webp"
+    "theme": "Belief",
+    "quote": "Believe you can and you're halfway there.",
+    "author": "Theodore Roosevelt",
+    "image": "assets/quotes/hope-022.webp"
   },
   {
     "id": "023",
-    "theme": "HORIZON",
-    "quote": "There is a crack in everything, that's how the light gets in.",
-    "author": "Leonard Cohen",
-    "image": "images/quote-023.webp"
+    "theme": "Patience",
+    "quote": "Patience is not simply the ability to wait, it is how we behave while we're waiting.",
+    "author": "Joyce Meyer",
+    "image": "assets/quotes/hope-023.webp"
   },
   {
     "id": "024",
-    "theme": "GRATITUDE",
-    "quote": "Gratitude turns what we have into enough.",
-    "author": "Aesop",
-    "image": "images/quote-024.webp"
+    "theme": "Purpose",
+    "quote": "The two most important days in your life are the day you are born and the day you find out why.",
+    "author": "Mark Twain",
+    "image": "assets/quotes/hope-024.webp"
   },
   {
     "id": "025",
-    "theme": "RENEWAL",
-    "quote": "Every day is a new beginning. Take a deep breath and start again.",
-    "author": "Unknown",
-    "image": "images/quote-025.webp"
+    "theme": "Light",
+    "quote": "Nothing can dim the light which shines from within.",
+    "author": "Maya Angelou",
+    "image": "assets/quotes/hope-025.webp"
   },
   {
     "id": "026",
-    "theme": "COMPASSION",
-    "quote": "Be kind whenever possible. It is always possible.",
-    "author": "Dalai Lama",
-    "image": "images/quote-026.webp"
+    "theme": "Strength",
+    "quote": "Out of suffering have emerged the strongest souls; the most massive characters are seared with scars.",
+    "author": "Kahlil Gibran",
+    "image": "assets/quotes/hope-026.webp"
   },
   {
     "id": "027",
-    "theme": "DESTINY",
-    "quote": "Your life is your story, and the adventure ahead of you is the journey to fulfill your own purpose and potential.",
-    "author": "Kerry Washington",
-    "image": "images/quote-027.webp"
+    "theme": "Dreams",
+    "quote": "All our dreams can come true, if we have the courage to pursue them.",
+    "author": "Walt Disney",
+    "image": "assets/quotes/hope-027.webp"
   },
   {
     "id": "028",
-    "theme": "PERSPECTIVE",
-    "quote": "Change the way you look at things and the things you look at change.",
-    "author": "Wayne Dyer",
-    "image": "images/quote-028.webp"
+    "theme": "Grace",
+    "quote": "In a world where you can be anything, be kind.",
+    "author": "Jennifer Dukes Lee",
+    "image": "assets/quotes/hope-028.webp"
   },
   {
     "id": "029",
-    "theme": "SELF-BELIEF",
-    "quote": "Trust yourself. You know more than you think you do.",
-    "author": "Benjamin Spock",
-    "image": "images/quote-029.webp"
+    "theme": "Persistence",
+    "quote": "Strive not to be a success, but rather to be of value.",
+    "author": "Albert Einstein",
+    "image": "assets/quotes/hope-029.webp"
   },
   {
     "id": "030",
-    "theme": "HARMONY",
-    "quote": "Happiness is when what you think, what you say, and what you do are in harmony.",
-    "author": "Mahatma Gandhi",
-    "image": "images/quote-030.webp"
+    "theme": "Hope",
+    "quote": "Keep your face always toward the sunshine—and shadows will fall behind you.",
+    "author": "Walt Whitman",
+    "image": "assets/quotes/hope-030.webp"
   },
   {
     "id": "031",
-    "theme": "PERSEVERANCE",
+    "theme": "Perseverance",
     "quote": "It does not matter how slowly you go as long as you do not stop.",
     "author": "Confucius",
-    "image": "images/quote-031.webp"
+    "image": "assets/quotes/hope-031.webp"
   },
   {
     "id": "032",
-    "theme": "BELIEF",
-    "quote": "Believe you can and you're halfway there.",
-    "author": "Theodore Roosevelt",
-    "image": "images/quote-032.webp"
+    "theme": "Resilience",
+    "quote": "Rock bottom became the solid foundation on which I rebuilt my life.",
+    "author": "J.K. Rowling",
+    "image": "assets/quotes/hope-032.webp"
   },
   {
     "id": "033",
-    "theme": "COURAGE",
+    "theme": "Courage",
     "quote": "Courage doesn't always roar. Sometimes courage is the quiet voice at the end of the day saying, 'I will try again tomorrow.'",
     "author": "Mary Anne Radmacher",
-    "image": "images/quote-033.webp"
+    "image": "assets/quotes/hope-033.webp"
   },
   {
     "id": "034",
-    "theme": "HOPE",
+    "theme": "Hope",
     "quote": "Everything that is done in this world is done by hope.",
     "author": "Martin Luther",
-    "image": "images/quote-034.webp"
+    "image": "assets/quotes/hope-034.webp"
   },
   {
     "id": "035",
-    "theme": "LIGHT",
+    "theme": "Light",
     "quote": "In the middle of darkness, light is persistent.",
     "author": "Mahatma Gandhi",
-    "image": "images/quote-035.webp"
+    "image": "assets/quotes/hope-035.webp"
   },
   {
     "id": "036",
-    "theme": "STRENGTH",
-    "quote": "Out of suffering have emerged the strongest souls; the most massive characters are seared with scars.",
-    "author": "Kahlil Gibran",
-    "image": "images/quote-036.webp"
+    "theme": "Growth",
+    "quote": "Out of your vulnerabilities will come your strength.",
+    "author": "Sigmund Freud",
+    "image": "assets/quotes/hope-036.webp"
   },
   {
     "id": "037",
-    "theme": "PATIENCE",
+    "theme": "Patience",
     "quote": "Trees that are slow to grow bear the best fruit.",
     "author": "Molière",
-    "image": "images/quote-037.webp"
+    "image": "assets/quotes/hope-037.webp"
   },
   {
     "id": "038",
-    "theme": "PURPOSE",
-    "quote": "The two most important days in your life are the day you are born and the day you find out why.",
-    "author": "Mark Twain",
-    "image": "images/quote-038.webp"
+    "theme": "Healing",
+    "quote": "Healing takes time, and asking for help is a courageous step.",
+    "author": "Mariska Hargitay",
+    "image": "assets/quotes/hope-038.webp"
   },
   {
     "id": "039",
-    "theme": "HEALING",
-    "quote": "Healing takes time, and asking for help is a courageous step.",
-    "author": "Mariska Hargitay",
-    "image": "images/quote-039.webp"
+    "theme": "Harmony",
+    "quote": "Happiness is when what you think, what you say, and what you do are in harmony.",
+    "author": "Mahatma Gandhi",
+    "image": "assets/quotes/hope-039.webp"
   },
   {
     "id": "040",
-    "theme": "UNITY",
+    "theme": "Unity",
     "quote": "Alone we can do so little; together we can do so much.",
     "author": "Helen Keller",
-    "image": "images/quote-040.webp"
+    "image": "assets/quotes/hope-040.webp"
   }
 ]
