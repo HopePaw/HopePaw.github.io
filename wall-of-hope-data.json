@@ -278,5 +278,75 @@
     "quote": "Alone we can do so little; together we can do so much.",
     "author": "Helen Keller",
     "image": "assets/quotes/hope-040.webp"
+  },
+  {
+    "id": "041",
+    "theme": "Growth",
+    "quote": "Growth is painful. Change is painful. But nothing is as painful as staying stuck somewhere you don't belong.",
+    "author": "Mandy Hale",
+    "image": "assets/quotes/hope-041.webp"
+  },
+  {
+    "id": "042",
+    "theme": "Perseverance",
+    "quote": "It does not matter how slowly you go as long as you do not stop.",
+    "author": "Confucius",
+    "image": "assets/quotes/hope-042.webp"
+  },
+  {
+    "id": "043",
+    "theme": "Courage",
+    "quote": "Courage is being scared to death, but saddling up anyway.",
+    "author": "John Wayne",
+    "image": "assets/quotes/hope-043.webp"
+  },
+  {
+    "id": "044",
+    "theme": "Kindness",
+    "quote": "No act of kindness, no matter how small, is ever wasted.",
+    "author": "Aesop",
+    "image": "assets/quotes/hope-044.webp"
+  },
+  {
+    "id": "045",
+    "theme": "Dreams",
+    "quote": "All our dreams can come true, if we have the courage to pursue them.",
+    "author": "Walt Disney",
+    "image": "assets/quotes/hope-045.webp"
+  },
+  {
+    "id": "046",
+    "theme": "Joy",
+    "quote": "Find joy in the ordinary.",
+    "author": "Jonathan Lockwood Huie",
+    "image": "assets/quotes/hope-046.webp"
+  },
+  {
+    "id": "047",
+    "theme": "Hope",
+    "quote": "Hope is being able to see that there is light despite all of the darkness.",
+    "author": "Desmond Tutu",
+    "image": "assets/quotes/hope-047.webp"
+  },
+  {
+    "id": "048",
+    "theme": "Patience",
+    "quote": "Adopt the pace of nature: her secret is patience.",
+    "author": "Ralph Waldo Emerson",
+    "image": "assets/quotes/hope-048.webp"
+  },
+  {
+    "id": "049",
+    "theme": "Friendship",
+    "quote": "A real friend is one who walks in when the rest of the world walks out.",
+    "author": "Walter Winchell",
+    "image": "assets/quotes/hope-049.webp"
+  },
+  {
+    "id": "050",
+    "theme": "Success",
+    "quote": "Success is not final; failure is not fatal: It is the courage to continue that counts.",
+    "author": "Winston Churchill",
+    "image": "assets/quotes/hope-050.webp"
   }
 ]
