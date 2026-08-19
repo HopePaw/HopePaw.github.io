@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HopePaw - Tug of War Math Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .game-container {
+            width: 100%;
+            max-width: 600px;
+            background: #2a2a2a;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .arena {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background-image: url('latar.png');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+        .character {
+            position: absolute;
+            bottom: 20px;
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            transition: left 0.3s ease;
+        }
+        #hopepaw {
+            left: 50px;
+        }
+        #lawan {
+            right: 50px;
+        }
+        .rope-center {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 30px;
+            object-fit: contain;
+            transition: left 0.3s ease;
+        }
+        .quiz-section {
+            padding: 20px;
+        }
+        .question {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        button {
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            background: #ffcc00;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #000;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #e6b800;
+        }
+        .message {
+            margin-top: 15px;
+            font-size: 16px;
+            font-height: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="arena" id="arena">
+            <!-- Perhatikan nama file gambar sesuai yang kamu upload: hopepaww.png -->
+            <img src="hopepaww.png" id="hopepaw" class="character" alt="HopePaw">
+            <img src="tali.png" class="rope-center" id="rope" alt="Tali">
+            <img src="lawan.png" id="lawan" class="character" alt="Lawan" style="right: 50px;">
+        </div>
+        
+        <div class="quiz-section">
+            <div class="question" id="question-text">Memuat Soal...</div>
+            <div class="options" id="options-container"></div>
+            <div class="message" id="game-message">Jawab soal dengan benar untuk menarik tali!</div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let targetScore = 5; // Skor untuk menang
+        let hopepawPos = 50; // Posisi awal CSS left (px)
+
+        const questionText = document.getElementById("question-text");
+        const optionsContainer = document.getElementById("options-container");
+        const gameMessage = document.getElementById("game-message");
+        const hopepaw = document.getElementById("hopepaw");
+        const rope = document.getElementById("rope");
+
+        let currentAnswer = 0;
+
+        function generateQuestion() {
+            let num1 = Math.floor(Math.random() * 10) + 1;
+            let num2 = Math.floor(Math.random() * 10) + 1;
+            currentAnswer = num1 + num2;
+
+            questionText.innerText = `${num1} + ${num2} = ?`;
+
+            // Buat pilihan jawaban acak
+            let options = [currentAnswer];
+            while (options.length < 4) {
+                let wrongAnswer = currentAnswer + Math.floor(Math.random() * 5) - 2;
+                if (wrongAnswer !== currentAnswer && !options.includes(wrongAnswer) && wrongAnswer > 0) {
+                    options.push(wrongAnswer);
+                }
+            }
+            // Acak posisi tombol
+            options.sort(() => Math.random() - 0.5);
+
+            optionsContainer.innerHTML = "";
+            options.forEach(opt => {
+                let btn = document.createElement("button");
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(opt);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            if (selected === currentAnswer) {
+                score++;
+                hopepawPos += 30; // HopePaw maju menarik tali
+                hopepaw.style.left = hopepawPos + "px";
+                gameMessage.innerText = "Benar! HopePaw menarik tali dengan kuat! 💪";
+                gameMessage.style.color = "#4BB543";
+
+                if (score >= targetScore) {
+                    gameMessage.innerText = "🎉 SELAMAT! HopePaw Berhasil Menang Tarik Tambang!";
+                    optionsContainer.innerHTML = "";
+                    questionText.innerText = "MENANG!";
+                    return;
+                }
+            } else {
+                hopepawPos = Math.max(20, hopepawPos - 20); // Mundur dikit kalau salah
+                hopepaw.style.left = hopepawPos + "px";
+                gameMessage.innerText = "Salah! Lawan menarik balik! 😱";
+                gameMessage.style.color = "#ff3333";
+            }
+
+            setTimeout(generateQuestion, 1000);
+        }
+
+        // Mulai game pertama kali
+        generateQuestion();
+    </script>
+</body>
+</html>
