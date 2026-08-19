@@ -30,7 +30,6 @@ body{
 
 .app{width:min(100%,1050px);margin:auto;padding:18px}
 
-/* NAVIGATION / BACK BUTTON */
 .nav-bar{
   display:flex;justify-content:space-between;align-items:center;
   margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.05);
@@ -98,7 +97,6 @@ body{
 .phase-sub{color:var(--muted);text-align:center;margin:0 0 20px;font-size:13px}
 .image-grid,.answer-grid{width:100%;max-width:850px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:10px auto 22px}
 
-/* --- KARTU DAN GAMBAR BENTUK LINGKARAN --- */
 .memory-card{
   position:relative;aspect-ratio:1;min-height:90px;border-radius:50%;
   border:2px solid rgba(96,165,250,.3);background:linear-gradient(145deg,rgba(30,41,59,.9),rgba(15,23,42,.95));
@@ -154,7 +152,6 @@ body{
 
 <div class="app">
 
-<!-- TOP NAV BAR BACK TO WEBSITE -->
 <div class="nav-bar">
   <a href="index.html" class="btn-back">
     ← Back to Main Website
@@ -238,21 +235,12 @@ body{
 </div>
 
 <script>
-const IMAGE_ASSETS=[
- {id:"pepee", src:"hopepaw-memory-assets/pepee.png"},
- {id:"shiba", src:"hopepaw-memory-assets/shiba.png"},
- {id:"doge", src:"hopepaw-memory-assets/doge.png"},
- {id:"pump", src:"hopepaw-memory-assets/pump.png"},
- {id:"trump", src:"hopepaw-memory-assets/trump.png"},
- {id:"enseem", src:"hopepaw-memory-assets/enseem.png"},
- {id:"elon", src:"hopepaw-memory-assets/elon.png"},
- {id:"alon", src:"hopepaw-memory-assets/alon.png"},
- {id:"pengu", src:"hopepaw-memory-assets/pengu.png"},
- {id:"cz", src:"hopepaw-memory-assets/cz.png"},
- {id:"solana", src:"hopepaw-memory-assets/solana.png"},
- {id:"btc", src:"hopepaw-memory-assets/btc.png"},
- {id:"bnb", src:"hopepaw-memory-assets/bnb.png"}
-];
+// Mengambil otomatis dari folder hopepaw-memory-assets dengan format 1.jpg sampai 44.jpg
+// (Jika file kamu berformat .png, silakan ganti .jpg menjadi .png di bawah ini)
+const IMAGE_ASSETS = Array.from({ length: 44 }, (_, i) => ({
+  id: `img_${i + 1}`,
+  src: `hopepaw-memory-assets/${i + 1}.jpg`
+}));
 
 let game={
  running:false,level:1,score:0,combo:0,correct:0,lives:3,
@@ -397,7 +385,6 @@ async function shareScore() {
     canvas.height = 1500;
     const ctx = canvas.getContext("2d");
 
-    // Background
     const bg = ctx.createLinearGradient(0, 0, 1200, 1500);
     bg.addColorStop(0, "#020617");
     bg.addColorStop(.48, "#0b2b67");
@@ -405,14 +392,12 @@ async function shareScore() {
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, 1200, 1500);
 
-    // Glow
     const glow = ctx.createRadialGradient(600, 430, 50, 600, 430, 520);
     glow.addColorStop(0, "rgba(37,99,235,.45)");
     glow.addColorStop(1, "rgba(37,99,235,0)");
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, 1200, 1000);
 
-    // Decorative paw circles
     ctx.globalAlpha = .08;
     ctx.fillStyle = "#60a5fa";
     for (let i = 0; i < 7; i++) {
@@ -422,7 +407,6 @@ async function shareScore() {
     }
     ctx.globalAlpha = 1;
 
-    // Card
     ctx.fillStyle = "rgba(15,23,42,.88)";
     roundRect(ctx, 70, 70, 1060, 1360, 42);
     ctx.fill();
@@ -432,7 +416,6 @@ async function shareScore() {
     roundRect(ctx, 70, 70, 1060, 1360, 42);
     ctx.stroke();
 
-    // Load mascot
     const mascot = new Image();
     mascot.crossOrigin = "anonymous";
     mascot.src = "hopepaw-mascot.png";
@@ -451,7 +434,6 @@ async function shareScore() {
         ctx.drawImage(mascot, 600 - w / 2, 170, w, h);
     }
 
-    // Title
     ctx.textAlign = "center";
     ctx.fillStyle = "#ffffff";
     ctx.font = "800 58px Arial";
@@ -461,7 +443,6 @@ async function shareScore() {
     ctx.font = "700 30px Arial";
     ctx.fillText("A MEME WITH A MISSION 🐾", 600, 920);
 
-    // Score
     ctx.fillStyle = "#ffffff";
     ctx.font = "900 150px Arial";
     ctx.fillText(score, 600, 1100);
@@ -470,7 +451,6 @@ async function shareScore() {
     ctx.font = "800 34px Arial";
     ctx.fillText("SCORE", 600, 1150);
 
-    // Stats
     ctx.fillStyle = "#e2e8f0";
     ctx.font = "700 34px Arial";
     ctx.fillText(`🧠 Level ${level}     🎯 Correct ${correct}`, 600, 1240);
@@ -479,7 +459,6 @@ async function shareScore() {
     ctx.font = "500 27px Arial";
     ctx.fillText("Can you beat my score?", 600, 1320);
 
-    // Footer
     ctx.fillStyle = "#60a5fa";
     ctx.font = "700 25px Arial";
     ctx.fillText("#HopePaw #HopePawMemory", 600, 1380);
