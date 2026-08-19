@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>HopePaw Memory 🐾</title>
-<meta name="description" content="Test your memory. Remember the HopePaw world. 🐾💙">
+<meta name="description" content="Remember the HopePaw world. Test your memory, build your streak, and join the mission. 🐾💙">
 
 <style>
 :root{
@@ -15,7 +15,7 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 body{
-  margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--text);
+  margin:0;min-height:100vh;font-family:Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);
   background:radial-gradient(circle at 20% 10%,rgba(37,99,235,.22),transparent 30%),
              radial-gradient(circle at 80% 30%,rgba(56,189,248,.12),transparent 28%),
              linear-gradient(135deg,#020617,#07152f 55%,#020617);
@@ -28,119 +28,128 @@ body{
 .orb.three{width:180px;height:180px;background:#1d4ed8;left:30%;bottom:-80px;animation-delay:-6s}
 @keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-25px) scale(1.12)}}
 
-.app{width:min(100%,1050px);margin:auto;padding:18px}
+.app{width:min(100%,720px);margin:auto;padding:14px}
 
 .nav-bar{
   display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.05);
+  margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.05);
 }
 .btn-back{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(37,99,235,0.1);border:1px solid rgba(96,165,250,0.3);
-  color:var(--light);padding:8px 16px;border-radius:12px;
-  text-decoration:none;font-size:13px;font-weight:700;transition:all 0.2s ease;
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(37,99,235,0.12);border:1px solid rgba(96,165,250,0.3);
+  color:var(--light);padding:6px 14px;border-radius:10px;
+  text-decoration:none;font-size:12px;font-weight:700;transition:all 0.2s ease;
 }
 .btn-back:hover{
   background:rgba(37,99,235,0.25);border-color:var(--light);color:#fff;
 }
 
-.header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px}
-.brand{display:flex;align-items:center;gap:12px}
+.header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:10px}
 .brand-logo{
-  width:52px;height:52px;flex:0 0 52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;flex:0 0 44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   background:rgba(37,99,235,.15);border:1px solid rgba(96,165,250,.35);overflow:hidden
 }
 .brand-logo img{width:100%;height:100%;object-fit:cover;display:block}
-.brand h1{margin:0;font-size:20px}.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}
-.sound-btn{border:1px solid var(--border);background:rgba(15,23,42,.8);color:#fff;border-radius:12px;width:44px;height:44px;cursor:pointer;font-size:19px}
+.brand h1{margin:0;font-size:18px;font-weight:800}.brand p{margin:1px 0 0;color:var(--muted);font-size:11px}
+.sound-btn{border:1px solid var(--border);background:rgba(15,23,42,.8);color:#fff;border-radius:10px;width:38px;height:38px;cursor:pointer;font-size:16px}
 
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-.stat{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:12px;text-align:center;backdrop-filter:blur(12px)}
-.stat-label{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}
-.stat-value{margin-top:4px;font-size:20px;font-weight:800}.lives{color:#fb7185}
-.progress-box{margin-bottom:14px}.progress-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:6px}
-.progress{height:7px;background:rgba(30,41,59,.9);border-radius:99px;overflow:hidden}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:8px;text-align:center;backdrop-filter:blur(12px)}
+.stat-label{color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:0.8px;font-weight:700}
+.stat-value{margin-top:2px;font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat-value.milestone{font-size:11px;color:var(--light);line-height:20px}
+.stat-value.lives{color:#fb7185}
+
+.progress-box{margin-bottom:12px}.progress-top{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-bottom:5px;font-weight:600}
+.progress{height:6px;background:rgba(30,41,59,.9);border-radius:99px;overflow:hidden}
 .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:inherit;transition:width .2s linear}
+.progress-fill.urgent{background:linear-gradient(90deg,#ef4444,#f97316)!important}
 
 .game-card{
-  position:relative;min-height:570px;border-radius:25px;
-  background:linear-gradient(145deg,rgba(15,23,42,.94),rgba(8,20,42,.90));
-  border:1px solid var(--border);box-shadow:0 25px 80px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.04);
-  overflow:hidden
+  position:relative;border-radius:20px;
+  background:linear-gradient(145deg,rgba(15,23,42,.92),rgba(8,20,42,.88));
+  border:1px solid var(--border);box-shadow:0 20px 50px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.05);
+  overflow:hidden;padding:16px;min-height:430px;display:flex;flex-direction:column;justify-content:center;
 }
-.game-screen{min-height:570px;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.start-screen{text-align:center;max-width:650px}
+.game-screen{padding:10px 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%}
+.start-screen{text-align:center;max-width:500px;margin:0 auto}
 
 .big-paw{
-  width:150px;height:150px;max-width:42vw;max-height:42vw;margin:0 auto 20px;
+  width:100px;height:100px;margin:0 auto 12px;
   border-radius:50%;display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(circle,rgba(96,165,250,.28),rgba(37,99,235,.05));
-  border:2px solid rgba(96,165,250,.4);box-shadow:0 0 60px rgba(37,99,235,.25);
+  background:radial-gradient(circle,rgba(96,165,250,.25),rgba(37,99,235,.05));
+  border:2px solid rgba(96,165,250,.4);box-shadow:0 0 45px rgba(37,99,235,.3);
   overflow:hidden;animation:pawFloat 3s ease-in-out infinite
 }
 .big-paw img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
-@keyframes pawFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pawFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
-.start-screen h2{font-size:clamp(30px,6vw,52px);margin:0 0 12px}
+.start-screen h2{font-size:clamp(22px,4.5vw,32px);margin:0 0 6px;font-weight:900}
 .start-screen h2 span{color:var(--light)}
-.start-screen p{color:var(--muted);line-height:1.7;max-width:560px;margin:0 auto 24px}
-.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:25px 0}
-.rule{background:rgba(30,41,59,.55);border:1px solid rgba(148,163,184,.1);border-radius:15px;padding:15px 8px}
-.rule-icon{font-size:25px;display:block;margin-bottom:6px}.rule span:last-child{color:var(--muted);font-size:11px}
-.btn{border:none;border-radius:14px;padding:14px 28px;color:#fff;font-weight:800;cursor:pointer;font-size:15px;transition:transform .18s,box-shadow .18s;text-decoration:none;display:inline-block}
+.start-screen p{color:var(--muted);line-height:1.5;max-width:440px;margin:0 auto 14px;font-size:12px}
+.world-lore{
+  background:rgba(30,41,59,.4);border:1px solid rgba(96,165,250,.15);border-radius:12px;
+  padding:10px;margin-bottom:16px;font-size:11px;color:var(--light);font-weight:600;
+}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.rule{background:rgba(30,41,59,.55);border:1px solid rgba(148,163,184,.1);border-radius:12px;padding:10px 6px}
+.rule-icon{font-size:18px;display:block;margin-bottom:4px}.rule span:last-child{color:var(--muted);font-size:10px;font-weight:600}
+.btn{border:none;border-radius:12px;padding:12px 24px;color:#fff;font-weight:800;cursor:pointer;font-size:14px;transition:transform .18s,box-shadow .18s;text-decoration:none;display:inline-block}
 .btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.97)}
-.btn-primary{background:linear-gradient(135deg,#2563eb,#3b82f6);box-shadow:0 12px 35px rgba(37,99,235,.3)}
+.btn-primary{background:linear-gradient(135deg,#2563eb,#3b82f6);box-shadow:0 8px 25px rgba(37,99,235,.35)}
 .btn-secondary{background:rgba(30,41,59,.8);border:1px solid rgba(148,163,184,.18)}
 
-.phase-title{font-size:13px;color:var(--light);text-transform:uppercase;letter-spacing:2px;font-weight:800;margin-bottom:7px}
-.phase-main{font-size:clamp(25px,5vw,40px);font-weight:900;margin:0 0 6px;text-align:center}
-.phase-sub{color:var(--muted);text-align:center;margin:0 0 20px;font-size:13px}
-.image-grid,.answer-grid{width:100%;max-width:850px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:10px auto 22px}
+.phase-title{font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:2px;font-weight:800;margin-bottom:4px}
+.phase-main{font-size:clamp(20px,4vw,28px);font-weight:900;margin:0 0 4px;text-align:center}
+.phase-sub{color:var(--muted);text-align:center;margin:0 0 14px;font-size:12px}
 
-.memory-card{
-  position:relative;aspect-ratio:1;min-height:90px;border-radius:50%;
-  border:2px solid rgba(96,165,250,.3);background:linear-gradient(145deg,rgba(30,41,59,.9),rgba(15,23,42,.95));
-  overflow:hidden;animation:appear .35s ease both;box-shadow:0 6px 16px rgba(0,0,0,.3);
+.image-grid,.answer-grid{
+  width:100%;max-width:540px;display:grid;
+  grid-template-columns:repeat(3,1fr);gap:10px;margin:8px auto 14px;
+  justify-content:center;
 }
-.answer-card{
-  aspect-ratio:1;border-radius:50%;border:2px solid rgba(96,165,250,.25);
-  background:rgba(15,23,42,.9);cursor:pointer;display:flex;align-items:center;justify-content:center;
-  overflow:hidden;transition:all .2s ease;position:relative;padding:0;box-shadow:0 6px 16px rgba(0,0,0,.3);
+
+/* Kotak kartu standar untuk memaksimalkan tampilan artwork 44 gambar */
+.memory-card, .answer-card{
+  position:relative;aspect-ratio:1;border-radius:16px;
+  background:#fff;
+  border:2px solid rgba(96,165,250,.3);
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
+  overflow:hidden;padding:6px;display:flex;align-items:center;justify-content:center;
+  transition:all .2s ease;
 }
-.answer-card:hover{transform:scale(1.05);border-color:rgba(96,165,250,.8);box-shadow:0 0 20px rgba(56,189,248,.3)}
-.answer-card:active{transform:scale(.92)}
 
-.card-image-box{width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden;background:radial-gradient(circle,rgba(37,99,235,.2),rgba(2,6,23,.8));padding:8px}
-.card-image-box img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.answer-card{cursor:pointer;}
+.answer-card:hover:not(:disabled){transform:translateY(-3px) scale(1.02);border-color:var(--cyan);box-shadow:0 0 20px rgba(56,189,248,.4)}
+.answer-card:active:not(:disabled){transform:scale(.95)}
+.answer-card:disabled{opacity:.5;filter:grayscale(40%);cursor:not-allowed;transform:none!important}
 
-@keyframes appear{from{opacity:0;transform:scale(.7) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.feedback{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;font-size:70px;font-weight:900;opacity:0}
+.card-image-box{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:10px}
+.card-image-box img{width:100%;height:100%;object-fit:contain}
+
+@keyframes appear{from{opacity:0;transform:scale(.8) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.feedback{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:900;opacity:0;z-index:10}
 .feedback.show{animation:feedback .65s ease}.feedback.correct{color:var(--green)}.feedback.wrong{color:var(--red)}
 @keyframes feedback{0%{opacity:0;transform:scale(.5)}30%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(1.5)}}
-.combo{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100;pointer-events:none;font-size:40px;font-weight:900;color:var(--gold);text-shadow:0 0 25px rgba(250,204,21,.5);opacity:0}
+.combo{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100;pointer-events:none;font-size:28px;font-weight:900;color:var(--gold);text-shadow:0 0 20px rgba(250,204,21,.6);opacity:0;text-align:center}
 .combo.show{animation:comboPop .9s ease}
 @keyframes comboPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-80%) scale(1)}}
 
-.result{text-align:center;width:100%;max-width:650px}
-.result-badge{width:120px;height:120px;margin:0 auto 20px;display:flex;justify-content:center;align-items:center;border-radius:50%;background:rgba(37,99,235,.12);border:2px solid rgba(96,165,250,.35);overflow:hidden}
+.result{text-align:center;width:100%;max-width:500px}
+.result-badge{width:80px;height:80px;margin:0 auto 12px;display:flex;justify-content:center;align-items:center;border-radius:50%;background:rgba(37,99,235,.12);border:2px solid rgba(96,165,250,.35);overflow:hidden}
 .result-badge img{width:100%;height:100%;object-fit:cover}
-.result h2{font-size:clamp(30px,6vw,50px);margin:0 0 5px}.result-title{color:var(--light);font-weight:800;margin-bottom:25px}
-.final-score{font-size:65px;font-weight:900;background:linear-gradient(90deg,#60a5fa,#38bdf8);-webkit-background-clip:text;color:transparent;margin-bottom:20px}
-.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:25px}
-.result-stat{background:rgba(30,41,59,.6);border-radius:15px;padding:15px}.result-stat strong{display:block;font-size:20px}.result-stat span{color:var(--muted);font-size:10px}
-.result-buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
-.footer{text-align:center;color:#64748b;font-size:11px;padding:18px}.footer strong{color:#94a3b8}.hidden{display:none!important}
+.result h2{font-size:clamp(22px,4.5vw,32px);margin:0 0 4px}.result-title{color:var(--light);font-weight:800;margin-bottom:14px;font-size:12px}
+.final-score{font-size:44px;font-weight:900;background:linear-gradient(90deg,#60a5fa,#38bdf8);-webkit-background-clip:text;color:transparent;margin-bottom:14px}
+.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.result-stat{background:rgba(30,41,59,.6);border-radius:12px;padding:10px 6px}.result-stat strong{display:block;font-size:16px}.result-stat span{color:var(--muted);font-size:9px;font-weight:700}
+.result-buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.footer{text-align:center;color:#64748b;font-size:11px;padding:12px}.footer strong{color:#94a3b8}.hidden{display:none!important}
 
-@media(max-width:700px){
-  .app{padding:12px}.header{margin-bottom:12px}.brand-logo{width:44px;height:44px;flex-basis:44px}.brand h1{font-size:17px}
-  .stats{gap:6px}.stat{padding:9px 5px}.stat-value{font-size:17px}
-  .game-card,.game-screen{min-height:600px}.game-screen{padding:18px 12px}
-  .rules{grid-template-columns:1fr;gap:7px}.rule{padding:10px}
-  .image-grid,.answer-grid{gap:8px}.memory-card{min-height:70px}.final-score{font-size:52px}
-}
-@media(max-width:430px){
-  .stats{grid-template-columns:repeat(2,1fr)}.image-grid,.answer-grid{grid-template-columns:repeat(3,1fr)}
-  .game-card,.game-screen{min-height:620px}.big-paw{width:125px;height:125px}
+@media(max-width:480px){
+  .app{padding:10px}
+  .image-grid,.answer-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .memory-card, .answer-card{border-radius:12px;padding:4px}
 }
 </style>
 </head>
@@ -161,7 +170,7 @@ body{
 <header class="header">
   <div class="brand">
     <div class="brand-logo"><img src="hopepaw-mascot.png" alt="HopePaw"></div>
-    <div><h1>HopePaw Memory</h1><p>Remember. Think. Keep going. 💙</p></div>
+    <div><h1>HopePaw Memory</h1><p>Remember the HopePaw World 🐾💙</p></div>
   </div>
   <button class="sound-btn" id="soundBtn" onclick="toggleSound()">🔊</button>
 </header>
@@ -169,7 +178,7 @@ body{
 <div class="stats">
   <div class="stat"><div class="stat-label">Score</div><div class="stat-value" id="score">0</div></div>
   <div class="stat"><div class="stat-label">Level</div><div class="stat-value" id="level">1</div></div>
-  <div class="stat"><div class="stat-label">Combo</div><div class="stat-value" id="comboStat">0</div></div>
+  <div class="stat"><div class="stat-label">Milestone</div><div class="stat-value milestone" id="milestoneStat">🌱 Beginning</div></div>
   <div class="stat"><div class="stat-label">Lives</div><div class="stat-value lives" id="lives">❤️❤️❤️</div></div>
 </div>
 
@@ -183,11 +192,13 @@ body{
   <div class="start-screen">
     <div class="big-paw"><img src="hopepaw-mascot.png" alt="HopePaw mascot"></div>
     <h2>HopePaw <span>Memory</span></h2>
-    <p>A simple memory challenge inspired by the HopePaw journey. Remember the images, choose them correctly, and see how far you can go.</p>
+    <div class="world-lore">
+      🐾 Look carefully. Remember what you see. Every image tells part of the HopePaw world and mission.
+    </div>
     <div class="rules">
-      <div class="rule"><span class="rule-icon">👀</span><span>Remember the images</span></div>
-      <div class="rule"><span class="rule-icon">🧠</span><span>Choose the correct ones</span></div>
-      <div class="rule"><span class="rule-icon">🔥</span><span>Build your combo</span></div>
+      <div class="rule"><span class="rule-icon">👀</span><span>Memorize</span></div>
+      <div class="rule"><span class="rule-icon">⏱️</span><span>Beat Timer</span></div>
+      <div class="rule"><span class="rule-icon">🔥</span><span>High Streak</span></div>
     </div>
     <button class="btn btn-primary" onclick="startGame()">🐾 Start Memory Run</button>
   </div>
@@ -198,14 +209,16 @@ body{
   <h2 class="phase-main" id="memoryTitle">Remember these!</h2>
   <p class="phase-sub" id="memorySub">Memorize the images before they disappear.</p>
   <div class="image-grid" id="memoryGrid"></div>
-  <div class="progress" style="width:min(500px,90%)"><div class="progress-fill" id="memoryTimer"></div></div>
+  <div class="progress" style="width:min(350px,90%)"><div class="progress-fill" id="memoryTimer"></div></div>
 </section>
 
 <section id="answerScreen" class="game-screen hidden">
   <div class="phase-title">MEMORY TEST</div>
   <h2 class="phase-main">Which images did you see?</h2>
-  <p class="phase-sub">Tap every image that appeared.</p>
+  <p class="phase-sub" id="answerSub">Tap every image that appeared before time runs out!</p>
   <div class="answer-grid" id="answerGrid"></div>
+  <div class="progress-top" style="width:min(350px,90%);margin:6px auto 4px;"><span id="answerTimerText" style="font-weight:800;color:var(--light)">TIME LEFT: 15s</span></div>
+  <div class="progress" style="width:min(350px,90%)"><div class="progress-fill" id="answerTimerFill"></div></div>
 </section>
 
 <section id="resultScreen" class="game-screen hidden">
@@ -235,17 +248,25 @@ body{
 </div>
 
 <script>
-// Mengambil otomatis dari folder hopepaw-memory-assets dengan format 1.jpg sampai 44.jpg
-// (Jika file kamu berformat .png, silakan ganti .jpg menjadi .png di bawah ini)
 const IMAGE_ASSETS = Array.from({ length: 44 }, (_, i) => ({
   id: `img_${i + 1}`,
   src: `hopepaw-memory-assets/${i + 1}.jpg`
 }));
 
+// 3. Preload seluruh 44 gambar agar langsung siap di cache browser saat game dibuka
+function preloadImages() {
+  IMAGE_ASSETS.forEach(item => {
+    const img = new Image();
+    img.src = item.src;
+  });
+}
+preloadImages();
+
 let game={
- running:false,level:1,score:0,combo:0,correct:0,lives:3,
+ running:false,level:1,completedLevels:0,score:0,combo:0,correct:0,lives:3,
  bestScore:Number(localStorage.getItem("hopepawBestScore")||0),
- memoryItems:[],answerItems:[],selected:new Set(),sound:true,timer:null
+ memoryItems:[],answerItems:[],selected:new Set(),sound:true,
+ timer:null,phaseTimer:null,answerTimer:null
 };
 
 const $=id=>document.getElementById(id);
@@ -263,21 +284,61 @@ function shuffle(a){
  for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}
  return x;
 }
-function getMemoryCount(){return Math.min(6,3+Math.floor((game.level-1)/2))}
-function getAnswerCount(){return Math.min(10,getMemoryCount()+3)}
-function getMemoryTime(){return Math.max(1800,5600-(game.level-1)*180)}
+
+// Skala tingkat kesulitan jumlah gambar
+function getMemoryCount(){
+ if(game.level<=3) return 3;
+ if(game.level<=6) return 4;
+ if(game.level<=10) return 5;
+ return 6; 
+}
+
+function getAnswerCount(){
+ const mem=getMemoryCount();
+ return Math.min(12, mem + (game.level >= 16 ? 6 : 3));
+}
+
+function getMemoryTime(){
+ return Math.max(1600, 5200 - (game.level-1)*160);
+}
+
+function getAnswerTimeLimit(){
+ if(game.level<=3) return 15000;
+ if(game.level<=6) return 12000;
+ if(game.level<=10) return 10000;
+ return 8000;
+}
+
+// 5. Definisi Milestone HopePaw World
+function getMilestoneName(lvl){
+ if(lvl<=3) return "🌱 Beginning";
+ if(lvl<=6) return "🐾 Explorer";
+ if(lvl<=10) return "💙 Hope Builder";
+ if(lvl<=15) return "🔥 Community Hero";
+ return "🧠 Memory Master";
+}
+
+function getResultMessage(lvl){
+ if(lvl>=16)return"HopePaw Memory Master 🧠🔥";
+ if(lvl>=11)return"Community Hero! Seriously impressive 💙";
+ if(lvl>=7)return"Hope Builder! You're getting dangerous 🐾";
+ if(lvl>=4)return"Explorer! Nice run, keep pushing!";
+ return"Beginning of a great journey. Try again! 💙";
+}
 
 function updateUI(){
  $("score").textContent=game.score.toLocaleString();
  $("level").textContent=game.level;
- $("comboStat").textContent=game.combo;
+ $("milestoneStat").textContent=getMilestoneName(game.level);
  $("lives").textContent="❤️".repeat(game.lives)+"🖤".repeat(3-game.lives);
  $("bestScoreLabel").textContent="Best: "+game.bestScore.toLocaleString();
 }
+
 function showScreen(screen){
  [startScreen,memoryScreen,answerScreen,resultScreen].forEach(s=>s.classList.add("hidden"));
  screen.classList.remove("hidden");
 }
+
 function createVisual(item){
  const d=document.createElement("div");
  d.className="card-image-box";
@@ -287,14 +348,23 @@ function createVisual(item){
  d.appendChild(img);
  return d;
 }
+
 function startGame(){
  playMusic();
- cancelAnimationFrame(game.timer);clearTimeout(game.phaseTimer);
- game.running=true;game.level=1;game.score=0;game.combo=0;game.correct=0;game.lives=3;game.selected=new Set();
+ cancelGameTimers();
+ game.running=true;game.level=1;game.completedLevels=0;game.score=0;game.combo=0;game.correct=0;game.lives=3;game.selected=new Set();
  updateUI();$("progressLabel").textContent="Level 1";$("progressFill").style.width="0%";playSound("start");nextLevel();
 }
+
+function cancelGameTimers(){
+ cancelAnimationFrame(game.timer);
+ clearTimeout(game.phaseTimer);
+ clearInterval(game.answerTimer);
+}
+
 function nextLevel(){
  if(!game.running)return;
+ cancelGameTimers();
  game.selected=new Set();
  const mc=getMemoryCount(),ac=getAnswerCount(),s=shuffle(IMAGE_ASSETS);
  game.memoryItems=s.slice(0,mc);
@@ -302,12 +372,13 @@ function nextLevel(){
  game.answerItems=shuffle([...game.memoryItems,...rest.slice(0,ac-mc)]);
  showMemoryPhase();
 }
+
 function showMemoryPhase(){
  showScreen(memoryScreen);memoryGrid.innerHTML="";
  $("memoryTitle").textContent=`Remember ${game.memoryItems.length} images`;
- $("memorySub").textContent=`Level ${game.level} · They disappear soon...`;
+ $("memorySub").textContent=`Level ${game.level} (${getMilestoneName(game.level)}) · Look closely...`;
  game.memoryItems.forEach((item,i)=>{
-  const c=document.createElement("div");c.className="memory-card";c.style.animationDelay=`${i*.04}s`;c.appendChild(createVisual(item));memoryGrid.appendChild(c);
+  const c=document.createElement("div");c.className="memory-card";c.style.animation=`appear .35s ease ${i*.04}s both`;c.appendChild(createVisual(item));memoryGrid.appendChild(c);
  });
  const duration=getMemoryTime(),start=performance.now();
  $("progressLabel").textContent="Memorize...";
@@ -319,64 +390,146 @@ function showMemoryPhase(){
  game.timer=requestAnimationFrame(animate);
  game.phaseTimer=setTimeout(()=>{if(game.running)showAnswerPhase()},duration);
 }
+
 function showAnswerPhase(){
  if(!game.running)return;
- showScreen(answerScreen);answerGrid.innerHTML="";$("progressLabel").textContent="Choose the correct images";$("progressFill").style.width="100%";
+ showScreen(answerScreen);answerGrid.innerHTML="";
+ $("progressLabel").textContent="Choose the correct images";
+ $("progressFill").style.width="100%";
+ $("progressFill").classList.remove("urgent");
+
  shuffle(game.answerItems).forEach((item,i)=>{
   const c=document.createElement("button");c.className="answer-card";c.type="button";c.style.animation=`appear .3s ease ${i*.03}s both`;
   c.appendChild(createVisual(item));c.onclick=()=>selectAnswer(item,c);answerGrid.appendChild(c);
  });
+
+ // 2. Timer Jawaban Dinamis dengan Teks Jelas & Desak 3 Detik Terakhir
+ const timeLimit = getAnswerTimeLimit();
+ const ansStart = performance.now();
+ clearInterval(game.answerTimer);
+ 
+ game.answerTimer = setInterval(()=>{
+  if(!game.running) { clearInterval(game.answerTimer); return; }
+  const elapsed = performance.now() - ansStart;
+  const remMs = Math.max(0, timeLimit - elapsed);
+  const remSec = Math.ceil(remMs / 1000);
+  const remPct = Math.max(0, (remMs / timeLimit) * 100);
+  
+  $("answerTimerFill").style.width = remPct + "%";
+  $("answerTimerText").textContent = `TIME LEFT: 0${remSec}s`.replace(/0(\d\d)/, "$1");
+
+  if(remSec <= 3){
+   $("answerTimerFill").classList.add("urgent");
+   $("answerTimerText").style.color = "var(--red)";
+  } else {
+   $("answerTimerFill").classList.remove("urgent");
+   $("answerTimerText").style.color = "var(--light)";
+  }
+  
+  if(remMs <= 0){
+   clearInterval(game.answerTimer);
+   game.lives--;
+   game.combo=0;
+   showFeedback("⏰ TIME","wrong");
+   playSound("wrong");
+   updateUI();
+   if(game.lives<=0){
+    gameOver();
+   } else {
+    nextLevel();
+   }
+  }
+ }, 50);
 }
+
 function selectAnswer(item,card){
- if(!game.running||game.selected.has(item.id))return;
+ if(!game.running||game.selected.has(item.id)||card.disabled)return;
  const correct=game.memoryItems.some(x=>x.id===item.id);
  if(correct){
-  game.selected.add(item.id);card.style.borderColor="rgba(34,197,94,.8)";card.style.background="rgba(34,197,94,.15)";
+  game.selected.add(item.id);
+  card.disabled=true;
+  card.style.borderColor="rgba(34,197,94,1)";
+  card.style.background="#e6f4ea";
   game.correct++;game.combo++;
   const mult=Math.min(5,1+Math.floor(game.combo/3));game.score+=100*mult*game.level;
   showFeedback("✓","correct");
-  if(game.combo>=3&&game.combo%3===0){showCombo(`${game.combo} COMBO!`);playSound("combo")}else playSound("correct");
+  
+  // 4. Sistem Combo Berjenjang
+  if(game.combo>=3){
+   let streakText=`${game.combo} COMBO\n🔥 Nice!`;
+   if(game.combo>=15) streakText=`${game.combo} COMBO\n🧠 MEMORY MASTER!`;
+   else if(game.combo>=10) streakText=`${game.combo} COMBO\n⚡ MEMORY BEAST!`;
+   else if(game.combo>=5) streakText=`${game.combo} COMBO\n🔥🔥 ON FIRE!`;
+   
+   showCombo(streakText);
+   playSound("combo");
+  } else {
+   playSound("correct");
+  }
   updateUI();
-  if(game.selected.size===game.memoryItems.length)levelComplete();
+  if(game.selected.size===game.memoryItems.length){
+   clearInterval(game.answerTimer);
+   levelComplete();
+  }
  }else{
-  card.style.borderColor="rgba(239,68,68,.8)";card.style.background="rgba(239,68,68,.15)";
+  // 1. Kartu salah dikunci agar tidak bisa diklik berulang untuk nyawa dobel
+  card.disabled=true;
+  card.style.borderColor="rgba(239,68,68,1)";
+  card.style.background="#fce8e6";
+  card.style.opacity=".55";
+  
   game.lives--;game.combo=0;showFeedback("✕","wrong");playSound("wrong");updateUI();
-  if(game.lives<=0)setTimeout(gameOver,500);
+  if(game.lives<=0){
+   clearInterval(game.answerTimer);
+   setTimeout(gameOver,500);
+  }
  }
 }
+
 function levelComplete(){
- game.level++;updateUI();$("progressLabel").textContent="Correct! Next level...";playSound("level");
+ game.completedLevels = game.level; // 1. Simpan level sukses dengan konsisten
+ game.level++;
+ updateUI();
+ $("progressLabel").textContent="Correct! Next level...";
+ playSound("level");
  game.phaseTimer=setTimeout(()=>{if(game.running)nextLevel()},750);
 }
+
 function gameOver(){
- game.running=false;cancelAnimationFrame(game.timer);clearTimeout(game.phaseTimer);
+ game.running=false;
+ cancelGameTimers();
  const oldBest=game.bestScore;
  if(game.score>game.bestScore){game.bestScore=game.score;localStorage.setItem("hopepawBestScore",game.bestScore)}
  updateUI();showScreen(resultScreen);
- $("finalScore").textContent=game.score.toLocaleString();$("finalLevel").textContent=Math.max(1,game.level-1);
- $("finalCorrect").textContent=game.correct;$("finalBest").textContent=game.bestScore.toLocaleString();
+ 
+ $("finalScore").textContent=game.score.toLocaleString();
+ $("finalLevel").textContent=game.completedLevels; // 1. Tampilkan level terakhir yang berhasil diselesaikan secara akurat
+ $("finalCorrect").textContent=game.correct;
+ $("finalBest").textContent=game.bestScore.toLocaleString();
+ 
  const newBest=game.score>oldBest&&game.score>0;
- $("resultHeading").textContent=newBest?"NEW HIGH SCORE!":"Run Complete";
- $("resultTitle").textContent=newBest?"You just made history in HopePaw Memory.":getResultMessage();
+ $("resultHeading").textContent=newBest?"🎉 NEW HOPEPAW RECORD!":"Run Complete";
+ $("resultTitle").textContent=newBest?"You just made history in the HopePaw world!":getResultMessage(game.completedLevels);
  playSound(newBest?"win":"gameover");
 }
-function getResultMessage(){
- if(game.level>=15)return"Memory Master 🧠🔥";
- if(game.level>=10)return"That's seriously impressive!";
- if(game.level>=7)return"You're getting dangerous. 🐾";
- if(game.level>=4)return"Nice run. Try to beat it!";
- return"Every great run starts somewhere. 💙";
-}
+
 function showFeedback(text,type){
  $("feedback").textContent=text;$("feedback").className="feedback "+type;void $("feedback").offsetWidth;$("feedback").classList.add("show");
  setTimeout(()=>$("feedback").classList.remove("show"),700);
 }
+
 function showCombo(text){
- $("comboPopup").textContent=text;$("comboPopup").className="combo";void $("comboPopup").offsetWidth;$("comboPopup").classList.add("show");
+ $("comboPopupinnerHTML") // safety check
+ $("comboPopup").style.whiteSpace="pre-line";
+ $("comboPopup").textContent=text;
+ $("comboPopup").className="combo";
+ void $("comboPopup").offsetWidth;
+ $("comboPopup").classList.add("show");
  setTimeout(()=>$("comboPopup").classList.remove("show"),900);
 }
+
 async function shareScore() {
-    const level = Math.max(1, game.level - 1);
+    const level = game.completedLevels;
     const score = game.score.toLocaleString();
     const correct = game.correct;
 
@@ -472,7 +625,7 @@ async function shareScore() {
                 try {
                     await navigator.share({
                         title: "HopePaw Memory",
-                        text: `🐾 I just scored ${score} in HopePaw Memory! Can you beat my score? 💙 #HopePaw #HopePawMemory`,
+                        text: `🐾 I just reached Level ${level} in HopePaw Memory!\nScore: ${score}\nCan you beat me? 💙 #HopePaw #HopePawMemory`,
                         files: [file]
                     });
                     return;
