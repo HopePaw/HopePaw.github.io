@@ -3,178 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HopePaw - Tug of War Math Game</title>
+    <title>HopePaw Tug of War</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background: #1a1a1a;
+        }
+        body {
+            background: #0f172a;
             color: #fff;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-        }
-        .game-container {
-            width: 100%;
-            max-width: 600px;
-            background: #2a2a2a;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            text-align: center;
-        }
-        .arena {
-            position: relative;
-            width: 100%;
-            height: 250px;
-            background-image: url('latar.png');
-            background-size: cover;
-            background-position: center;
             overflow: hidden;
         }
-        .character {
-            position: absolute;
-            bottom: 20px;
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            transition: left 0.3s ease;
+        .game-wrapper {
+            width: 100%;
+            max-width: 450px;
+            background: #1e293b;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border: 2px solid #334155;
         }
-        #hopepaw {
-            left: 50px;
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: #0f172a;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 2px solid #334155;
         }
-        #lawan {
-            right: 50px;
+        .score-left { color: #38bdf8; }
+        .score-right { color: #f43f5e; }
+
+        canvas {
+            display: block;
+            background: linear-gradient(to bottom, #38bdf8, #bae6fd 60%, #4ade80 60%);
+            width: 100%;
+            height: 220px;
         }
-        .rope-center {
-            position: absolute;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 30px;
-            object-fit: contain;
-            transition: left 0.3s ease;
-        }
-        .quiz-section {
+
+        .quiz-container {
             padding: 20px;
+            text-align: center;
+            background: #1e293b;
         }
         .question {
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 26px;
             font-weight: bold;
+            margin-bottom: 20px;
+            color: #f8fafc;
+            letter-spacing: 1px;
         }
-        .options {
+        .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
         }
-        button {
-            padding: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            background: #ffcc00;
+        .btn-option {
+            background: #3b82f6;
+            color: white;
             border: none;
-            border-radius: 8px;
+            padding: 14px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
             cursor: pointer;
-            color: #000;
-            transition: 0.2s;
+            transition: all 0.1s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        button:hover {
-            background: #e6b800;
+        .btn-option:active {
+            transform: scale(0.95);
         }
-        .message {
+        .btn-option:hover {
+            background: #2563eb;
+        }
+        .message-box {
             margin-top: 15px;
-            font-size: 16px;
-            font-height: bold;
+            font-size: 15px;
+            min-height: 24px;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
-    <div class="game-container">
-        <div class="arena" id="arena">
-            <!-- Perhatikan nama file gambar sesuai yang kamu upload: hopepaww.png -->
-            <img src="hopepaww.png" id="hopepaw" class="character" alt="HopePaw">
-            <img src="tali.png" class="rope-center" id="rope" alt="Tali">
-            <img src="lawan.png" id="lawan" class="character" alt="Lawan" style="right: 50px;">
+    <div class="game-wrapper">
+        <div class="score-board">
+            <span class="score-left">🐶 HopePaw</span>
+            <span id="status-text">Tarik Tambang!</span>
+            <span class="score-right">Lawan 🐱</span>
         </div>
-        
-        <div class="quiz-section">
-            <div class="question" id="question-text">Memuat Soal...</div>
-            <div class="options" id="options-container"></div>
-            <div class="message" id="game-message">Jawab soal dengan benar untuk menarik tali!</div>
+
+        <!-- Area Gambar Murni dari Canvas -->
+        <canvas id="gameCanvas" width="450" height="220"></canvas>
+
+        <div class="quiz-container">
+            <div class="question" id="question">Loading...</div>
+            <div class="options-grid" id="options"></div>
+            <div class="message-box" id="message">Jawab dengan benar untuk menarik tali!</div>
         </div>
     </div>
 
     <script>
-        let score = 0;
-        let targetScore = 5; // Skor untuk menang
-        let hopepawPos = 50; // Posisi awal CSS left (px)
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
 
-        const questionText = document.getElementById("question-text");
-        const optionsContainer = document.getElementById("options-container");
-        const gameMessage = document.getElementById("game-message");
-        const hopepaw = document.getElementById("hopepaw");
-        const rope = document.getElementById("rope");
-
+        let ropePos = 0; // Pergeseran tali (-100 sampai 100)
         let currentAnswer = 0;
+        let isGameOver = false;
+
+        const questionEl = document.getElementById("question");
+        const optionsEl = document.getElementById("options");
+        const messageEl = document.getElementById("message");
+        const statusText = document.getElementById("status-text");
+
+        function drawScene() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Garis Tengah / Batas
+            ctx.strokeStyle = "#cbd5e1";
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 100);
+            ctx.lineTo(canvas.width / 2, 180);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // 2. Tali Tambang di tengah
+            let centerX = canvas.width / 2 + ropePos;
+            ctx.strokeStyle = "#b45309";
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.moveTo(80, 140);
+            ctx.lineTo(canvas.width - 80, 140);
+            ctx.stroke();
+
+            // Bendera penanda di tengah tali
+            ctx.fillStyle = "#ef4444";
+            ctx.beginPath();
+            ctx.moveTo(centerX, 120);
+            ctx.lineTo(centerX + 12, 132);
+            ctx.lineTo(centerX, 144);
+            ctx.fill();
+
+            // 3. Karakter Kiri (HopePaw - Warna Biru/Cyan)
+            let hopeX = 80 + ropePos;
+            // Badan
+            ctx.fillStyle = "#0ea5e9";
+            ctx.fillRect(hopeX - 20, 120, 40, 35);
+            // Kepala
+            ctx.beginPath();
+            ctx.arc(hopeX, 110, 18, 0, Math.PI * 2);
+            ctx.fill();
+            // Telinga HopePaw
+            ctx.beginPath();
+            ctx.arc(hopeX - 12, 98, 7, 0, Math.PI * 2);
+            ctx.arc(hopeX + 12, 98, 7, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 4. Karakter Kanan (Lawan - Warna Merah/Pink)
+            let lawanX = (canvas.width - 80) + ropePos;
+            // Badan
+            ctx.fillStyle = "#f43f5e";
+            ctx.fillRect(lawanX - 20, 120, 40, 35);
+            // Kepala
+            ctx.beginPath();
+            ctx.arc(lawanX, 110, 18, 0, Math.PI * 2);
+            ctx.fill();
+            // Telinga Lawan
+            ctx.beginPath();
+            ctx.arc(lawanX - 12, 98, 7, 0, Math.PI * 2);
+            ctx.arc(lawanX + 12, 98, 7, 0, Math.PI * 2);
+            ctx.fill();
+        }
 
         function generateQuestion() {
-            let num1 = Math.floor(Math.random() * 10) + 1;
-            let num2 = Math.floor(Math.random() * 10) + 1;
-            currentAnswer = num1 + num2;
+            if (isGameOver) return;
+            
+            let n1 = Math.floor(Math.random() * 12) + 1;
+            let n2 = Math.floor(Math.random() * 12) + 1;
+            currentAnswer = n1 + n2;
 
-            questionText.innerText = `${num1} + ${num2} = ?`;
+            questionEl.innerText = `${n1} + ${n2} = ?`;
 
-            // Buat pilihan jawaban acak
-            let options = [currentAnswer];
-            while (options.length < 4) {
-                let wrongAnswer = currentAnswer + Math.floor(Math.random() * 5) - 2;
-                if (wrongAnswer !== currentAnswer && !options.includes(wrongAnswer) && wrongAnswer > 0) {
-                    options.push(wrongAnswer);
+            let choices = [currentAnswer];
+            while (choices.length < 4) {
+                let wrong = currentAnswer + Math.floor(Math.random() * 8) - 4;
+                if (wrong !== currentAnswer && !choices.includes(wrong) && wrong >= 0) {
+                    choices.push(wrong);
                 }
             }
-            // Acak posisi tombol
-            options.sort(() => Math.random() - 0.5);
+            choices.sort(() => Math.random() - 0.5);
 
-            optionsContainer.innerHTML = "";
-            options.forEach(opt => {
+            optionsEl.innerHTML = "";
+            choices.forEach(val => {
                 let btn = document.createElement("button");
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(opt);
-                optionsContainer.appendChild(btn);
+                btn.className = "btn-option";
+                btn.innerText = val;
+                btn.onclick = () => handleAnswer(val);
+                optionsEl.appendChild(btn);
             });
         }
 
-        function checkAnswer(selected) {
-            if (selected === currentAnswer) {
-                score++;
-                hopepawPos += 30; // HopePaw maju menarik tali
-                hopepaw.style.left = hopepawPos + "px";
-                gameMessage.innerText = "Benar! HopePaw menarik tali dengan kuat! 💪";
-                gameMessage.style.color = "#4BB543";
+        function handleAnswer(selected) {
+            if (isGameOver) return;
 
-                if (score >= targetScore) {
-                    gameMessage.innerText = "🎉 SELAMAT! HopePaw Berhasil Menang Tarik Tambang!";
-                    optionsContainer.innerHTML = "";
-                    questionText.innerText = "MENANG!";
-                    return;
-                }
+            if (selected === currentAnswer) {
+                ropePos -= 20; // Tarik ke kiri (HopePaw menang)
+                messageEl.innerText = "Benar! Tarikan kuat! 💪";
+                messageEl.style.color = "#4ade80";
             } else {
-                hopepawPos = Math.max(20, hopepawPos - 20); // Mundur dikit kalau salah
-                hopepaw.style.left = hopepawPos + "px";
-                gameMessage.innerText = "Salah! Lawan menarik balik! 😱";
-                gameMessage.style.color = "#ff3333";
+                ropePos += 20; // Tarik ke kanan (Lawan menang)
+                messageEl.innerText = "Salah! Lawan membalas! 😱";
+                messageEl.style.color = "#f87171";
             }
 
-            setTimeout(generateQuestion, 1000);
+            drawScene();
+
+            // Cek kondisi menang / kalah
+            if (ropePos <= -100) {
+                isGameOver = true;
+                statusText.innerText = "MENANG! 🎉";
+                questionEl.innerText = "HOPEPAW MENANG!";
+                optionsEl.innerHTML = "";
+                messageEl.innerText = "Hebat! Kamu berhasil mengalahkan lawan!";
+                messageEl.style.color = "#38bdf8";
+                return;
+            } else if (ropePos >= 100) {
+                isGameOver = true;
+                statusText.innerText = "KALAH! 💀";
+                questionEl.innerText = "LAWAN MENANG!";
+                optionsEl.innerHTML = "";
+                messageEl.innerText = "Coba lagi ya, jangan menyerah!";
+                messageEl.style.color = "#f43f5e";
+                return;
+            }
+
+            setTimeout(generateQuestion, 400);
         }
 
-        // Mulai game pertama kali
+        // Inisialisasi awal
+        drawScene();
         generateQuestion();
     </script>
 </body>
