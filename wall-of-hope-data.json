@@ -348,5 +348,75 @@
     "quote": "Success is not final; failure is not fatal: It is the courage to continue that counts.",
     "author": "Winston Churchill",
     "image": "assets/quotes/hope-050.webp"
+  },
+  {
+    "id": "051",
+    "theme": "Courage",
+    "quote": "Courage is not the absence of fear, but the determination to move forward even when your steps still tremble.",
+    "author": "HopePaw",
+    "image": "assets/quotes/hope-051.webp"
+  },
+  {
+    "id": "052",
+    "theme": "Sincerity",
+    "quote": "The most sincere help never expects applause, because true happiness lies in the smiles we help create.",
+    "author": "HopePaw",
+    "image": "assets/quotes/hope-052.webp"
+  },
+  {
+    "id": "053",
+    "theme": "Growth",
+    "quote": "Never compare your tiny sprout to a full-grown tree. Every great thing has its own time to grow.",
+    "author": "HopePaw",
+    "image": "assets/quotes/hope-053.webp"
+  },
+  {
+    "id": "054",
+    "theme": "Rest",
+    "quote": "If today feels heavy, it is okay to rest for a moment. Take a deep breath, the sun will rise again for you tomorrow.",
+    "author": "HopePaw",
+    "image": "assets/quotes/hope-054.webp"
+  },
+  {
+    "id": "055",
+    "theme": "Kindness",
+    "quote": "A small act of kindness you share today might be the reason someone believes in the beauty of the world again.",
+    "author": "HopePaw",
+    "image": "assets/quotes/hope-055.webp"
+  },
+  {
+    "id": "056",
+    "theme": "Consistency",
+    "quote": "Slow and steady is far better than fast and quitting halfway. Keep moving forward at your own pace.",
+    "author": "HopePaw",
+    "image": "assets/quotes/hope-056.webp"
+  },
+  {
+    "id": "057",
+    "theme": "Community",
+    "quote": "Walking alone might feel fast, but walking together with a community will carry us far beyond our limits.",
+    "author": "HopePaw",
+    "image": "assets/quotes/hope-057.webp"
+  },
+  {
+    "id": "058",
+    "theme": "Hope",
+    "quote": "Hope is like a star in a dark night; unseen when the sky is bright, but always there to keep you company in the silence.",
+    "author": "HopePaw",
+    "image": "assets/quotes/hope-058.webp"
+  },
+  {
+    "id": "059",
+    "theme": "Resilience",
+    "quote": "Stumbling is normal, getting back up is a choice. Every mistake is a teacher shaping you into someone stronger.",
+    "author": "HopePaw",
+    "image": "assets/quotes/hope-059.webp"
+  },
+  {
+    "id": "060",
+    "theme": "Vision",
+    "quote": "Big dreams start with a sincere heart. Let's build a brighter future, step by step, together with HopePaw.",
+    "author": "HopePaw",
+    "image": "assets/quotes/hope-060.webp"
   }
 ]
